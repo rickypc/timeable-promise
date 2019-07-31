@@ -1,0 +1,49 @@
+{
+  "author": "Richard Huang <rickypc@users.noreply.github.com>",
+  "dependencies": {},
+  "description": "A Promise object of an asynchronous operation with timeout support.",
+  "devDependencies": {
+    "eslint": "^6.1.0",
+    "eslint-config-airbnb-base": "^13.2.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jest": "^22.14.0",
+    "jest": "^24.8.0",
+    "jsdoc-to-markdown": "^5.0.0"
+  },
+  "homepage": "https://github.com/rickypc/timeable-promise#readme",
+  "jest": {
+    "clearMocks": true,
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "index.js"
+    ],
+    "coverageDirectory": "./coverage/",
+    "errorOnDeprecated": true,
+    "logHeapUsage": true,
+    "testEnvironment": "node"
+  },
+  "keywords": [
+    "timeout",
+    "promise",
+    "timeable",
+    "asynchronous",
+    "wait",
+    "time",
+    "support",
+    "helper",
+    "utility"
+  ],
+  "license": "AGPL-3.0",
+  "main": "index.js",
+  "name": "timeable-promise",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:rickypc/timeable-promise.git"
+  },
+  "scripts": {
+    "docs": "jsdoc2md -t .readme.hbs index.js > README.md",
+    "lint": "eslint __tests__/** index.js; exit 0",
+    "test": "jest"
+  },
+  "version": "1.0.0"
+}
