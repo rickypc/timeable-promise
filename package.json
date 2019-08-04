@@ -10,6 +10,9 @@
     "jest": "^24.8.0",
     "jsdoc-to-markdown": "^5.0.0"
   },
+  "engines": {
+    "node": ">=10.0.0"
+  },
   "homepage": "https://github.com/rickypc/timeable-promise#readme",
   "jest": {
     "clearMocks": true,
@@ -40,10 +43,11 @@
     "type": "git",
     "url": "git@github.com:rickypc/timeable-promise.git"
   },
+  "runkitExampleFilename": "example.js",
   "scripts": {
     "docs": "jsdoc2md -t .readme.hbs index.js > README.md",
     "lint": "eslint __tests__/** index.js; exit 0",
     "test": "jest"
   },
-  "version": "1.1.0"
+  "version": "1.2.0"
 }
