@@ -17,7 +17,11 @@
  */
 
 /**
+ * A Promise object of an asynchronous operation with timeout support.
+ *
  * @module timeable-promise
+ *
+ * @see {@link https://mzl.la/2MQJhPC|Promise}
  *
  * @example
  * const { untilSettledOrTimedOut } = require('timeable-promise');
