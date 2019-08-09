@@ -10,7 +10,7 @@
 Timeable Promise
 ================
 
-A [Promise](https://mzl.la/2Yt4ykQ) object of an asynchronous operation with timeout support.
+A [Promise](https://mzl.la/2MQJhPC) object of an asynchronous operation with timeout support.
 
 Installation
 -
@@ -21,6 +21,9 @@ $ npm install --save timeable-promise
 
 API Reference
 -
+A Promise object of an asynchronous operation with timeout support.
+
+**See**: [Promise](https://mzl.la/2MQJhPC)  
 **Example**  
 ```js
 const { untilSettledOrTimedOut } = require('timeable-promise');
