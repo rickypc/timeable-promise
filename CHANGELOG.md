@@ -1,3 +1,7 @@
+### 1.2.1 (2019.08.09)
+
+* Fix documentation typos
+
 ### 1.2.0 (2019.08.03)
 
 * Add Runkit example file
