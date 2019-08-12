@@ -1,3 +1,7 @@
+### 1.2.4 (2019.08.11)
+
+* Adjust tests to follow latest Airbnb config
+
 ### 1.2.3 (2019.08.11)
 
 * Update (another) dependency
