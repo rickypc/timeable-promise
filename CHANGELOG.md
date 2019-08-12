@@ -1,3 +1,7 @@
+### 1.2.3 (2019.08.11)
+
+* Update (another) dependency
+
 ### 1.2.2 (2019.08.11)
 
 * Update dependency and documentation
