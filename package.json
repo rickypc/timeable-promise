@@ -7,7 +7,7 @@
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jest": "^22.15.0",
-    "jest": "^24.8.0",
+    "jest": "^25.1.0",
     "jsdoc-to-markdown": "^5.0.0"
   },
   "engines": {
