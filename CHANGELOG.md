@@ -1,3 +1,7 @@
+### 1.2.5 (2020.03.07)
+
+* Adjust link and contribution section on readme
+
 ### 1.2.4 (2019.08.11)
 
 * Adjust tests to follow latest Airbnb config
