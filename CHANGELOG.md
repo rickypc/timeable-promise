@@ -1,3 +1,7 @@
+### 1.2.6 (2020.07.12)
+
+* Update dependencies
+
 ### 1.2.5 (2020.03.07)
 
 * Adjust link and contribution section on readme
