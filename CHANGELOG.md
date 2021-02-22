@@ -1,3 +1,7 @@
+### 1.2.8 (2021.02.21)
+
+* Update dependencies
+
 ### 1.2.7 (2020.07.12)
 
 * Ignore Makefile
