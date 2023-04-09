@@ -22,6 +22,8 @@ Installation
 -
 
 ```bash
+$ yarn add timeable-promise
+# or
 $ npm install --save timeable-promise
 ```
 
@@ -135,28 +137,61 @@ console.timeEnd('waitFor');
 
 Development Dependencies
 -
-You will need to install [Node.js](https://bit.ly/2SMCGXK) as a local development dependency. The `npm` package manager comes bundled with all recent releases of `Node.js`.
+You will need to install [Node.js](https://bit.ly/2SMCGXK) as a local
+development dependency. The `npm` package manager comes bundled with all
+recent releases of `Node.js`. You can also use [yarn](https://bit.ly/3nmWS1K)
+as a package manager.
 
-`npm install` will attempt to resolve any `npm` module dependencies that have been declared in the project’s `package.json` file, installing them into the `node_modules` folder.
+`yarn` or `npm install` will attempt to resolve any `npm` module dependencies
+that have been declared in the project’s `package.json` file, installing them
+into the `node_modules` folder.
 
 ```bash
+$ yarn
+# or
 $ npm install
 ```
 
-Run Linter
+Run Benchmark, Leak, Lint, and Unit Tests
 -
-To make sure we followed code style best practice, run:
+To make sure we did not break anything, let's run all the tests:
 
 ```bash
-$ npm run lint
+$ yarn test
+# or
+$ npm run test:lint; npm run test:unit; npm run test:bench; npm run test:leak
 ```
 
-Run Unit Tests
--
-To make sure we did not break anything, let's run:
+Run benchmark tests only:
 
 ```bash
-$ npm test
+$ yarn test:bench
+# or
+$ npm run test:bench
+```
+
+Run leak tests only:
+
+```bash
+$ yarn test:leak
+# or
+$ npm run test:leak
+```
+
+Run lint tests only:
+
+```bash
+$ yarn test:lint
+# or
+$ npm run test:lint
+```
+
+Run unit tests only:
+
+```bash
+$ yarn test:unit
+# or
+$ npm run test:unit
 ```
 
 Contributing
