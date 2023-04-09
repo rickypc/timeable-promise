@@ -12,7 +12,7 @@
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-jest": "^27.2.1",
-    "eslint-plugin-jsdoc": "^40.1.1",
+    "eslint-plugin-jsdoc": "^40.1.2",
     "eslint-plugin-no-secrets": "^0.8.9",
     "eslint-plugin-security": "^1.7.1",
     "eslint-plugin-yml": "^1.5.0",
