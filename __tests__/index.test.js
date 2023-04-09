@@ -1,6 +1,6 @@
 /*!
  *  index.test.js - tests for TimeablePromise functionality.
- *  Copyright (c) 2018 - 2019 Richard Huang <rickypc@users.noreply.github.com>
+ *  Copyright (c) 2018 - 2023 Richard Huang <rickypc@users.noreply.github.com>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as
@@ -16,13 +16,17 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-const { untilSettledOrTimedOut } = require('../index.js');
+const { untilSettledOrTimedOut, waitFor } = require('../index.js');
+
+const hrtimeToMs = (value) => (value[0] * 1000000000 + value[1]) / 1000000;
 
 describe('TimeablePromise module test', () => {
   describe('untilSettledOrTimedOut', () => {
     it('should return resolved', async () => {
       const actual = await untilSettledOrTimedOut(async (resolve, reject, pending) => {
-        await new Promise((done) => setTimeout(done, 10));
+        await new Promise((done) => {
+          setTimeout(done, 10);
+        });
         expect(pending()).toBeTruthy();
         resolve('executor');
       }, (resolve) => resolve('timeout'), 100);
@@ -31,17 +35,23 @@ describe('TimeablePromise module test', () => {
 
     it('should return rejected', async () => {
       const actual = await untilSettledOrTimedOut(async (resolve, reject, pending) => {
-        await new Promise((done) => setTimeout(done, 10));
+        await new Promise((done) => {
+          setTimeout(done, 10);
+        });
+        // eslint-disable-next-line jest/no-conditional-expect
         expect(pending()).toBeTruthy();
         reject('executor');
       }, (resolve) => resolve('timeout'), 100)
+        // eslint-disable-next-line jest/no-conditional-expect
         .catch((ex) => expect(ex).toEqual('executor'));
       expect(actual).toBeUndefined();
     });
 
     it('should return timed out resolved', async () => {
       const actual = await untilSettledOrTimedOut(async (resolve, reject, pending) => {
-        await new Promise((done) => setTimeout(done, 200));
+        await new Promise((done) => {
+          setTimeout(done, 200);
+        });
         expect(pending()).toBeFalsy();
         resolve('executor');
       }, (resolve) => resolve('timeout'), 100);
@@ -50,12 +60,51 @@ describe('TimeablePromise module test', () => {
 
     it('should return timed out rejected', async () => {
       const actual = await untilSettledOrTimedOut(async (resolve, reject, pending) => {
-        await new Promise((done) => setTimeout(done, 200));
+        await new Promise((done) => {
+          setTimeout(done, 200);
+        });
+        // eslint-disable-next-line jest/no-conditional-expect
         expect(pending()).toBeFalsy();
         resolve('executor');
       }, (resolve, reject) => reject('timeout'), 100)
+        // eslint-disable-next-line jest/no-conditional-expect
         .catch((ex) => expect(ex).toEqual('timeout'));
       expect(actual).toBeUndefined();
+    });
+  });
+
+  describe('waitFor', () => {
+    it('should return resolved', async () => {
+      let inflight = true;
+      setTimeout(() => {
+        inflight = false;
+      }, 50);
+
+      const begin = process.hrtime();
+      await waitFor(() => !inflight, 100, 50);
+      const end = process.hrtime(begin);
+
+      expect(hrtimeToMs(end)).toBeLessThan(100);
+    });
+
+    it('should return resolved with default interval', async () => {
+      const inflight = false;
+
+      const begin = process.hrtime();
+      await waitFor(() => !inflight, 2000);
+      const end = process.hrtime(begin);
+
+      expect(hrtimeToMs(end)).toBeLessThan(2000);
+    });
+
+    it('should return timed out resolved', async () => {
+      const inflight = true;
+
+      const begin = process.hrtime();
+      await waitFor(() => !inflight, 100, 50);
+      const end = process.hrtime(begin);
+
+      expect(hrtimeToMs(end)).toBeGreaterThan(50);
     });
   });
 });
