@@ -1,6 +1,6 @@
 /*!
  *  .eslintrc.js - ESLint configuration.
- *  Copyright (c) 2018 - 2019 Richard Huang <rickypc@users.noreply.github.com>
+ *  Copyright (c) 2018 - 2023 Richard Huang <rickypc@users.noreply.github.com>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as
@@ -24,12 +24,40 @@ module.exports = {
   extends: [
     'airbnb-base',
     'plugin:jest/recommended',
+    'plugin:jsdoc/recommended',
+    'plugin:security/recommended',
+    'plugin:yml/recommended',
+  ],
+  ignorePatterns: [
+    '/coverage/',
+    '!.github',
+  ],
+  overrides: [
+    {
+      files: [
+        '*.yml',
+      ],
+      parser: 'yaml-eslint-parser',
+    },
   ],
   plugins: [
     'import',
     'jest',
+    'jsdoc',
+    'no-secrets',
+    'security',
   ],
   rules: {
+    'import/extensions': [
+      'error',
+      'ignorePackages',
+    ],
+    'import/no-extraneous-dependencies': [
+      'error',
+      {
+        devDependencies: true,
+      },
+    ],
     'space-before-function-paren': ['error', 'always'],
   },
-}
+};
