@@ -1,3 +1,12 @@
+### 1.3.0 (2023.04.09)
+
+* Add `waitFor` method
+* Adjust readme links
+* Add more linters
+* Add benchmark and memory leak tests
+* Use GA for validations
+* Update dependencies
+
 ### 1.2.8 (2021.02.21)
 
 * Update dependencies
