@@ -1,3 +1,7 @@
+### 1.3.1 (2023.04.09)
+
+* Minor config adjustments
+
 ### 1.3.0 (2023.04.09)
 
 * Add `waitFor` method
