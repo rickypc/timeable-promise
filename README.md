@@ -1,12 +1,16 @@
 [![Version](https://img.shields.io/npm/v/timeable-promise)](https://bit.ly/2YFweqU)
 [![Downloads](https://img.shields.io/npm/dt/timeable-promise)](https://bit.ly/2YFweqU)
+<!---
 [![Dependency Status](https://img.shields.io/david/rickypc/timeable-promise)](https://bit.ly/2KhJo3N)
 [![Dev Dependency Status](https://img.shields.io/david/dev/rickypc/timeable-promise)](https://bit.ly/2MuKEU3)
+-->
 [![Code Style](https://img.shields.io/badge/code%20style-Airbnb-red)](https://bit.ly/2JYN1gk)
-[![Build](https://img.shields.io/travis/rickypc/timeable-promise)](https://bit.ly/2ZlJrSv)
+[![Build](https://img.shields.io/github/actions/workflow/status/rickypc/timeable-promise/validations.yml)](https://bit.ly/43aA0qF)
 [![Coverage](https://img.shields.io/codecov/c/github/rickypc/timeable-promise)](https://bit.ly/2LPRiVj)
 [![Vulnerability](https://img.shields.io/snyk/vulnerabilities/github/rickypc/timeable-promise)](https://bit.ly/2yP3kGa)
+<!---
 [![Dependabot](https://api.dependabot.com/badges/status?host=github&repo=rickypc/timeable-promise)](https://bit.ly/2KIM5vs)
+-->
 [![License](https://img.shields.io/npm/l/timeable-promise)](https://bit.ly/2yi7gyO)
 
 Timeable Promise
@@ -28,7 +32,8 @@ A Promise object of an asynchronous operation with timeout support.
 **See**: [Promise](https://mzl.la/2MQJhPC)  
 **Example**  
 ```js
-const { untilSettledOrTimedOut } = require('timeable-promise');
+const { untilSettledOrTimedOut, waitFor } = require('timeable-promise');
+// ---------- untilSettledOrTimedOut ----------
 const response = await untilSettledOrTimedOut((resolve, reject, pending) => {
   // Promise executor with extra `pending` param to check if promise is not
   // timed-out yet.
@@ -41,14 +46,23 @@ const response = await untilSettledOrTimedOut((resolve, reject, pending) => {
 }, 5000)
   .catch(ex => console.log('nay :(', ex));
 console.log(`resolved with ${response}, yay!`);
+// ---------- waitFor ----------
+// Long process running...
+let inflight = true
+const predicate = () => !inflight;
+const timeout = 5000;
+setTimeout(() => {
+  // Long process done.
+  inflight = false;
+}, 1000);
+console.time('waitFor');
+await waitFor(predicate, timeout);
+console.timeEnd('waitFor');
 ```
 
 * [timeable-promise](#module_timeable-promise)
-    * _static_
-        * [.untilSettledOrTimedOut(executor, timeoutExecutor, timeout)](#module_timeable-promise.untilSettledOrTimedOut) ⇒ <code>Promise.&lt;\*&gt;</code>
-    * _inner_
-        * [~Executor](#module_timeable-promise..Executor) : <code>function</code>
-        * [~TimeoutExecutor](#module_timeable-promise..TimeoutExecutor) : <code>function</code>
+    * [.untilSettledOrTimedOut(executor, timeoutExecutor, timeout)](#module_timeable-promise.untilSettledOrTimedOut) ⇒ <code>Promise.&lt;\*&gt;</code>
+    * [.waitFor(predicate, timeout, [interval])](#module_timeable-promise.waitFor) ⇒ <code>Promise.&lt;void&gt;</code>
 
 <a name="module_timeable-promise.untilSettledOrTimedOut"></a>
 
@@ -60,8 +74,8 @@ Provide timeout support on Promise object.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| executor | <code>Executor</code> | Executor function. |
-| timeoutExecutor | <code>TimeoutExecutor</code> | Timeout executor function. |
+| executor | [<code>Executor</code>](#Executor) | Executor function. |
+| timeoutExecutor | [<code>TimeoutExecutor</code>](#TimeoutExecutor) | Timeout executor function. |
 | timeout | <code>number</code> | Timeout. |
 
 **Example**  
@@ -90,54 +104,33 @@ const response = await untilSettledOrTimedOut(executor, timeoutExecutor, timeout
   .catch(ex => console.log('nay :(', ex));
 console.log(`resolved with ${response}, yay!`);
 ```
-<a name="module_timeable-promise..Executor"></a>
+<a name="module_timeable-promise.waitFor"></a>
 
-### timeable-promise~Executor : <code>function</code>
-Executor function that is executed immediately by the Promise implementation.
+### timeable-promise.waitFor(predicate, timeout, [interval]) ⇒ <code>Promise.&lt;void&gt;</code>
+Provide waiting support on given predicate.
 
-**Kind**: inner typedef of [<code>timeable-promise</code>](#module_timeable-promise)  
+**Kind**: static method of [<code>timeable-promise</code>](#module_timeable-promise)  
 
-| Param | Type | Description |
-| --- | --- | --- |
-| resolve | <code>function</code> | Resolve the promise. |
-| reject | <code>function</code> | Reject the promise. |
-| pending | <code>function</code> | True if Promise is not timed out, otherwise false. |
-
-**Example**  
-```js
-const executor = (resolve, reject, pending) => {
-  // Do something promising here...
-  if (pending()) {
-    try {
-      // Do something more promising here...
-      resolve(true);
-    } catch (ex) {
-      reject(false);
-    }
-  }
-};
-```
-<a name="module_timeable-promise..TimeoutExecutor"></a>
-
-### timeable-promise~TimeoutExecutor : <code>function</code>
-Timeout executor function that is executed when timeout is reached.
-
-**Kind**: inner typedef of [<code>timeable-promise</code>](#module_timeable-promise)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| resolve | <code>function</code> | Resolve the promise. |
-| reject | <code>function</code> | Reject the promise. |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| predicate | <code>function</code> |  | Predicate function. |
+| timeout | <code>number</code> |  | Timeout. |
+| [interval] | <code>number</code> | <code>1000</code> | Check interval. |
 
 **Example**  
 ```js
-const timeoutExecutor = (resolve, reject) => {
-  try {
-    resolve(true);
-  } catch (ex) {
-    reject(false);
-  }
-};
+const { waitFor } = require('timeable-promise');
+// Long process running...
+let inflight = true
+const predicate = () => !inflight;
+const timeout = 5000;
+setTimeout(() => {
+  // Long process done.
+  inflight = false;
+}, 1000);
+console.time('waitFor');
+await waitFor(predicate, timeout);
+console.timeEnd('waitFor');
 ```
 
 Development Dependencies
@@ -182,7 +175,7 @@ That's it! Thank you for your contribution!
 
 License
 -
-Copyright (c) 2018 - 2020 Richard Huang.
+Copyright (c) 2018 - 2023 Richard Huang.
 
 This module is free software, licensed under: [GNU Affero General Public License (AGPL-3.0)](https://bit.ly/2yi7gyO).
 
