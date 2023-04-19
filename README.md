@@ -1,16 +1,10 @@
 [![Version](https://img.shields.io/npm/v/timeable-promise)](https://bit.ly/2YFweqU)
 [![Downloads](https://img.shields.io/npm/dt/timeable-promise)](https://bit.ly/2YFweqU)
-<!---
-[![Dependency Status](https://img.shields.io/david/rickypc/timeable-promise)](https://bit.ly/2KhJo3N)
-[![Dev Dependency Status](https://img.shields.io/david/dev/rickypc/timeable-promise)](https://bit.ly/2MuKEU3)
--->
+[![Dependency Status](https://img.shields.io/librariesio/github/rickypc/timeable-promise)](https://bit.ly/3MUJErG)
 [![Code Style](https://img.shields.io/badge/code%20style-Airbnb-red)](https://bit.ly/2JYN1gk)
 [![Build](https://img.shields.io/github/actions/workflow/status/rickypc/timeable-promise/validations.yml)](https://bit.ly/43aA0qF)
 [![Coverage](https://img.shields.io/codecov/c/github/rickypc/timeable-promise)](https://bit.ly/2LPRiVj)
 [![Vulnerability](https://img.shields.io/snyk/vulnerabilities/github/rickypc/timeable-promise)](https://bit.ly/2yP3kGa)
-<!---
-[![Dependabot](https://api.dependabot.com/badges/status?host=github&repo=rickypc/timeable-promise)](https://bit.ly/2KIM5vs)
--->
 [![License](https://img.shields.io/npm/l/timeable-promise)](https://bit.ly/2yi7gyO)
 
 Timeable Promise
@@ -34,7 +28,31 @@ A Promise object of an asynchronous operation with timeout support.
 **See**: [Promise](https://mzl.la/2MQJhPC)  
 **Example**  
 ```js
-const { untilSettledOrTimedOut, waitFor } = require('timeable-promise');
+const {
+  poll,
+  sleep,
+  untilSettledOrTimedOut,
+  waitFor,
+} = require('timeable-promise');
+
+// ---------- poll ----------
+const timer = poll((stopped) => {
+  // Do something promising here...
+  if (!stopped()) {
+    // Do something when polling is not stopped...
+  }
+}, false, 100);
+setTimeout(() => {
+  // Simulate the end of polling.
+  timer.stop();
+}, 1000);
+
+// ---------- sleep ----------
+console.time('sleep');
+// Sleep for 1s.
+await sleep(1000);
+console.timeEnd('sleep');
+
 // ---------- untilSettledOrTimedOut ----------
 const response = await untilSettledOrTimedOut((resolve, reject, pending) => {
   // Promise executor with extra `pending` param to check if promise is not
@@ -48,6 +66,7 @@ const response = await untilSettledOrTimedOut((resolve, reject, pending) => {
 }, 5000)
   .catch(ex => console.log('nay :(', ex));
 console.log(`resolved with ${response}, yay!`);
+
 // ---------- waitFor ----------
 // Long process running...
 let inflight = true
@@ -63,9 +82,99 @@ console.timeEnd('waitFor');
 ```
 
 * [timeable-promise](#module_timeable-promise)
+    * [.poll(executor, [immediately], [interval])](#module_timeable-promise.poll) ⇒ [<code>timer</code>](#module_timeable-promise.poll..timer)
+        * [~executor](#module_timeable-promise.poll..executor) : <code>function</code>
+        * [~timer](#module_timeable-promise.poll..timer) : <code>object</code>
+    * [.sleep(timeout)](#module_timeable-promise.sleep) ⇒ <code>Promise.&lt;void&gt;</code>
     * [.untilSettledOrTimedOut(executor, timeoutExecutor, timeout)](#module_timeable-promise.untilSettledOrTimedOut) ⇒ <code>Promise.&lt;\*&gt;</code>
+        * [~executor](#module_timeable-promise.untilSettledOrTimedOut..executor) : <code>function</code>
+        * [~timeoutExecutor](#module_timeable-promise.untilSettledOrTimedOut..timeoutExecutor) : <code>function</code>
     * [.waitFor(predicate, timeout, [interval])](#module_timeable-promise.waitFor) ⇒ <code>Promise.&lt;void&gt;</code>
 
+<a name="module_timeable-promise.poll"></a>
+
+### timeable-promise.poll(executor, [immediately], [interval]) ⇒ [<code>timer</code>](#module_timeable-promise.poll..timer)
+Provide polling support without congestion when executor takes longer than interval.
+
+**Kind**: static method of [<code>timeable-promise</code>](#module_timeable-promise)  
+**Returns**: [<code>timer</code>](#module_timeable-promise.poll..timer) - The return object with stop function.  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| executor | [<code>executor</code>](#module_timeable-promise.poll..executor) |  | Executor function. |
+| [immediately] | <code>boolean</code> | <code>false</code> | Run executor immediately in the beginning. |
+| [interval] | <code>number</code> | <code>1000</code> | Delay interval. |
+
+**Example**  
+```js
+const { poll } = require('timeable-promise');
+const timer = poll((stopped) => {
+  // Do something promising here...
+  if (!stopped()) {
+    // Do something when polling is not stopped...
+  }
+}, false, 100);
+setTimeout(() => {
+  // Simulate the end of polling.
+  timer.stop();
+}, 1000);
+```
+
+* [.poll(executor, [immediately], [interval])](#module_timeable-promise.poll) ⇒ [<code>timer</code>](#module_timeable-promise.poll..timer)
+    * [~executor](#module_timeable-promise.poll..executor) : <code>function</code>
+    * [~timer](#module_timeable-promise.poll..timer) : <code>object</code>
+
+<a name="module_timeable-promise.poll..executor"></a>
+
+#### poll~executor : <code>function</code>
+Executor function that is executed immediately by the Promise implementation.
+
+**Kind**: inner typedef of [<code>poll</code>](#module_timeable-promise.poll)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| stopped | <code>function</code> | True if polling is stopped, otherwise false. |
+
+**Example**  
+```js
+const executor = (stopped) => {
+  // Do something promising here...
+  if (!stopped()) {
+    // Do something when polling is not stopped...
+  }
+};
+```
+<a name="module_timeable-promise.poll..timer"></a>
+
+#### poll~timer : <code>object</code>
+Timer object containing the polling stop function.
+
+**Kind**: inner typedef of [<code>poll</code>](#module_timeable-promise.poll)  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| stop | <code>function</code> | The polling stop function. |
+
+<a name="module_timeable-promise.sleep"></a>
+
+### timeable-promise.sleep(timeout) ⇒ <code>Promise.&lt;void&gt;</code>
+Provide sleep support.
+
+**Kind**: static method of [<code>timeable-promise</code>](#module_timeable-promise)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| timeout | <code>number</code> | Timeout. |
+
+**Example**  
+```js
+const { sleep } = require('timeable-promise');
+console.time('sleep');
+// Sleep for 1s.
+await sleep(1000);
+console.timeEnd('sleep');
+```
 <a name="module_timeable-promise.untilSettledOrTimedOut"></a>
 
 ### timeable-promise.untilSettledOrTimedOut(executor, timeoutExecutor, timeout) ⇒ <code>Promise.&lt;\*&gt;</code>
@@ -76,8 +185,8 @@ Provide timeout support on Promise object.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| executor | [<code>Executor</code>](#Executor) | Executor function. |
-| timeoutExecutor | [<code>TimeoutExecutor</code>](#TimeoutExecutor) | Timeout executor function. |
+| executor | [<code>executor</code>](#module_timeable-promise.untilSettledOrTimedOut..executor) | Executor function. |
+| timeoutExecutor | [<code>timeoutExecutor</code>](#module_timeable-promise.untilSettledOrTimedOut..timeoutExecutor) | Timeout executor function. |
 | timeout | <code>number</code> | Timeout. |
 
 **Example**  
@@ -105,6 +214,60 @@ const timeout = 5000;
 const response = await untilSettledOrTimedOut(executor, timeoutExecutor, timeout)
   .catch(ex => console.log('nay :(', ex));
 console.log(`resolved with ${response}, yay!`);
+```
+
+* [.untilSettledOrTimedOut(executor, timeoutExecutor, timeout)](#module_timeable-promise.untilSettledOrTimedOut) ⇒ <code>Promise.&lt;\*&gt;</code>
+    * [~executor](#module_timeable-promise.untilSettledOrTimedOut..executor) : <code>function</code>
+    * [~timeoutExecutor](#module_timeable-promise.untilSettledOrTimedOut..timeoutExecutor) : <code>function</code>
+
+<a name="module_timeable-promise.untilSettledOrTimedOut..executor"></a>
+
+#### untilSettledOrTimedOut~executor : <code>function</code>
+Executor function that is executed immediately by the Promise implementation.
+
+**Kind**: inner typedef of [<code>untilSettledOrTimedOut</code>](#module_timeable-promise.untilSettledOrTimedOut)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| resolve | <code>function</code> | Resolve the promise. |
+| reject | <code>function</code> | Reject the promise. |
+| pending | <code>function</code> | True if Promise is not timed out, otherwise false. |
+
+**Example**  
+```js
+const executor = (resolve, reject, pending) => {
+  // Do something promising here...
+  if (pending()) {
+    try {
+      // Do something more promising here...
+      resolve(true);
+    } catch (ex) {
+      reject(false);
+    }
+  }
+};
+```
+<a name="module_timeable-promise.untilSettledOrTimedOut..timeoutExecutor"></a>
+
+#### untilSettledOrTimedOut~timeoutExecutor : <code>function</code>
+Timeout executor function that is executed when timeout is reached.
+
+**Kind**: inner typedef of [<code>untilSettledOrTimedOut</code>](#module_timeable-promise.untilSettledOrTimedOut)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| resolve | <code>function</code> | Resolve the promise. |
+| reject | <code>function</code> | Reject the promise. |
+
+**Example**  
+```js
+const timeoutExecutor = (resolve, reject) => {
+  try {
+    resolve(true);
+  } catch (ex) {
+    reject(false);
+  }
+};
 ```
 <a name="module_timeable-promise.waitFor"></a>
 
