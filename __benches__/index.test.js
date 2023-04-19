@@ -17,9 +17,20 @@
  */
 
 const run = require('./runner.js');
-const { untilSettledOrTimedOut, waitFor } = require('../index.js');
+const {
+  poll,
+  sleep,
+  untilSettledOrTimedOut,
+  waitFor,
+} = require('../index.js');
 
 (async () => {
+  await run('poll', async () => {
+    const timer = poll(() => {}, 1);
+    setTimeout(() => timer.stop(), 3);
+    await sleep(5);
+  });
+  await run('sleep', () => sleep(1));
   await run('untilSettledOrTimedOut', () => untilSettledOrTimedOut(
     (resolve) => resolve(),
     (resolve) => resolve(),

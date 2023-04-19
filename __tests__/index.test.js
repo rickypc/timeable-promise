@@ -16,17 +16,57 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-const { untilSettledOrTimedOut, waitFor } = require('../index.js');
+const {
+  poll,
+  sleep,
+  untilSettledOrTimedOut,
+  waitFor,
+} = require('../index.js');
 
 const hrtimeToMs = (value) => (value[0] * 1000000000 + value[1]) / 1000000;
 
 describe('TimeablePromise module test', () => {
+  describe('poll', () => {
+    it('should run at interval', async () => {
+      const log = jest.fn();
+      const timer = poll(log);
+      setTimeout(() => timer.stop(), 2000);
+      await sleep(2100);
+
+      expect(log).toHaveBeenCalledTimes(1);
+    });
+
+    it('should skip on congestion', async () => {
+      let count = 1;
+      const log = jest.fn();
+      const timer = poll(async (stopped) => {
+        await sleep(98 + count);
+        if (!stopped()) {
+          log();
+          count += 1;
+        }
+      }, true, 100);
+      setTimeout(() => timer.stop(), 1000);
+      await sleep(1100);
+
+      expect(log).toHaveBeenCalledTimes(5);
+    });
+  });
+
+  describe('sleep', () => {
+    it('should sleep', async () => {
+      const begin = process.hrtime();
+      await sleep(100);
+      const end = process.hrtime(begin);
+
+      expect(hrtimeToMs(end)).toBeGreaterThan(50);
+    });
+  });
+
   describe('untilSettledOrTimedOut', () => {
     it('should return resolved', async () => {
       const actual = await untilSettledOrTimedOut(async (resolve, reject, pending) => {
-        await new Promise((done) => {
-          setTimeout(done, 10);
-        });
+        await sleep(10);
         expect(pending()).toBeTruthy();
         resolve('executor');
       }, (resolve) => resolve('timeout'), 100);
@@ -35,9 +75,7 @@ describe('TimeablePromise module test', () => {
 
     it('should return rejected', async () => {
       const actual = await untilSettledOrTimedOut(async (resolve, reject, pending) => {
-        await new Promise((done) => {
-          setTimeout(done, 10);
-        });
+        await sleep(10);
         // eslint-disable-next-line jest/no-conditional-expect
         expect(pending()).toBeTruthy();
         reject('executor');
@@ -49,9 +87,7 @@ describe('TimeablePromise module test', () => {
 
     it('should return timed out resolved', async () => {
       const actual = await untilSettledOrTimedOut(async (resolve, reject, pending) => {
-        await new Promise((done) => {
-          setTimeout(done, 200);
-        });
+        await sleep(200);
         expect(pending()).toBeFalsy();
         resolve('executor');
       }, (resolve) => resolve('timeout'), 100);
@@ -60,9 +96,7 @@ describe('TimeablePromise module test', () => {
 
     it('should return timed out rejected', async () => {
       const actual = await untilSettledOrTimedOut(async (resolve, reject, pending) => {
-        await new Promise((done) => {
-          setTimeout(done, 200);
-        });
+        await sleep(200);
         // eslint-disable-next-line jest/no-conditional-expect
         expect(pending()).toBeFalsy();
         resolve('executor');
