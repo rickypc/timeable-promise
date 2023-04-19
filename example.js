@@ -1,8 +1,26 @@
-// eslint-disable-next-line import/no-unresolved
-const { untilSettledOrTimedOut, waitFor } = require('timeable-promise');
+const {
+  poll,
+  sleep,
+  untilSettledOrTimedOut,
+  waitFor,
+  // eslint-disable-next-line import/no-unresolved
+} = require('timeable-promise');
 
 (async () => {
-  const logs = ['1. Settle Example'];
+  let iter = 1;
+  const logs = ['1. Poll Example'];
+  const timer = poll(() => {
+    logs.push(`   => poll: ${iter += 1}`);
+  }, false, 100);
+  setTimeout(() => timer.stop(), 300);
+
+  logs.push('2. Sleep Example');
+  const s0 = performance.now();
+  await sleep(1000);
+  const s1 = performance.now();
+  logs.push(`   => slept: ${s1 - s0}ms`);
+
+  logs.push('3. Settle Example');
   let response = await untilSettledOrTimedOut(async (resolve, reject, pending) => {
     // Simulate processing time shorter than timeout.
     const processed = await new Promise((done) => {
@@ -22,7 +40,7 @@ const { untilSettledOrTimedOut, waitFor } = require('timeable-promise');
     });
   logs.push(`   => response: ${response}`);
 
-  logs.push('2. Timeout Example');
+  logs.push('4. Timeout Example');
   response = await untilSettledOrTimedOut(async (resolve, reject, pending) => {
     // Simulate processing time longer than timeout.
     const processed = await new Promise((done) => {
@@ -42,7 +60,7 @@ const { untilSettledOrTimedOut, waitFor } = require('timeable-promise');
     });
   logs.push(`   => response: ${response}`);
 
-  logs.push('3. Wait Example');
+  logs.push('5. WaitFor Example');
   // Simulate long process running.
   let inflight = true;
   const predicate = () => !inflight;
@@ -51,14 +69,13 @@ const { untilSettledOrTimedOut, waitFor } = require('timeable-promise');
     // Simulate long process completion.
     inflight = false;
   }, 1000);
-  // eslint-disable-next-line no-console
-  console.time('Wait');
+  const w0 = performance.now();
   await waitFor(predicate, timeout);
+  const w1 = performance.now();
+  logs.push(`   => waited: ${w1 - w0}ms`);
 
   // eslint-disable-next-line no-console
   console.log(...logs);
-  // eslint-disable-next-line no-console
-  console.timeEnd('Wait');
 
   return 'Timeable Promise Examples';
 })();
