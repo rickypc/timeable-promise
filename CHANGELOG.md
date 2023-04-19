@@ -1,3 +1,11 @@
+### 1.3.2 (2023.04.19)
+
+* Add `poll` and `sleep` methods
+* Add benchmark and memory leak tests
+* Adjust the examples
+* Adjust readme links
+* Update dependencies and documentation
+
 ### 1.3.1 (2023.04.09)
 
 * Minor config adjustments
