@@ -1,3 +1,9 @@
+### 1.4.0 (2023.04.25)
+
+* Swap `poll` params
+* Adjust the examples
+* Update dependencies and documentation
+
 ### 1.3.2 (2023.04.19)
 
 * Add `poll` and `sleep` methods
