@@ -79,18 +79,18 @@
  *   if (!stopped()) {
  *     // Do something when polling is not stopped...
  *   }
- * }, false, 100);
+ * }, 100);
  * setTimeout(() => {
  *   // Simulate the end of polling.
  *   timer.stop();
  * }, 1000);
  * @function module:timeable-promise.poll
  * @param {module:timeable-promise.poll~executor} executor - Executor function.
- * @param {boolean} [immediately=false] - Run executor immediately in the beginning.
  * @param {number} [interval=1000] - Delay interval.
+ * @param {boolean} [immediately=false] - Run executor immediately in the beginning.
  * @returns {module:timeable-promise.poll~timer} The return object with stop function.
  */
-const poll = (executor, immediately = false, interval = 1000) => {
+const poll = (executor, interval = 1000, immediately = false) => {
   let inflight = false;
   let timer;
   const wrapper = async () => {
@@ -209,7 +209,7 @@ const waitFor = (predicate, timeout, interval = 1000) => {
         if (predicate()) {
           clearInterval(timer);
           timer = null;
-          /* istanbul ignore else */
+          // istanbul ignore else
           if (pending()) {
             resolve();
           }
@@ -241,7 +241,7 @@ const waitFor = (predicate, timeout, interval = 1000) => {
  *   if (!stopped()) {
  *     // Do something when polling is not stopped...
  *   }
- * }, false, 100);
+ * }, 100);
  * setTimeout(() => {
  *   // Simulate the end of polling.
  *   timer.stop();
