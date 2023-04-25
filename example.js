@@ -11,7 +11,7 @@ const {
   const logs = ['1. Poll Example'];
   const timer = poll(() => {
     logs.push(`   => poll: ${iter += 1}`);
-  }, false, 100);
+  }, 100);
   setTimeout(() => timer.stop(), 300);
 
   logs.push('2. Sleep Example');
