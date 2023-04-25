@@ -45,7 +45,7 @@ describe('TimeablePromise module test', () => {
           log();
           count += 1;
         }
-      }, true, 100);
+      }, 100, true);
       setTimeout(() => timer.stop(), 1000);
       await sleep(1100);
 
