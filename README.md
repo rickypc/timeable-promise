@@ -41,7 +41,7 @@ const timer = poll((stopped) => {
   if (!stopped()) {
     // Do something when polling is not stopped...
   }
-}, false, 100);
+}, 100);
 setTimeout(() => {
   // Simulate the end of polling.
   timer.stop();
@@ -82,7 +82,7 @@ console.timeEnd('waitFor');
 ```
 
 * [timeable-promise](#module_timeable-promise)
-    * [.poll(executor, [immediately], [interval])](#module_timeable-promise.poll) ⇒ [<code>timer</code>](#module_timeable-promise.poll..timer)
+    * [.poll(executor, [interval], [immediately])](#module_timeable-promise.poll) ⇒ [<code>timer</code>](#module_timeable-promise.poll..timer)
         * [~executor](#module_timeable-promise.poll..executor) : <code>function</code>
         * [~timer](#module_timeable-promise.poll..timer) : <code>object</code>
     * [.sleep(timeout)](#module_timeable-promise.sleep) ⇒ <code>Promise.&lt;void&gt;</code>
@@ -93,7 +93,7 @@ console.timeEnd('waitFor');
 
 <a name="module_timeable-promise.poll"></a>
 
-### timeable-promise.poll(executor, [immediately], [interval]) ⇒ [<code>timer</code>](#module_timeable-promise.poll..timer)
+### timeable-promise.poll(executor, [interval], [immediately]) ⇒ [<code>timer</code>](#module_timeable-promise.poll..timer)
 Provide polling support without congestion when executor takes longer than interval.
 
 **Kind**: static method of [<code>timeable-promise</code>](#module_timeable-promise)  
@@ -102,8 +102,8 @@ Provide polling support without congestion when executor takes longer than inter
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | executor | [<code>executor</code>](#module_timeable-promise.poll..executor) |  | Executor function. |
-| [immediately] | <code>boolean</code> | <code>false</code> | Run executor immediately in the beginning. |
 | [interval] | <code>number</code> | <code>1000</code> | Delay interval. |
+| [immediately] | <code>boolean</code> | <code>false</code> | Run executor immediately in the beginning. |
 
 **Example**  
 ```js
@@ -113,14 +113,14 @@ const timer = poll((stopped) => {
   if (!stopped()) {
     // Do something when polling is not stopped...
   }
-}, false, 100);
+}, 100);
 setTimeout(() => {
   // Simulate the end of polling.
   timer.stop();
 }, 1000);
 ```
 
-* [.poll(executor, [immediately], [interval])](#module_timeable-promise.poll) ⇒ [<code>timer</code>](#module_timeable-promise.poll..timer)
+* [.poll(executor, [interval], [immediately])](#module_timeable-promise.poll) ⇒ [<code>timer</code>](#module_timeable-promise.poll..timer)
     * [~executor](#module_timeable-promise.poll..executor) : <code>function</code>
     * [~timer](#module_timeable-promise.poll..timer) : <code>object</code>
 
