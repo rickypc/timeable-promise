@@ -17,6 +17,26 @@
  */
 
 /**
+ * @callback module:timeable-promise.parallel~executor
+ * @description Executor function that will be executed in parallel.
+ * @example
+ * const executor = (value, index, array) => {
+ *   // Do something promising here...
+ * };
+ * @param {*} value - The current value being processed in the array.
+ * @param {number} index - The index of the current value being processed in the array.
+ * @param {Array} array - The array that is being processed in parallel.
+ */
+
+/**
+ * @description Parallel outcome object.
+ * @property {Error} reason - The exception object.
+ * @property {string} status - The outcome status.
+ * @property {*} value - The outcome value.
+ * @typedef {object} module:timeable-promise.parallel~settled
+ */
+
+/**
  * @callback module:timeable-promise.poll~executor
  * @description Executor function that is executed immediately by the Promise implementation.
  * @example
@@ -27,6 +47,33 @@
  *   }
  * };
  * @param {Function} stopped - True if polling is stopped, otherwise false.
+ */
+
+/**
+ * @description Timer object containing the polling stop function.
+ * @property {Function} stop - The polling stop function.
+ * @typedef {object} module:timeable-promise.poll~timer
+ */
+
+/**
+ * @callback module:timeable-promise.sequential~executor
+ * @description Executor function that will be executed in sequential.
+ * @example
+ * const executor = (value, index, array, accumulator) => {
+ *   // Do something promising here...
+ * };
+ * @param {*} value - The current value being processed in the array.
+ * @param {number} index - The index of the current value being processed in the array.
+ * @param {Array} array - The array that is being processed in sequential.
+ * @param {Array} accumulator - The outcome array from previous call to this executor.
+ */
+
+/**
+ * @description Sequential outcome object.
+ * @property {Error} reason - The exception object.
+ * @property {string} status - The outcome status.
+ * @property {*} value - The outcome value.
+ * @typedef {object} module:timeable-promise.sequential~settled
  */
 
 /**
@@ -65,10 +112,20 @@
  */
 
 /**
- * @description Timer object containing the polling stop function.
- * @property {Function} stop - The polling stop function.
- * @typedef {object} module:timeable-promise.poll~timer
+ * @description Provide parallel execution support.
+ * @example
+ * const { parallel } = require('timeable-promise');
+ * const parallelSettled = await parallel([...], (value, index, array) => {
+ *   // Do something promising here...
+ *   return value;
+ * });
+ * console.log('parallel settled: ', parallelSettled);
+ * @function module:timeable-promise.parallel
+ * @param {Array} array - The array that is being processed in parallel.
+ * @param {module:timeable-promise.parallel~executor} executor - Executor function.
+ * @returns {Array<module:timeable-promise.parallel~settled>} The parallel outcome object.
  */
+const parallel = (array, executor) => Promise.allSettled(array.map(executor));
 
 /**
  * @description Provide polling support without congestion when executor takes longer than interval.
@@ -111,6 +168,40 @@ const poll = (executor, interval = 1000, immediately = false) => {
     },
   };
 };
+
+// @todo fix me
+
+/**
+ * @description Provide sequential execution support.
+ * @example
+ * const { sequential } = require('timeable-promise');
+ * const sequentialSettled = await sequential([...], (value, index, array) => {
+ *   // Do something promising here...
+ *   return value;
+ * });
+ * console.log('sequential settled: ', sequentialSettled);
+ * @function module:timeable-promise.sequential
+ * @param {Array} array - The array that is being processed in sequential.
+ * @param {module:timeable-promise.sequential~executor} executor - Executor function.
+ * @returns {Array<module:timeable-promise.sequential~settled>} The sequential outcome object.
+ */
+const sequential = (array, executor) => array.reduce(async (previous, value, index) => {
+  const accumulator = await previous;
+  let result;
+  try {
+    result = {
+      status: 'fulfilled',
+      value: await executor(value, index, array, accumulator),
+    };
+  } catch (ex) {
+    result = {
+      reason: ex,
+      status: 'rejected',
+    };
+  }
+  accumulator.push(result);
+  return accumulator;
+}, Promise.resolve([]));
 
 /**
  * @description Provide sleep support.
@@ -229,11 +320,20 @@ const waitFor = (predicate, timeout, interval = 1000) => {
  * @description A Promise object of an asynchronous operation with timeout support.
  * @example
  * const {
+ *   parallel,
  *   poll,
+ *   sequential,
  *   sleep,
  *   untilSettledOrTimedOut,
  *   waitFor,
  * } = require('timeable-promise');
+ *
+ * // ---------- parallel ----------
+ * const parallelSettled = await parallel([...], (value, index, array) => {
+ *   // Do something promising here...
+ *   return value;
+ * });
+ * console.log('parallel settled: ', parallelSettled);
  *
  * // ---------- poll ----------
  * const timer = poll((stopped) => {
@@ -246,6 +346,13 @@ const waitFor = (predicate, timeout, interval = 1000) => {
  *   // Simulate the end of polling.
  *   timer.stop();
  * }, 1000);
+ *
+ * // ---------- sequential ----------
+ * const sequentialSettled = await sequential([...], (value, index, array) => {
+ *   // Do something promising here...
+ *   return value;
+ * });
+ * console.log('sequential settled: ', sequentialSettled);
  *
  * // ---------- sleep ----------
  * console.time('sleep');
@@ -283,7 +390,9 @@ const waitFor = (predicate, timeout, interval = 1000) => {
  * @see {@link https://mzl.la/2MQJhPC|Promise}
  */
 const TimeablePromise = {
+  parallel,
   poll,
+  sequential,
   sleep,
   untilSettledOrTimedOut,
   waitFor,
