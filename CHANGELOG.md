@@ -1,3 +1,10 @@
+### 1.5.0 (2023.05.01)
+
+* Add `parallel` and `sequential` methods
+* Adjust the tests
+* Adjust the examples
+* Update documentation
+
 ### 1.4.0 (2023.04.25)
 
 * Swap `poll` params
