@@ -18,17 +18,25 @@
 
 const run = require('./runner.js');
 const {
+  parallel,
   poll,
+  sequential,
   sleep,
   untilSettledOrTimedOut,
   waitFor,
 } = require('../index.js');
 
 (async () => {
+  await run('parallel', async () => {
+    await parallel(['a', 'b', 'c'], (value) => value);
+  });
   await run('poll', async () => {
     const timer = poll(() => {}, 1);
     setTimeout(() => timer.stop(), 3);
     await sleep(5);
+  });
+  await run('sequential', async () => {
+    await sequential(['a', 'b', 'c'], (value) => value);
   });
   await run('sleep', () => sleep(1));
   await run('untilSettledOrTimedOut', () => untilSettledOrTimedOut(

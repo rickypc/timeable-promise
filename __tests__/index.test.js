@@ -17,7 +17,9 @@
  */
 
 const {
+  parallel,
   poll,
+  sequential,
   sleep,
   untilSettledOrTimedOut,
   waitFor,
@@ -26,12 +28,31 @@ const {
 const hrtimeToMs = (value) => (value[0] * 1000000000 + value[1]) / 1000000;
 
 describe('TimeablePromise module test', () => {
+  describe('parallel', () => {
+    it('should fulfilled', async () => {
+      expect(await parallel(['a', 'b', 'c'], (value) => value)).toEqual([
+        { status: 'fulfilled', value: 'a' },
+        { status: 'fulfilled', value: 'b' },
+        { status: 'fulfilled', value: 'c' },
+      ]);
+    });
+
+    it('should rejected', async () => {
+      expect(await parallel(['a', 'b', 'c'], () => Promise.reject(Error('error'))))
+        .toEqual([
+          { reason: expect.any(Error), status: 'rejected' },
+          { reason: expect.any(Error), status: 'rejected' },
+          { reason: expect.any(Error), status: 'rejected' },
+        ]);
+    });
+  });
+
   describe('poll', () => {
     it('should run at interval', async () => {
       const log = jest.fn();
       const timer = poll(log);
-      setTimeout(() => timer.stop(), 2000);
-      await sleep(2100);
+      setTimeout(() => timer.stop(), 1100);
+      await sleep(1200);
 
       expect(log).toHaveBeenCalledTimes(1);
     });
@@ -50,6 +71,25 @@ describe('TimeablePromise module test', () => {
       await sleep(1100);
 
       expect(log).toHaveBeenCalledTimes(5);
+    });
+  });
+
+  describe('sequential', () => {
+    it('should fulfilled', async () => {
+      expect(await sequential(['a', 'b', 'c'], (value) => value)).toEqual([
+        { status: 'fulfilled', value: 'a' },
+        { status: 'fulfilled', value: 'b' },
+        { status: 'fulfilled', value: 'c' },
+      ]);
+    });
+
+    it('should rejected', async () => {
+      expect(await sequential(['a', 'b', 'c'], () => Promise.reject(Error('error'))))
+        .toEqual([
+          { reason: expect.any(Error), status: 'rejected' },
+          { reason: expect.any(Error), status: 'rejected' },
+          { reason: expect.any(Error), status: 'rejected' },
+        ]);
     });
   });
 
