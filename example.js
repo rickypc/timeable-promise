@@ -1,5 +1,7 @@
 const {
+  parallel,
   poll,
+  sequential,
   sleep,
   untilSettledOrTimedOut,
   waitFor,
@@ -7,20 +9,38 @@ const {
 } = require('timeable-promise');
 
 (async () => {
+  const logs = ['1. Parallel Example'];
+  const parallelSettled = await parallel(['a', 'b', 'c'], async (value, index) => {
+    // Simulate long process running.
+    await sleep(100);
+    logs.push(`   => parallel: ${index}-${value}`);
+    return value;
+  });
+  logs.push('   => parallel settled: ', parallelSettled);
+
   let iter = 1;
-  const logs = ['1. Poll Example'];
+  logs.push('2. Poll Example');
   const timer = poll(() => {
     logs.push(`   => poll: ${iter += 1}`);
   }, 100);
   setTimeout(() => timer.stop(), 300);
 
-  logs.push('2. Sleep Example');
+  logs.push('3. Sequential Example');
+  const sequentialSettled = await sequential(['a', 'b', 'c'], async (value, index) => {
+    // Simulate long process running.
+    await sleep(100);
+    logs.push(`   => sequential: ${index}-${value}`);
+    return value;
+  });
+  logs.push('   => sequential settled: ', sequentialSettled);
+
+  logs.push('4. Sleep Example');
   const s0 = performance.now();
   await sleep(1000);
   const s1 = performance.now();
   logs.push(`   => slept: ${s1 - s0}ms`);
 
-  logs.push('3. Settle Example');
+  logs.push('5. Settle Example');
   let response = await untilSettledOrTimedOut(async (resolve, reject, pending) => {
     // Simulate processing time shorter than timeout.
     const processed = await new Promise((done) => {
@@ -40,7 +60,7 @@ const {
     });
   logs.push(`   => response: ${response}`);
 
-  logs.push('4. Timeout Example');
+  logs.push('6. Timeout Example');
   response = await untilSettledOrTimedOut(async (resolve, reject, pending) => {
     // Simulate processing time longer than timeout.
     const processed = await new Promise((done) => {
@@ -60,7 +80,7 @@ const {
     });
   logs.push(`   => response: ${response}`);
 
-  logs.push('5. WaitFor Example');
+  logs.push('7. WaitFor Example');
   // Simulate long process running.
   let inflight = true;
   const predicate = () => !inflight;
