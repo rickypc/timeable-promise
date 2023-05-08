@@ -31,6 +31,7 @@ module.exports = {
   ignorePatterns: [
     '/coverage/',
     '!.github',
+    '/supports/',
   ],
   overrides: [
     {
@@ -58,6 +59,7 @@ module.exports = {
         devDependencies: true,
       },
     ],
+    'security/detect-object-injection': 0,
     'space-before-function-paren': ['error', 'always'],
   },
 };
