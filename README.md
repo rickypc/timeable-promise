@@ -10,7 +10,7 @@
 Timeable Promise
 ================
 
-A [Promise](https://mzl.la/2MQJhPC) object of an asynchronous operation with timeout support.
+Various asynchronous operations with timeout support.
 
 Installation
 -
@@ -23,19 +23,57 @@ $ npm install --save timeable-promise
 
 API Reference
 -
-A Promise object of an asynchronous operation with timeout support.
+Various asynchronous operations with timeout support.
 
 **See**: [Promise](https://mzl.la/2MQJhPC)  
 **Example**  
 ```js
 const {
+  chunk,
+  concurrent,
+  concurrents,
+  consecutive,
+  consecutives,
   parallel,
   poll,
   sequential,
   sleep,
+  toNumber,
   untilSettledOrTimedOut,
   waitFor,
 } = require('timeable-promise');
+
+// ---------- chunk ----------
+const chunked = chunk([1, 2, 3, 4], 2);
+console.log('chunked: ', chunked);
+
+// ---------- concurrent ----------
+const concurrentSettled = await concurrent([...], (value, index, array) => {
+  // Do something promising here...
+  return value;
+});
+console.log('concurrent settled: ', concurrentSettled);
+
+// ---------- concurrents ----------
+const concurrentsSettled = await concurrents([...], (value, index, array) => {
+  // Do something promising here...
+  return value;
+});
+console.log('concurrents settled: ', concurrentsSettled);
+
+// ---------- consecutive ----------
+const consecutiveSettled = await consecutive([...], (value, index, array) => {
+  // Do something promising here...
+  return value;
+});
+console.log('consecutive settled: ', consecutiveSettled);
+
+// ---------- consecutives ----------
+const consecutivesSettled = await consecutives([...], (value, index, array) => {
+  // Do something promising here...
+  return value;
+});
+console.log('consecutives settled: ', consecutivesSettled);
 
 // ---------- parallel ----------
 const parallelSettled = await parallel([...], (value, index, array) => {
@@ -69,6 +107,10 @@ console.time('sleep');
 await sleep(1000);
 console.timeEnd('sleep');
 
+// ---------- toNumber ----------
+const converted = toNumber('1');
+console.log('converted: ', 1);
+
 // ---------- untilSettledOrTimedOut ----------
 const response = await untilSettledOrTimedOut((resolve, reject, pending) => {
   // Promise executor with extra `pending` param to check if promise is not
@@ -98,33 +140,229 @@ console.timeEnd('waitFor');
 ```
 
 * [timeable-promise](#module_timeable-promise)
-    * [.parallel(array, executor)](#module_timeable-promise.parallel) ⇒ [<code>Array.&lt;settled&gt;</code>](#module_timeable-promise.parallel..settled)
-        * [~executor](#module_timeable-promise.parallel..executor) : <code>function</code>
-        * [~settled](#module_timeable-promise.parallel..settled) : <code>object</code>
+    * [.chunk(array, [size])](#module_timeable-promise.chunk) ⇒ <code>Array</code>
+    * [.concurrent(array, executor, [concurrency])](#module_timeable-promise.concurrent) ⇒ <code>Promise.&lt;Array.&lt;module:timeable-promise.concurrent~settled&gt;&gt;</code>
+        * [~executor](#module_timeable-promise.concurrent..executor) : <code>function</code>
+        * [~settled](#module_timeable-promise.concurrent..settled) : <code>object</code>
+    * [.concurrents(array, executor, [concurrency])](#module_timeable-promise.concurrents) ⇒ <code>Promise.&lt;Array.&lt;module:timeable-promise.concurrent~settled&gt;&gt;</code>
+    * [.consecutive(array, executor, [concurrency])](#module_timeable-promise.consecutive) ⇒ <code>Promise.&lt;Array.&lt;module:timeable-promise.consecutive~settled&gt;&gt;</code>
+        * [~executor](#module_timeable-promise.consecutive..executor) : <code>function</code>
+        * [~settled](#module_timeable-promise.consecutive..settled) : <code>object</code>
+    * [.consecutives(array, executor, [concurrency])](#module_timeable-promise.consecutives) ⇒ <code>Promise.&lt;Array.&lt;module:timeable-promise.consecutive~settled&gt;&gt;</code>
+    * [.parallel(array, executor, [concurrency])](#module_timeable-promise.parallel) ⇒ <code>Promise.&lt;Array.&lt;module:timeable-promise.concurrent~settled&gt;&gt;</code>
     * [.poll(executor, [interval], [immediately])](#module_timeable-promise.poll) ⇒ [<code>timer</code>](#module_timeable-promise.poll..timer)
         * [~executor](#module_timeable-promise.poll..executor) : <code>function</code>
         * [~timer](#module_timeable-promise.poll..timer) : <code>object</code>
-    * [.sequential(array, executor)](#module_timeable-promise.sequential) ⇒ [<code>Array.&lt;settled&gt;</code>](#module_timeable-promise.sequential..settled)
-        * [~executor](#module_timeable-promise.sequential..executor) : <code>function</code>
-        * [~settled](#module_timeable-promise.sequential..settled) : <code>object</code>
+    * [.sequential(array, executor, [concurrency])](#module_timeable-promise.sequential) ⇒ <code>Promise.&lt;Array.&lt;module:timeable-promise.consecutive~settled&gt;&gt;</code>
     * [.sleep(timeout)](#module_timeable-promise.sleep) ⇒ <code>Promise.&lt;void&gt;</code>
+    * [.toNumber(value, [defaultValue])](#module_timeable-promise.toNumber) ⇒ <code>number</code>
     * [.untilSettledOrTimedOut(executor, timeoutExecutor, timeout)](#module_timeable-promise.untilSettledOrTimedOut) ⇒ <code>Promise.&lt;\*&gt;</code>
         * [~executor](#module_timeable-promise.untilSettledOrTimedOut..executor) : <code>function</code>
         * [~timeoutExecutor](#module_timeable-promise.untilSettledOrTimedOut..timeoutExecutor) : <code>function</code>
     * [.waitFor(predicate, timeout, [interval])](#module_timeable-promise.waitFor) ⇒ <code>Promise.&lt;void&gt;</code>
 
-<a name="module_timeable-promise.parallel"></a>
+<a name="module_timeable-promise.chunk"></a>
 
-### timeable-promise.parallel(array, executor) ⇒ [<code>Array.&lt;settled&gt;</code>](#module_timeable-promise.parallel..settled)
-Provide parallel execution support.
+### timeable-promise.chunk(array, [size]) ⇒ <code>Array</code>
+Splits the `array` into groups of `size`.
+             The final chunk would be the remaining elements.
 
 **Kind**: static method of [<code>timeable-promise</code>](#module_timeable-promise)  
-**Returns**: [<code>Array.&lt;settled&gt;</code>](#module_timeable-promise.parallel..settled) - The parallel outcome object.  
+**Returns**: <code>Array</code> - The chunked array.  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| array | <code>Array</code> |  | The original array. |
+| [size] | <code>number</code> | <code>0</code> | The group size. |
+
+**Example**  
+```js
+const { chunk } = require('timeable-promise');
+const chunked = chunk([1, 2, 3, 4], 2);
+console.log('chunked: ', chunked);
+```
+<a name="module_timeable-promise.concurrent"></a>
+
+### timeable-promise.concurrent(array, executor, [concurrency]) ⇒ <code>Promise.&lt;Array.&lt;module:timeable-promise.concurrent~settled&gt;&gt;</code>
+Run `executor` on all `array` items concurrently.
+
+**Kind**: static method of [<code>timeable-promise</code>](#module_timeable-promise)  
+**Returns**: <code>Promise.&lt;Array.&lt;module:timeable-promise.concurrent~settled&gt;&gt;</code> - The concurrent outcome objects.  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| array | <code>Array</code> |  | The array items to be processed by executor. |
+| executor | [<code>executor</code>](#module_timeable-promise.concurrent..executor) |  | Executor function. |
+| [concurrency] | <code>number</code> | <code>0</code> | The max concurrent execution. |
+
+**Example**  
+```js
+const { concurrent } = require('timeable-promise');
+const concurrentSettled = await concurrent([...], (value, index, array) => {
+  // Do something promising here...
+  return value;
+});
+console.log('concurrent settled: ', concurrentSettled);
+```
+
+* [.concurrent(array, executor, [concurrency])](#module_timeable-promise.concurrent) ⇒ <code>Promise.&lt;Array.&lt;module:timeable-promise.concurrent~settled&gt;&gt;</code>
+    * [~executor](#module_timeable-promise.concurrent..executor) : <code>function</code>
+    * [~settled](#module_timeable-promise.concurrent..settled) : <code>object</code>
+
+<a name="module_timeable-promise.concurrent..executor"></a>
+
+#### concurrent~executor : <code>function</code>
+Executor function that will be executed concurrently.
+
+**Kind**: inner typedef of [<code>concurrent</code>](#module_timeable-promise.concurrent)  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| array | <code>Array</code> | The array that is being processed in parallel. |
-| executor | [<code>executor</code>](#module_timeable-promise.parallel..executor) | Executor function. |
+| value | <code>\*</code> | The current value being processed in the array. |
+| index | <code>number</code> | The index of the current value being processed in the array. |
+| array | <code>Array</code> | The array that is being processed concurrently. |
+
+**Example**  
+```js
+const executor = (value, index, array) => {
+  // Do something promising here...
+};
+```
+<a name="module_timeable-promise.concurrent..settled"></a>
+
+#### concurrent~settled : <code>object</code>
+Concurrent outcome object.
+
+**Kind**: inner typedef of [<code>concurrent</code>](#module_timeable-promise.concurrent)  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| reason | <code>Error</code> | The exception object. |
+| status | <code>string</code> | The outcome status. |
+| value | <code>\*</code> | The outcome value. |
+
+<a name="module_timeable-promise.concurrents"></a>
+
+### timeable-promise.concurrents(array, executor, [concurrency]) ⇒ <code>Promise.&lt;Array.&lt;module:timeable-promise.concurrent~settled&gt;&gt;</code>
+Run `executor` on all `array` groups concurrently.
+
+**Kind**: static method of [<code>timeable-promise</code>](#module_timeable-promise)  
+**Returns**: <code>Promise.&lt;Array.&lt;module:timeable-promise.concurrent~settled&gt;&gt;</code> - The concurrent outcome objects.  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| array | <code>Array</code> |  | The array groups to be processed by executor. |
+| executor | [<code>executor</code>](#module_timeable-promise.concurrent..executor) |  | Executor function. |
+| [concurrency] | <code>number</code> | <code>0</code> | The max concurrent execution. |
+
+**Example**  
+```js
+const { concurrents } = require('timeable-promise');
+const concurrentsSettled = await concurrents([...], (value, index, array) => {
+  // Do something promising here...
+  return value;
+});
+console.log('concurrents settled: ', concurrentsSettled);
+```
+<a name="module_timeable-promise.consecutive"></a>
+
+### timeable-promise.consecutive(array, executor, [concurrency]) ⇒ <code>Promise.&lt;Array.&lt;module:timeable-promise.consecutive~settled&gt;&gt;</code>
+Run `executor` on all `array` items consecutively.
+
+**Kind**: static method of [<code>timeable-promise</code>](#module_timeable-promise)  
+**Returns**: <code>Promise.&lt;Array.&lt;module:timeable-promise.consecutive~settled&gt;&gt;</code> - The consecutive outcome objects.  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| array | <code>Array</code> |  | The array items to be processed by executor. |
+| executor | [<code>executor</code>](#module_timeable-promise.consecutive..executor) |  | Executor function. |
+| [concurrency] | <code>number</code> | <code>0</code> | The max consecutive execution. |
+
+**Example**  
+```js
+const { consecutive } = require('timeable-promise');
+const consecutiveSettled = await consecutive([...], (value, index, array) => {
+  // Do something promising here...
+  return value;
+});
+console.log('consecutive settled: ', consecutiveSettled);
+```
+
+* [.consecutive(array, executor, [concurrency])](#module_timeable-promise.consecutive) ⇒ <code>Promise.&lt;Array.&lt;module:timeable-promise.consecutive~settled&gt;&gt;</code>
+    * [~executor](#module_timeable-promise.consecutive..executor) : <code>function</code>
+    * [~settled](#module_timeable-promise.consecutive..settled) : <code>object</code>
+
+<a name="module_timeable-promise.consecutive..executor"></a>
+
+#### consecutive~executor : <code>function</code>
+Executor function that will be executed consecutively.
+
+**Kind**: inner typedef of [<code>consecutive</code>](#module_timeable-promise.consecutive)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| value | <code>\*</code> | The current value being processed in the array. |
+| index | <code>number</code> | The index of the current value being processed in the array. |
+| array | <code>Array</code> | The array that is being processed consecutively. |
+| accumulator | <code>Array</code> | The outcome array from previous call to this executor. |
+
+**Example**  
+```js
+const executor = (value, index, array, accumulator) => {
+  // Do something promising here...
+};
+```
+<a name="module_timeable-promise.consecutive..settled"></a>
+
+#### consecutive~settled : <code>object</code>
+Consecutive outcome object.
+
+**Kind**: inner typedef of [<code>consecutive</code>](#module_timeable-promise.consecutive)  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| reason | <code>Error</code> | The exception object. |
+| status | <code>string</code> | The outcome status. |
+| value | <code>\*</code> | The outcome value. |
+
+<a name="module_timeable-promise.consecutives"></a>
+
+### timeable-promise.consecutives(array, executor, [concurrency]) ⇒ <code>Promise.&lt;Array.&lt;module:timeable-promise.consecutive~settled&gt;&gt;</code>
+Run `executor` on all `array` groups consecutively.
+
+**Kind**: static method of [<code>timeable-promise</code>](#module_timeable-promise)  
+**Returns**: <code>Promise.&lt;Array.&lt;module:timeable-promise.consecutive~settled&gt;&gt;</code> - The consecutive outcome objects.  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| array | <code>Array</code> |  | The array groups to be processed by executor. |
+| executor | [<code>executor</code>](#module_timeable-promise.consecutive..executor) |  | Executor function. |
+| [concurrency] | <code>number</code> | <code>0</code> | The max consecutive execution. |
+
+**Example**  
+```js
+const { consecutives } = require('timeable-promise');
+const consecutivesSettled = await consecutives([...], (value, index, array) => {
+  // Do something promising here...
+  return value;
+});
+console.log('consecutives settled: ', consecutivesSettled);
+```
+<a name="module_timeable-promise.parallel"></a>
+
+### timeable-promise.parallel(array, executor, [concurrency]) ⇒ <code>Promise.&lt;Array.&lt;module:timeable-promise.concurrent~settled&gt;&gt;</code>
+Provide parallel execution with `concurrency` support.
+
+**Kind**: static method of [<code>timeable-promise</code>](#module_timeable-promise)  
+**Returns**: <code>Promise.&lt;Array.&lt;module:timeable-promise.concurrent~settled&gt;&gt;</code> - The parallel outcome objects.  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| array | <code>Array</code> |  | The array that is being processed in parallel. |
+| executor | [<code>executor</code>](#module_timeable-promise.concurrent..executor) |  | Executor function. |
+| [concurrency] | <code>number</code> | <code>0</code> | The max concurrent execution. |
 
 **Example**  
 ```js
@@ -135,48 +373,11 @@ const parallelSettled = await parallel([...], (value, index, array) => {
 });
 console.log('parallel settled: ', parallelSettled);
 ```
-
-* [.parallel(array, executor)](#module_timeable-promise.parallel) ⇒ [<code>Array.&lt;settled&gt;</code>](#module_timeable-promise.parallel..settled)
-    * [~executor](#module_timeable-promise.parallel..executor) : <code>function</code>
-    * [~settled](#module_timeable-promise.parallel..settled) : <code>object</code>
-
-<a name="module_timeable-promise.parallel..executor"></a>
-
-#### parallel~executor : <code>function</code>
-Executor function that will be executed in parallel.
-
-**Kind**: inner typedef of [<code>parallel</code>](#module_timeable-promise.parallel)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| value | <code>\*</code> | The current value being processed in the array. |
-| index | <code>number</code> | The index of the current value being processed in the array. |
-| array | <code>Array</code> | The array that is being processed in parallel. |
-
-**Example**  
-```js
-const executor = (value, index, array) => {
-  // Do something promising here...
-};
-```
-<a name="module_timeable-promise.parallel..settled"></a>
-
-#### parallel~settled : <code>object</code>
-Parallel outcome object.
-
-**Kind**: inner typedef of [<code>parallel</code>](#module_timeable-promise.parallel)  
-**Properties**
-
-| Name | Type | Description |
-| --- | --- | --- |
-| reason | <code>Error</code> | The exception object. |
-| status | <code>string</code> | The outcome status. |
-| value | <code>\*</code> | The outcome value. |
-
 <a name="module_timeable-promise.poll"></a>
 
 ### timeable-promise.poll(executor, [interval], [immediately]) ⇒ [<code>timer</code>](#module_timeable-promise.poll..timer)
-Provide polling support without congestion when executor takes longer than interval.
+Provide polling support without congestion when `executor`
+             takes longer than `interval`.
 
 **Kind**: static method of [<code>timeable-promise</code>](#module_timeable-promise)  
 **Returns**: [<code>timer</code>](#module_timeable-promise.poll..timer) - The return object with stop function.  
@@ -240,16 +441,17 @@ Timer object containing the polling stop function.
 
 <a name="module_timeable-promise.sequential"></a>
 
-### timeable-promise.sequential(array, executor) ⇒ [<code>Array.&lt;settled&gt;</code>](#module_timeable-promise.sequential..settled)
-Provide sequential execution support.
+### timeable-promise.sequential(array, executor, [concurrency]) ⇒ <code>Promise.&lt;Array.&lt;module:timeable-promise.consecutive~settled&gt;&gt;</code>
+Provide sequential execution with `concurrency` support.
 
 **Kind**: static method of [<code>timeable-promise</code>](#module_timeable-promise)  
-**Returns**: [<code>Array.&lt;settled&gt;</code>](#module_timeable-promise.sequential..settled) - The sequential outcome object.  
+**Returns**: <code>Promise.&lt;Array.&lt;module:timeable-promise.consecutive~settled&gt;&gt;</code> - The sequential outcome objects.  
 
-| Param | Type | Description |
-| --- | --- | --- |
-| array | <code>Array</code> | The array that is being processed in sequential. |
-| executor | [<code>executor</code>](#module_timeable-promise.sequential..executor) | Executor function. |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| array | <code>Array</code> |  | The array that is being processed in sequential. |
+| executor | [<code>executor</code>](#module_timeable-promise.consecutive..executor) |  | Executor function. |
+| [concurrency] | <code>number</code> | <code>0</code> | The max consecutive execution. |
 
 **Example**  
 ```js
@@ -260,45 +462,6 @@ const sequentialSettled = await sequential([...], (value, index, array) => {
 });
 console.log('sequential settled: ', sequentialSettled);
 ```
-
-* [.sequential(array, executor)](#module_timeable-promise.sequential) ⇒ [<code>Array.&lt;settled&gt;</code>](#module_timeable-promise.sequential..settled)
-    * [~executor](#module_timeable-promise.sequential..executor) : <code>function</code>
-    * [~settled](#module_timeable-promise.sequential..settled) : <code>object</code>
-
-<a name="module_timeable-promise.sequential..executor"></a>
-
-#### sequential~executor : <code>function</code>
-Executor function that will be executed in sequential.
-
-**Kind**: inner typedef of [<code>sequential</code>](#module_timeable-promise.sequential)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| value | <code>\*</code> | The current value being processed in the array. |
-| index | <code>number</code> | The index of the current value being processed in the array. |
-| array | <code>Array</code> | The array that is being processed in sequential. |
-| accumulator | <code>Array</code> | The outcome array from previous call to this executor. |
-
-**Example**  
-```js
-const executor = (value, index, array, accumulator) => {
-  // Do something promising here...
-};
-```
-<a name="module_timeable-promise.sequential..settled"></a>
-
-#### sequential~settled : <code>object</code>
-Sequential outcome object.
-
-**Kind**: inner typedef of [<code>sequential</code>](#module_timeable-promise.sequential)  
-**Properties**
-
-| Name | Type | Description |
-| --- | --- | --- |
-| reason | <code>Error</code> | The exception object. |
-| status | <code>string</code> | The outcome status. |
-| value | <code>\*</code> | The outcome value. |
-
 <a name="module_timeable-promise.sleep"></a>
 
 ### timeable-promise.sleep(timeout) ⇒ <code>Promise.&lt;void&gt;</code>
@@ -318,10 +481,29 @@ console.time('sleep');
 await sleep(1000);
 console.timeEnd('sleep');
 ```
+<a name="module_timeable-promise.toNumber"></a>
+
+### timeable-promise.toNumber(value, [defaultValue]) ⇒ <code>number</code>
+Converts `value` to number.
+
+**Kind**: static method of [<code>timeable-promise</code>](#module_timeable-promise)  
+**Returns**: <code>number</code> - The converted number.  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| value | <code>\*</code> |  | The value to be converted to number. |
+| [defaultValue] | <code>number</code> | <code>0</code> | The default number. |
+
+**Example**  
+```js
+const { toNumber } = require('timeable-promise');
+const converted = toNumber('1');
+console.log('converted: ', 1);
+```
 <a name="module_timeable-promise.untilSettledOrTimedOut"></a>
 
 ### timeable-promise.untilSettledOrTimedOut(executor, timeoutExecutor, timeout) ⇒ <code>Promise.&lt;\*&gt;</code>
-Provide timeout support on Promise object.
+Provide `timeout` support on Promise object.
 
 **Kind**: static method of [<code>timeable-promise</code>](#module_timeable-promise)  
 **Returns**: <code>Promise.&lt;\*&gt;</code> - Resolve or reject response value.  
@@ -415,7 +597,7 @@ const timeoutExecutor = (resolve, reject) => {
 <a name="module_timeable-promise.waitFor"></a>
 
 ### timeable-promise.waitFor(predicate, timeout, [interval]) ⇒ <code>Promise.&lt;void&gt;</code>
-Provide waiting support on given predicate.
+Provide waiting support on given `predicate`.
 
 **Kind**: static method of [<code>timeable-promise</code>](#module_timeable-promise)  
 
