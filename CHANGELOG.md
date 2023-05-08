@@ -1,3 +1,12 @@
+### 1.6.0 (2023.05.07)
+
+* Add `concurrent`, `concurrents`, `consecutive`, and `consecutives` methods
+* Add `chunk`, and `toNumber` utility methods
+* Add concurrency supports for `parallel` and `sequential` methods
+* Adjust the tests
+* Adjust the examples
+* Update dependencies and documentation
+
 ### 1.5.0 (2023.05.01)
 
 * Add `parallel` and `sequential` methods
