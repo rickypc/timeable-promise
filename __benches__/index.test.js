@@ -18,15 +18,34 @@
 
 const run = require('./runner.js');
 const {
+  chunk,
+  concurrent,
+  concurrents,
+  consecutive,
+  consecutives,
   parallel,
   poll,
   sequential,
   sleep,
+  toNumber,
   untilSettledOrTimedOut,
   waitFor,
 } = require('../index.js');
 
 (async () => {
+  await run('chunk', () => chunk(['a', 'b', 'c'], 2));
+  await run('concurrent', async () => {
+    await concurrent(['a', 'b', 'c'], (value) => value);
+  });
+  await run('concurrents', async () => {
+    await concurrents([['a', 'b'], ['c']], (value) => value);
+  });
+  await run('consecutive', async () => {
+    await consecutive(['a', 'b', 'c'], (value) => value);
+  });
+  await run('consecutives', async () => {
+    await consecutives([['a', 'b'], ['c']], (value) => value);
+  });
   await run('parallel', async () => {
     await parallel(['a', 'b', 'c'], (value) => value);
   });
@@ -39,6 +58,7 @@ const {
     await sequential(['a', 'b', 'c'], (value) => value);
   });
   await run('sleep', () => sleep(1));
+  await run('toNumber', () => toNumber('1'));
   await run('untilSettledOrTimedOut', () => untilSettledOrTimedOut(
     (resolve) => resolve(),
     (resolve) => resolve(),

@@ -17,10 +17,16 @@
  */
 
 const {
+  chunk,
+  concurrent,
+  concurrents,
+  consecutive,
+  consecutives,
   parallel,
   poll,
   sequential,
   sleep,
+  toNumber,
   untilSettledOrTimedOut,
   waitFor,
 } = require('../index.js');
@@ -28,8 +34,168 @@ const {
 const hrtimeToMs = (value) => (value[0] * 1000000000 + value[1]) / 1000000;
 
 describe('TimeablePromise module test', () => {
+  describe('chunk', () => {
+    it('should return chunked array', () => {
+      expect(chunk([1, 2, 3], 2)).toEqual([[1, 2], [3]]);
+    });
+
+    it('should return original array', () => {
+      expect(chunk([1, 2, 3])).toEqual([1, 2, 3]);
+      expect(chunk()).toBeUndefined();
+    });
+
+    it('should return empty array', () => {
+      expect(chunk('', 2)).toEqual([]);
+    });
+  });
+
+  describe('concurrent', () => {
+    it('should fulfilled with concurrency', async () => {
+      expect(await concurrent(['a', 'b', 'c'], (value) => value, 2)).toEqual([
+        { status: 'fulfilled', value: ['a', 'b'] },
+        { status: 'fulfilled', value: ['c'] },
+      ]);
+    });
+
+    it('should fulfilled without concurrency', async () => {
+      expect(await concurrent(['a', 'b', 'c'], (value) => value)).toEqual([
+        { status: 'fulfilled', value: 'a' },
+        { status: 'fulfilled', value: 'b' },
+        { status: 'fulfilled', value: 'c' },
+      ]);
+    });
+
+    it('should rejected with concurrency', async () => {
+      expect(await concurrent(['a', 'b', 'c'], () => Promise.reject(Error('error')), 2))
+        .toEqual([
+          { reason: expect.any(Error), status: 'rejected' },
+          { reason: expect.any(Error), status: 'rejected' },
+        ]);
+    });
+
+    it('should rejected without concurrency', async () => {
+      expect(await concurrent(['a', 'b', 'c'], () => Promise.reject(Error('error'))))
+        .toEqual([
+          { reason: expect.any(Error), status: 'rejected' },
+          { reason: expect.any(Error), status: 'rejected' },
+          { reason: expect.any(Error), status: 'rejected' },
+        ]);
+    });
+  });
+
+  describe('concurrents', () => {
+    it('should fulfilled with concurrency', async () => {
+      expect(await concurrents([['a', 'b'], ['c']], (value) => value)).toEqual([
+        { status: 'fulfilled', value: 'a' },
+        { status: 'fulfilled', value: 'b' },
+        { status: 'fulfilled', value: 'c' },
+      ]);
+    }, 2);
+
+    it('should fulfilled without concurrency', async () => {
+      expect(await concurrents([['a', 'b'], ['c']], (value) => value)).toEqual([
+        { status: 'fulfilled', value: 'a' },
+        { status: 'fulfilled', value: 'b' },
+        { status: 'fulfilled', value: 'c' },
+      ]);
+    });
+
+    it('should rejected with concurrency', async () => {
+      expect(await concurrents([['a', 'b'], ['c']], () => Promise.reject(Error('error')), 2))
+        .toEqual([
+          { reason: expect.any(Error), status: 'rejected' },
+          { reason: expect.any(Error), status: 'rejected' },
+        ]);
+    });
+
+    it('should rejected without concurrency', async () => {
+      expect(await concurrents([['a', 'b'], ['c']], () => Promise.reject(Error('error'))))
+        .toEqual([
+          { reason: expect.any(Error), status: 'rejected' },
+          { reason: expect.any(Error), status: 'rejected' },
+          { reason: expect.any(Error), status: 'rejected' },
+        ]);
+    });
+  });
+
+  describe('consecutive', () => {
+    it('should fulfilled with concurrency', async () => {
+      expect(await consecutive(['a', 'b', 'c'], (value) => value, 2)).toEqual([
+        { status: 'fulfilled', value: ['a', 'b'] },
+        { status: 'fulfilled', value: ['c'] },
+      ]);
+    });
+
+    it('should fulfilled without concurrency', async () => {
+      expect(await consecutive(['a', 'b', 'c'], (value) => value)).toEqual([
+        { status: 'fulfilled', value: 'a' },
+        { status: 'fulfilled', value: 'b' },
+        { status: 'fulfilled', value: 'c' },
+      ]);
+    });
+
+    it('should rejected with concurrency', async () => {
+      expect(await consecutive(['a', 'b', 'c'], () => Promise.reject(Error('error')), 2))
+        .toEqual([
+          { reason: expect.any(Error), status: 'rejected' },
+          { reason: expect.any(Error), status: 'rejected' },
+        ]);
+    });
+
+    it('should rejected without concurrency', async () => {
+      expect(await consecutive(['a', 'b', 'c'], () => Promise.reject(Error('error'))))
+        .toEqual([
+          { reason: expect.any(Error), status: 'rejected' },
+          { reason: expect.any(Error), status: 'rejected' },
+          { reason: expect.any(Error), status: 'rejected' },
+        ]);
+    });
+  });
+
+  describe('consecutives', () => {
+    it('should fulfilled with concurrency', async () => {
+      expect(await consecutives([['a', 'b'], ['c']], (value) => value)).toEqual([
+        { status: 'fulfilled', value: 'a' },
+        { status: 'fulfilled', value: 'b' },
+        { status: 'fulfilled', value: 'c' },
+      ]);
+    }, 2);
+
+    it('should fulfilled without concurrency', async () => {
+      expect(await consecutives([['a', 'b'], ['c']], (value) => value)).toEqual([
+        { status: 'fulfilled', value: 'a' },
+        { status: 'fulfilled', value: 'b' },
+        { status: 'fulfilled', value: 'c' },
+      ]);
+    });
+
+    it('should rejected with concurrency', async () => {
+      expect(await consecutives([['a', 'b'], ['c']], () => Promise.reject(Error('error')), 2))
+        .toEqual([
+          { reason: expect.any(Error), status: 'rejected' },
+          { reason: expect.any(Error), status: 'rejected' },
+        ]);
+    });
+
+    it('should rejected without concurrency', async () => {
+      expect(await consecutives([['a', 'b'], ['c']], () => Promise.reject(Error('error'))))
+        .toEqual([
+          { reason: expect.any(Error), status: 'rejected' },
+          { reason: expect.any(Error), status: 'rejected' },
+          { reason: expect.any(Error), status: 'rejected' },
+        ]);
+    });
+  });
+
   describe('parallel', () => {
-    it('should fulfilled', async () => {
+    it('should fulfilled with concurrency', async () => {
+      expect(await parallel([['a', 'b'], ['c']], (value) => value, 2)).toEqual([
+        { status: 'fulfilled', value: ['a', 'b'] },
+        { status: 'fulfilled', value: ['c'] },
+      ]);
+    }, 2);
+
+    it('should fulfilled without concurrency', async () => {
       expect(await parallel(['a', 'b', 'c'], (value) => value)).toEqual([
         { status: 'fulfilled', value: 'a' },
         { status: 'fulfilled', value: 'b' },
@@ -37,7 +203,15 @@ describe('TimeablePromise module test', () => {
       ]);
     });
 
-    it('should rejected', async () => {
+    it('should rejected with concurrency', async () => {
+      expect(await parallel([['a', 'b'], ['c']], () => Promise.reject(Error('error')), 2))
+        .toEqual([
+          { reason: expect.any(Error), status: 'rejected' },
+          { reason: expect.any(Error), status: 'rejected' },
+        ]);
+    });
+
+    it('should rejected without concurrency', async () => {
       expect(await parallel(['a', 'b', 'c'], () => Promise.reject(Error('error'))))
         .toEqual([
           { reason: expect.any(Error), status: 'rejected' },
@@ -75,7 +249,14 @@ describe('TimeablePromise module test', () => {
   });
 
   describe('sequential', () => {
-    it('should fulfilled', async () => {
+    it('should fulfilled with concurrency', async () => {
+      expect(await sequential([['a', 'b'], ['c']], (value) => value, 2)).toEqual([
+        { status: 'fulfilled', value: ['a', 'b'] },
+        { status: 'fulfilled', value: ['c'] },
+      ]);
+    }, 2);
+
+    it('should fulfilled without concurrency', async () => {
       expect(await sequential(['a', 'b', 'c'], (value) => value)).toEqual([
         { status: 'fulfilled', value: 'a' },
         { status: 'fulfilled', value: 'b' },
@@ -83,7 +264,15 @@ describe('TimeablePromise module test', () => {
       ]);
     });
 
-    it('should rejected', async () => {
+    it('should rejected with concurrency', async () => {
+      expect(await sequential([['a', 'b'], ['c']], () => Promise.reject(Error('error')), 2))
+        .toEqual([
+          { reason: expect.any(Error), status: 'rejected' },
+          { reason: expect.any(Error), status: 'rejected' },
+        ]);
+    });
+
+    it('should rejected without concurrency', async () => {
       expect(await sequential(['a', 'b', 'c'], () => Promise.reject(Error('error'))))
         .toEqual([
           { reason: expect.any(Error), status: 'rejected' },
@@ -100,6 +289,27 @@ describe('TimeablePromise module test', () => {
       const end = process.hrtime(begin);
 
       expect(hrtimeToMs(end)).toBeGreaterThan(50);
+    });
+  });
+
+  describe('toNumber', () => {
+    it.each`
+      value        | defaultValue | expected
+      ${undefined}   ${0}           ${0}
+      ${undefined}   ${1}           ${1}
+      ${null}        ${1}           ${0}
+      ${false}       ${1}           ${0}
+      ${true}        ${1}           ${1}
+      ${''}          ${1}           ${0}
+      ${'a'}         ${1}           ${1}
+      ${[]}          ${1}           ${0}
+      ${{}}          ${0}           ${0}
+      ${{}}          ${1}           ${1}
+      ${0}           ${1}           ${0}
+      ${1}           ${1}           ${1}
+      ${2}           ${1}           ${2}
+    `('should return expected', ({ value, defaultValue, expected }) => {
+      expect(toNumber(value, defaultValue)).toEqual(expected);
     });
   });
 
