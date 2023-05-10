@@ -1,3 +1,10 @@
+### 1.6.1 (2023.05.10)
+
+* Adjust `parallel` and `sequential` array input
+* Minor improvement to array appender
+* Adjust the tests
+* Update dependencies
+
 ### 1.6.0 (2023.05.07)
 
 * Add `concurrent`, `concurrents`, `consecutive`, and `consecutives` methods
