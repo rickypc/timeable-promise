@@ -124,8 +124,8 @@
  * @returns {Array} The appended accumulator array.
  */
 const append = (accumulator, array) => {
-  for (let i = 0, { length } = array; i < length; i += 1) {
-    accumulator[accumulator.length] = array[i];
+  for (let accLength = accumulator.length, i = 0, { length } = array; i < length; i += 1) {
+    accumulator[accLength + i] = array[i];
   }
   return accumulator;
 };
@@ -334,7 +334,7 @@ const consecutives = (array, executor, concurrency = 0) => {
  */
 const parallel = (array, executor, concurrency = 0) => {
   if (toNumber(concurrency)) {
-    return concurrents(array, executor, concurrency);
+    return concurrents(chunk(array, concurrency), executor, concurrency);
   }
   return concurrent(array, executor);
 };
@@ -400,7 +400,7 @@ const poll = (executor, interval = 1000, immediately = false) => {
  */
 const sequential = (array, executor, concurrency = 0) => {
   if (toNumber(concurrency)) {
-    return consecutives(array, executor, concurrency);
+    return consecutives(chunk(array, concurrency), executor, concurrency);
   }
   return consecutive(array, executor);
 };
