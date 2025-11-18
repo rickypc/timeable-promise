@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "baseUrl": ".",
+    "checkJs": false,
+    "noEmit": true,
+    "paths": {
+      "#root/*": [
+        "./*"
+      ]
+    },
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "es2024"
+  },
+  "include": [
+    "*.config.js",
+    "src",
+    "tests"
+  ]
+}
