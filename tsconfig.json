@@ -3,6 +3,8 @@
     "allowJs": true,
     "baseUrl": ".",
     "checkJs": false,
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
     "noEmit": true,
     "paths": {
       "#root/*": [

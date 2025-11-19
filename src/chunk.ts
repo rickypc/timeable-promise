@@ -9,10 +9,8 @@
  * Splits an array into chunks of a given size.
  * The final chunk will contain the remaining elements.
  * @example
- * ```ts
  * const chunked = chunk([1, 2, 3, 4, 5], 2);
  * console.log(chunked); // [[1, 2], [3, 4], [5]]
- * ```
  * @param {T[]} array - The original array.
  * @param {number} size - The group size (default = 0).
  * @returns {T[] | T[][]} A new array containing chunked subarrays,
