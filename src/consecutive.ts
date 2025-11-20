@@ -14,8 +14,10 @@ import { toNumber } from './toNumber';
  * and each group is processed one after another. While the output is always a
  * settled results array, the input shape differs: either individual items or
  * grouped chunks.
- * @example With concurrency (groups of size 2)
- * const consecutiveSettled1 = await consecutive([1, 2, 3, 4, 5], async (group) => {
+ * @example
+ * _With concurrency (groups of size 2):_
+ * ```ts
+ * const consecutiveSettled1 = await consecutive<number>([1, 2, 3, 4, 5], async (group) => {
  *   return group.map(x => x * 2);
  * }, 2);
  * console.log(consecutiveSettled1);
@@ -24,8 +26,11 @@ import { toNumber } from './toNumber';
  * //   { status: 'fulfilled', value: [6, 8] },
  * //   { status: 'fulfilled', value: [10] }
  * // ]
- * @example Without concurrency (each item processed one by one)
- * const consecutiveSettled2 = await consecutive([1, 2, 3], async (value) => {
+ * ```
+ * @example
+ * _Without concurrency (each item processed one by one):_
+ * ```ts
+ * const consecutiveSettled2 = await consecutive<number>([1, 2, 3], async (value) => {
  *   return value * 2;
  * });
  * console.log(consecutiveSettled2);
@@ -34,6 +39,7 @@ import { toNumber } from './toNumber';
  * //   { status: 'fulfilled', value: 4 },
  * //   { status: 'fulfilled', value: 6 }
  * // ]
+ * ```
  * @param {T[]} array - The array items to be processed by executor.
  * @param {ArrayExecutor<T>} executor - Executor function applied to each
  *   item or group.

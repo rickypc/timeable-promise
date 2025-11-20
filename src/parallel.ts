@@ -16,8 +16,10 @@ import { toNumber } from './toNumber';
  * If a concurrency value is provided, items are grouped into chunks of that size
  * and processed concurrently via `concurrents`. Otherwise, the entire array is
  * processed concurrently via `concurrent`.
- * @example With concurrency (groups of size 2)
- * const parallelSettled1 = await parallel([1, 2, 3, 4, 5], async (group) => {
+ * @example
+ * _With concurrency (groups of size 2):_
+ * ```ts
+ * const parallelSettled1 = await parallel<number>([1, 2, 3, 4, 5], async (group) => {
  *   return group.map(x => x * 2);
  * }, 2);
  * console.log(parallelSettled1);
@@ -26,8 +28,11 @@ import { toNumber } from './toNumber';
  * //   { status: 'fulfilled', value: [6, 8] },
  * //   { status: 'fulfilled', value: [10] }
  * // ]
- * @example Without concurrency (all items processed concurrently)
- * const parallelSettled2 = await parallel([1, 2, 3], async (value) => {
+ * ```
+ * @example
+ * _Without concurrency (all items processed concurrently):_
+ * ```ts
+ * const parallelSettled2 = await parallel<number>([1, 2, 3], async (value) => {
  *   return value * 2;
  * });
  * console.log(parallelSettled2);
@@ -36,6 +41,7 @@ import { toNumber } from './toNumber';
  * //   { status: 'fulfilled', value: 4 },
  * //   { status: 'fulfilled', value: 6 }
  * // ]
+ * ```
  * @param {T[]} array - The array that is being processed in parallel.
  * @param {ArrayExecutor<T>} executor - Executor function applied to each item
  *   or group.

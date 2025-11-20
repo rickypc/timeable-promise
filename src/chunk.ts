@@ -8,9 +8,12 @@
 /**
  * Splits an array into chunks of a given size.
  * The final chunk will contain the remaining elements.
- * @example Chunk into pairs
- * const chunked = chunk([1, 2, 3, 4, 5], 2);
+ * @example
+ * _Chunk into pairs:_
+ * ```ts
+ * const chunked = chunk<number>([1, 2, 3, 4, 5], 2);
  * console.log(chunked); // [[1, 2], [3, 4], [5]]
+ * ```
  * @param {T[]} array - The original array.
  * @param {number} size - The group size (default = 0).
  * @returns {T[] | T[][]} A new array containing chunked subarrays,

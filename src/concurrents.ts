@@ -16,8 +16,10 @@ import { toNumber } from './toNumber';
  * together. While the output format looks similar to `concurrent`,
  * the orchestration differs: `concurrents` manages multiple concurrent runs,
  * whereas `concurrent` handles a single run.
- * @example With concurrency (groups of size 2)
- * const concurrentsSettled1 = await concurrents([1, 2, 3, 4, 5], async (group) => {
+ * @example
+ * _With concurrency (groups of size 2):_
+ * ```ts
+ * const concurrentsSettled1 = await concurrents<number>([1, 2, 3, 4, 5], async (group) => {
  *   return group.map(x => x * 2);
  * }, 2);
  * console.log(concurrentsSettled1);
@@ -26,8 +28,11 @@ import { toNumber } from './toNumber';
  * //   { status: 'fulfilled', value: [6, 8] },
  * //   { status: 'fulfilled', value: [10] }
  * // ]
- * @example Without concurrency (each item treated as its own group)
- * const concurrentsSettled2 = await concurrents([1, 2, 3], async (value) => {
+ * ```
+ * @example
+ * _Without concurrency (each item treated as its own group):_
+ * ```ts
+ * const concurrentsSettled2 = await concurrents<number>([1, 2, 3], async (value) => {
  *   return value * 2;
  * });
  * console.log(concurrentsSettled2);
@@ -36,6 +41,7 @@ import { toNumber } from './toNumber';
  * //   { status: 'fulfilled', value: 4 },
  * //   { status: 'fulfilled', value: 6 }
  * // ]
+ * ```
  * @param {T[]} array - The array groups to be processed by executor.
  * @param {ArrayExecutor<T>} executor - Executor function applied to each
  *   group.

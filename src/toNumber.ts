@@ -7,12 +7,21 @@
 
 /**
  * Converts a value to a number. If conversion fails, returns the default value.
- * @example Convert string to number
+ * @example
+ * _Convert string to number:_
+ * ```ts
  * console.log(toNumber('42'));        // 42
- * @example Fallback value when conversion fails
+ * ```
+ * @example
+ * _Fallback value when conversion fails:_
+ * ```ts
  * console.log(toNumber('abc', 10));   // 10
- * @example Null input defaults to 0
+ * ```
+ * @example
+ * _Null input defaults to 0:_
+ * ```ts
  * console.log(toNumber(null));        // 0
+ * ```
  * @param {unknown} value - The value to convert.
  * @param {number} defaultValue - The fallback if conversion is invalid
  *   (default = 0).

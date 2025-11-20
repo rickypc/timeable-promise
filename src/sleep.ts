@@ -7,10 +7,13 @@
 
 /**
  * Suspends execution for the given timeout duration.
- * @example Sleep for 1 second
+ * @example
+ * _Sleep for 1 second:_
+ * ```ts
  * console.time('sleep');
  * await sleep(1000);
  * console.timeEnd('sleep');
+ * ```
  * @param {number} timeout - Timeout in milliseconds.
  * @returns {Promise<void>} A promise that resolves after the given timeout.
  */

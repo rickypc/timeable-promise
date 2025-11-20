@@ -25,7 +25,9 @@ export type TimeoutExecutor<T> = (
  * Provides timeout support for a Promise. The executor runs until either
  * it settles or the timeout expires, in which case the timeoutExecutor
  * is invoked.
- * @example Executor with timeout fallback
+ * @example
+ * _Executor with timeout fallback:_
+ * ```ts
  * const executor = (resolve, reject, pending) => {
  *   // Do something promising here...
  *   if (pending()) {
@@ -47,9 +49,10 @@ export type TimeoutExecutor<T> = (
  * };
  *
  * const timeout = 5000;
- * const response = await untilSettledOrTimedOut(executor, timeoutExecutor, timeout)
+ * const response = await untilSettledOrTimedOut<boolean>(executor, timeoutExecutor, timeout)
  *   .catch(ex => console.log('nay :(', ex));
  * console.log(`resolved with ${response}, yay!`);
+ * ```
  * @param {PromiseExecutor<T>} executor - Executor function, receives resolve,
  *   reject, and a `pending` function.
  * @param {TimeoutExecutor<T>} timeoutExecutor - Function invoked if timeout
@@ -57,7 +60,7 @@ export type TimeoutExecutor<T> = (
  * @param {number} timeout - Timeout in milliseconds.
  * @returns {Promise<T>} A promise resolving or rejecting with the executor
  *   or timeoutExecutor result.
- * @template T - The element type of the array.
+ * @template T - The type of the resolved return value.
  */
 export function untilSettledOrTimedOut<T>(
   executor: PromiseExecutor<T>,

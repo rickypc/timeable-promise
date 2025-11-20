@@ -20,12 +20,18 @@ export type Settled<T> = PromiseSettledResult<T>;
 
 /**
  * Executes an executor and returns a PromiseSettledResult-like outcome.
- * @example Fulfilled outcome
- * const ok = await outcome(async (x: number) => x * 2, 5);
+ * @example
+ * _Fulfilled outcome:_
+ * ```ts
+ * const ok = await outcome<number>(async (x: number) => x * 2, 5);
  * console.log(ok); // { status: 'fulfilled', value: 10 }
- * @example Rejected outcome
+ * ```
+ * @example
+ * _Rejected outcome:_
+ * ```ts
  * const err = await outcome(() => { throw new Error('fail'); });
  * console.log(err); // { reason: Error('fail'), status: 'rejected' }
+ * ```
  * @param {ArrayExecutor<T>} executor - Function to execute.
  * @param {Parameters<ArrayExecutor<T>>} args - Arguments passed to the executor.
  * @returns {Promise<Settled<T>>} A settled outcome object.

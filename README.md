@@ -104,7 +104,7 @@ class poll,sleep,waitFor,untilSettledOrTimedOut,chunk utility;
 function chunk<T>(array, size): T[] | T[][];
 ```
 
-Defined in: [chunk.ts:21](https://github.com/rickypc/timeable-promise/blob/main/src/chunk.ts#L21)
+Defined in: [chunk.ts:24](https://github.com/rickypc/timeable-promise/blob/main/src/chunk.ts#L24)
 
 Splits an array into chunks of a given size.
 The final chunk will contain the remaining elements.
@@ -131,9 +131,9 @@ A new array containing chunked subarrays,
 
 #### Example
 
+_Chunk into pairs:_
 ```ts
-Chunk into pairs
-const chunked = chunk([1, 2, 3, 4, 5], 2);
+const chunked = chunk<number>([1, 2, 3, 4, 5], 2);
 console.log(chunked); // [[1, 2], [3, 4], [5]]
 ```
 
@@ -148,7 +148,7 @@ function concurrent<T>(
 concurrency): Promise<Settled<T>[]>;
 ```
 
-Defined in: [concurrent.ts:46](https://github.com/rickypc/timeable-promise/blob/main/src/concurrent.ts#L46)
+Defined in: [concurrent.ts:52](https://github.com/rickypc/timeable-promise/blob/main/src/concurrent.ts#L52)
 
 Runs the executor concurrently across items in a single array.
 If a concurrency value is provided, items are grouped into chunks of
@@ -179,9 +179,9 @@ A promise resolving to an array of
 
 #### Examples
 
+_With concurrency (groups of size 2):_
 ```ts
-With concurrency (groups of size 2)
-const concurrentSettled1 = await concurrent([1, 2, 3, 4, 5], async (chunk) => {
+const concurrentSettled1 = await concurrent<number>([1, 2, 3, 4, 5], async (chunk) => {
   return chunk.map(x => x * 2);
 }, 2);
 console.log(concurrentSettled1);
@@ -192,9 +192,9 @@ console.log(concurrentSettled1);
 // ]
 ```
 
+_Without concurrency (each item processed individually):_
 ```ts
-Without concurrency (each item processed individually)
-const concurrentSettled2 = await concurrent([1, 2, 3], async (value) => {
+const concurrentSettled2 = await concurrent<number>([1, 2, 3], async (value) => {
   return value * 2;
 });
 console.log(concurrentSettled2);
@@ -216,7 +216,7 @@ function concurrents<T>(
 concurrency): Promise<Settled<T>[]>;
 ```
 
-Defined in: [concurrents.ts:49](https://github.com/rickypc/timeable-promise/blob/main/src/concurrents.ts#L49)
+Defined in: [concurrents.ts:55](https://github.com/rickypc/timeable-promise/blob/main/src/concurrents.ts#L55)
 
 Runs the executor concurrently across multiple groups of an array.
 Internally calls `concurrent` for each group, then appends the results
@@ -247,9 +247,9 @@ A promise resolving to an array of
 
 #### Examples
 
+_With concurrency (groups of size 2):_
 ```ts
-With concurrency (groups of size 2)
-const concurrentsSettled1 = await concurrents([1, 2, 3, 4, 5], async (group) => {
+const concurrentsSettled1 = await concurrents<number>([1, 2, 3, 4, 5], async (group) => {
   return group.map(x => x * 2);
 }, 2);
 console.log(concurrentsSettled1);
@@ -260,9 +260,9 @@ console.log(concurrentsSettled1);
 // ]
 ```
 
+_Without concurrency (each item treated as its own group):_
 ```ts
-Without concurrency (each item treated as its own group)
-const concurrentsSettled2 = await concurrents([1, 2, 3], async (value) => {
+const concurrentsSettled2 = await concurrents<number>([1, 2, 3], async (value) => {
   return value * 2;
 });
 console.log(concurrentsSettled2);
@@ -284,7 +284,7 @@ function consecutive<T>(
 concurrency): Promise<Settled<T>[]>;
 ```
 
-Defined in: [consecutive.ts:46](https://github.com/rickypc/timeable-promise/blob/main/src/consecutive.ts#L46)
+Defined in: [consecutive.ts:52](https://github.com/rickypc/timeable-promise/blob/main/src/consecutive.ts#L52)
 
 Runs the executor sequentially across items in a single array.
 If a concurrency value is provided, items are grouped into chunks of that size
@@ -315,9 +315,9 @@ A promise resolving to an array of
 
 #### Examples
 
+_With concurrency (groups of size 2):_
 ```ts
-With concurrency (groups of size 2)
-const consecutiveSettled1 = await consecutive([1, 2, 3, 4, 5], async (group) => {
+const consecutiveSettled1 = await consecutive<number>([1, 2, 3, 4, 5], async (group) => {
   return group.map(x => x * 2);
 }, 2);
 console.log(consecutiveSettled1);
@@ -328,9 +328,9 @@ console.log(consecutiveSettled1);
 // ]
 ```
 
+_Without concurrency (each item processed one by one):_
 ```ts
-Without concurrency (each item processed one by one)
-const consecutiveSettled2 = await consecutive([1, 2, 3], async (value) => {
+const consecutiveSettled2 = await consecutive<number>([1, 2, 3], async (value) => {
   return value * 2;
 });
 console.log(consecutiveSettled2);
@@ -352,7 +352,7 @@ function consecutives<T>(
 concurrency): Promise<Settled<T>[]>;
 ```
 
-Defined in: [consecutives.ts:47](https://github.com/rickypc/timeable-promise/blob/main/src/consecutives.ts#L47)
+Defined in: [consecutives.ts:53](https://github.com/rickypc/timeable-promise/blob/main/src/consecutives.ts#L53)
 
 Runs the executor sequentially across multiple groups of an array.
 Internally calls `consecutive` for each group, then appends the results together.
@@ -382,9 +382,9 @@ A promise resolving to an array of
 
 #### Examples
 
+_With concurrency (groups of size 2):_
 ```ts
-With concurrency (groups of size 2)
-const consecutivesSettled1 = await consecutives([1, 2, 3, 4, 5], async (group) => {
+const consecutivesSettled1 = await consecutives<number>([1, 2, 3, 4, 5], async (group) => {
   return group.map(x => x * 2);
 }, 2);
 console.log(consecutivesSettled1);
@@ -395,9 +395,9 @@ console.log(consecutivesSettled1);
 // ]
 ```
 
+_Without concurrency (each item treated as its own group):_
 ```ts
-Without concurrency (each item treated as its own group)
-const consecutivesSettled2 = await consecutives([1, 2, 3], async (value) => {
+const consecutivesSettled2 = await consecutives<number>([1, 2, 3], async (value) => {
   return value * 2;
 });
 console.log(consecutivesSettled2);
@@ -419,7 +419,7 @@ function parallel<T>(
 concurrency): Promise<Settled<T>[]>;
 ```
 
-Defined in: [parallel.ts:48](https://github.com/rickypc/timeable-promise/blob/main/src/parallel.ts#L48)
+Defined in: [parallel.ts:54](https://github.com/rickypc/timeable-promise/blob/main/src/parallel.ts#L54)
 
 Provides parallel execution of an executor across array items.
 If a concurrency value is provided, items are grouped into chunks of that size
@@ -449,9 +449,9 @@ A promise resolving to an array of settled
 
 #### Examples
 
+_With concurrency (groups of size 2):_
 ```ts
-With concurrency (groups of size 2)
-const parallelSettled1 = await parallel([1, 2, 3, 4, 5], async (group) => {
+const parallelSettled1 = await parallel<number>([1, 2, 3, 4, 5], async (group) => {
   return group.map(x => x * 2);
 }, 2);
 console.log(parallelSettled1);
@@ -462,9 +462,9 @@ console.log(parallelSettled1);
 // ]
 ```
 
+_Without concurrency (all items processed concurrently):_
 ```ts
-Without concurrency (all items processed concurrently)
-const parallelSettled2 = await parallel([1, 2, 3], async (value) => {
+const parallelSettled2 = await parallel<number>([1, 2, 3], async (value) => {
   return value * 2;
 });
 console.log(parallelSettled2);
@@ -486,7 +486,7 @@ function poll(
    immediately): PollHandle;
 ```
 
-Defined in: [poll.ts:38](https://github.com/rickypc/timeable-promise/blob/main/src/poll.ts#L38)
+Defined in: [poll.ts:41](https://github.com/rickypc/timeable-promise/blob/main/src/poll.ts#L41)
 
 Provides polling support without congestion when the executor takes longer
 than the interval. The executor receives a `stopped` function to check
@@ -508,8 +508,8 @@ An object with a `stop` function to end polling.
 
 #### Example
 
+_Basic polling with stop control:_
 ```ts
-Basic polling with stop control
 const timer = poll((stopped) => {
   // Do something promising here...
   if (!stopped()) {
@@ -534,7 +534,7 @@ function sequential<T>(
 concurrency): Promise<Settled<T>[]>;
 ```
 
-Defined in: [sequential.ts:48](https://github.com/rickypc/timeable-promise/blob/main/src/sequential.ts#L48)
+Defined in: [sequential.ts:54](https://github.com/rickypc/timeable-promise/blob/main/src/sequential.ts#L54)
 
 Provides sequential execution of an executor across array items.
 If a concurrency value is provided, items are grouped into chunks of that size
@@ -564,9 +564,9 @@ A promise resolving to an array of
 
 #### Examples
 
+_With concurrency (groups of size 2):_
 ```ts
-With concurrency (groups of size 2)
-const sequentialSettled1 = await sequential([1, 2, 3, 4, 5], async (group) => {
+const sequentialSettled1 = await sequential<number>([1, 2, 3, 4, 5], async (group) => {
   return group.map(x => x * 2);
 }, 2);
 console.log(sequentialSettled1);
@@ -577,9 +577,9 @@ console.log(sequentialSettled1);
 // ]
 ```
 
+_Without concurrency (all items processed one by one):_
 ```ts
-Without concurrency (all items processed one by one)
-const sequentialSettled2 = await sequential([1, 2, 3], async (value) => {
+const sequentialSettled2 = await sequential<number>([1, 2, 3], async (value) => {
   return value * 2;
 });
 console.log(sequentialSettled2);
@@ -598,7 +598,7 @@ console.log(sequentialSettled2);
 function sleep(timeout): Promise<void>;
 ```
 
-Defined in: [sleep.ts:18](https://github.com/rickypc/timeable-promise/blob/main/src/sleep.ts#L18)
+Defined in: [sleep.ts:21](https://github.com/rickypc/timeable-promise/blob/main/src/sleep.ts#L21)
 
 Suspends execution for the given timeout duration.
 
@@ -616,8 +616,8 @@ A promise that resolves after the given timeout.
 
 #### Example
 
+_Sleep for 1 second:_
 ```ts
-Sleep for 1 second
 console.time('sleep');
 await sleep(1000);
 console.timeEnd('sleep');
@@ -631,7 +631,7 @@ console.timeEnd('sleep');
 function toNumber(value, defaultValue): number;
 ```
 
-Defined in: [toNumber.ts:22](https://github.com/rickypc/timeable-promise/blob/main/src/toNumber.ts#L22)
+Defined in: [toNumber.ts:31](https://github.com/rickypc/timeable-promise/blob/main/src/toNumber.ts#L31)
 
 Converts a value to a number. If conversion fails, returns the default value.
 
@@ -650,18 +650,18 @@ A numeric value.
 
 #### Examples
 
+_Convert string to number:_
 ```ts
-Convert string to number
 console.log(toNumber('42'));        // 42
 ```
 
+_Fallback value when conversion fails:_
 ```ts
-Fallback value when conversion fails
 console.log(toNumber('abc', 10));   // 10
 ```
 
+_Null input defaults to 0:_
 ```ts
-Null input defaults to 0
 console.log(toNumber(null));        // 0
 ```
 
@@ -676,7 +676,7 @@ function untilSettledOrTimedOut<T>(
 timeout): Promise<T>;
 ```
 
-Defined in: [untilSettledOrTimedOut.ts:62](https://github.com/rickypc/timeable-promise/blob/main/src/untilSettledOrTimedOut.ts#L62)
+Defined in: [untilSettledOrTimedOut.ts:65](https://github.com/rickypc/timeable-promise/blob/main/src/untilSettledOrTimedOut.ts#L65)
 
 Provides timeout support for a Promise. The executor runs until either
 it settles or the timeout expires, in which case the timeoutExecutor
@@ -686,7 +686,7 @@ is invoked.
 
 | Type Parameter | Description |
 | ------ | ------ |
-| `T` | The element type of the array. |
+| `T` | The type of the resolved return value. |
 
 #### Parameters
 
@@ -705,8 +705,8 @@ A promise resolving or rejecting with the executor
 
 #### Example
 
+_Executor with timeout fallback:_
 ```ts
-Executor with timeout fallback
 const executor = (resolve, reject, pending) => {
   // Do something promising here...
   if (pending()) {
@@ -728,7 +728,7 @@ const timeoutExecutor = (resolve, reject) => {
 };
 
 const timeout = 5000;
-const response = await untilSettledOrTimedOut(executor, timeoutExecutor, timeout)
+const response = await untilSettledOrTimedOut<boolean>(executor, timeoutExecutor, timeout)
   .catch(ex => console.log('nay :(', ex));
 console.log(`resolved with ${response}, yay!`);
 ```
@@ -744,7 +744,7 @@ function waitFor(
 interval): Promise<void>;
 ```
 
-Defined in: [waitFor.ts:32](https://github.com/rickypc/timeable-promise/blob/main/src/waitFor.ts#L32)
+Defined in: [waitFor.ts:35](https://github.com/rickypc/timeable-promise/blob/main/src/waitFor.ts#L35)
 
 Wait until a predicate returns true or timeout occurs.
 
@@ -765,8 +765,8 @@ A promise that resolves when predicate is true or
 
 #### Example
 
+_Wait for predicate to become true:_
 ```ts
-Wait for predicate to become true
 let inflight = true;
 const predicate = () => !inflight;
 const timeout = 5000;

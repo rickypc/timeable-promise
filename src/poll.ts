@@ -16,7 +16,9 @@ export type PollHandle = {
  * Provides polling support without congestion when the executor takes longer
  * than the interval. The executor receives a `stopped` function to check
  * if polling has been stopped.
- * @example Basic polling with stop control
+ * @example
+ * _Basic polling with stop control:_
+ * ```ts
  * const timer = poll((stopped) => {
  *   // Do something promising here...
  *   if (!stopped()) {
@@ -28,6 +30,7 @@ export type PollHandle = {
  *   // Simulate the end of polling.
  *   timer.stop();
  * }, 1000);
+ * ```
  * @param {PollExecutor} executor - Function invoked on each poll.
  *   Receives a `stopped` function.
  * @param {number} interval - Delay interval in milliseconds (default = 1000).
