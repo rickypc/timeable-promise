@@ -26,7 +26,7 @@ $ npm install --save timeable-promise
 
 The diagram below shows how the exported utilities interact with each other:
 
-<div class="mermaid-block"><div class="mermaid dark">%%{init:{"theme":"dark"}}%%
+```mermaid
 graph LR
 
 subgraph Core
@@ -52,142 +52,36 @@ sleep
 waitFor
 untilSettledOrTimedOut
 
-chunk --&gt; toNumber
-concurrent --&gt; chunk
+chunk --> toNumber
+concurrent --> chunk
 
-concurrents --&gt; concurrent
-concurrents --&gt; append
-concurrents --&gt; toNumber
-concurrents --&gt; outcome
+concurrents --> concurrent
+concurrents --> append
+concurrents --> toNumber
+concurrents --> outcome
 
-consecutive --&gt; outcome
-consecutive --&gt; toNumber
+consecutive --> outcome
+consecutive --> toNumber
 
-consecutives --&gt; append
-consecutives --&gt; consecutive
-consecutives --&gt; toNumber
-consecutives --&gt; outcome
+consecutives --> append
+consecutives --> consecutive
+consecutives --> toNumber
+consecutives --> outcome
 
-parallel --&gt; chunk
-parallel --&gt; concurrent
-parallel --&gt; concurrents
-parallel --&gt; toNumber
-parallel --&gt; outcome
+parallel --> chunk
+parallel --> concurrent
+parallel --> concurrents
+parallel --> toNumber
+parallel --> outcome
 
-sequential --&gt; chunk
-sequential --&gt; consecutive
-sequential --&gt; consecutives
-sequential --&gt; toNumber
-sequential --&gt; outcome
+sequential --> chunk
+sequential --> consecutive
+sequential --> consecutives
+sequential --> toNumber
+sequential --> outcome
 
-waitFor --&gt; untilSettledOrTimedOut</div><div class="mermaid light">%%{init:{"theme":"default"}}%%
-graph LR
-
-subgraph Core
-  append
-  outcome
-  toNumber
-end
-
-subgraph Concurrency
-  concurrent
-  concurrents
-  parallel
-end
-
-subgraph Sequencing
-  consecutive
-  consecutives
-  sequential
-end
-
-poll
-sleep
-waitFor
-untilSettledOrTimedOut
-
-chunk --&gt; toNumber
-concurrent --&gt; chunk
-
-concurrents --&gt; concurrent
-concurrents --&gt; append
-concurrents --&gt; toNumber
-concurrents --&gt; outcome
-
-consecutive --&gt; outcome
-consecutive --&gt; toNumber
-
-consecutives --&gt; append
-consecutives --&gt; consecutive
-consecutives --&gt; toNumber
-consecutives --&gt; outcome
-
-parallel --&gt; chunk
-parallel --&gt; concurrent
-parallel --&gt; concurrents
-parallel --&gt; toNumber
-parallel --&gt; outcome
-
-sequential --&gt; chunk
-sequential --&gt; consecutive
-sequential --&gt; consecutives
-sequential --&gt; toNumber
-sequential --&gt; outcome
-
-waitFor --&gt; untilSettledOrTimedOut</div><pre><code class="language-mermaid">graph LR
-
-subgraph Core
-  append
-  outcome
-  toNumber
-end
-
-subgraph Concurrency
-  concurrent
-  concurrents
-  parallel
-end
-
-subgraph Sequencing
-  consecutive
-  consecutives
-  sequential
-end
-
-poll
-sleep
-waitFor
-untilSettledOrTimedOut
-
-chunk --&gt; toNumber
-concurrent --&gt; chunk
-
-concurrents --&gt; concurrent
-concurrents --&gt; append
-concurrents --&gt; toNumber
-concurrents --&gt; outcome
-
-consecutive --&gt; outcome
-consecutive --&gt; toNumber
-
-consecutives --&gt; append
-consecutives --&gt; consecutive
-consecutives --&gt; toNumber
-consecutives --&gt; outcome
-
-parallel --&gt; chunk
-parallel --&gt; concurrent
-parallel --&gt; concurrents
-parallel --&gt; toNumber
-parallel --&gt; outcome
-
-sequential --&gt; chunk
-sequential --&gt; consecutive
-sequential --&gt; consecutives
-sequential --&gt; toNumber
-sequential --&gt; outcome
-
-waitFor --&gt; untilSettledOrTimedOut</code></pre></div>
+waitFor --> untilSettledOrTimedOut
+```
 
 ## Functions
 
@@ -1080,66 +974,3 @@ This module is free software, licensed under:
 
 Documentation and other similar content are provided under
 [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](https://bit.ly/2SMCRlS).
-<style>
-:root.mermaid-enabled .mermaid-block > pre {
-  display: none;
-}
-:root:not(.mermaid-enabled) .mermaid-block > .mermaid {
-  display: none !important;
-}
-
-.mermaid-block > .mermaid[data-inserted].dark {
-  display: var(--mermaid-dark-display);
-}
-.mermaid-block > .mermaid[data-inserted].light {
-  display: var(--mermaid-light-display);
-}
-
-:root {
-  --mermaid-dark-display: none;
-  --mermaid-light-display: block;
-}
-@media (prefers-color-scheme: light) {
-  :root {
-    --mermaid-dark-display: none;
-    --mermaid-light-display: block;
-  }
-}
-@media (prefers-color-scheme: dark) {
-  :root {
-    --mermaid-dark-display: block;
-    --mermaid-light-display: none;
-  }
-}
-body.light, :root[data-theme="light"] {
-  --mermaid-dark-display: none;
-  --mermaid-light-display: block;
-}
-body.dark, :root[data-theme="dark"] {
-  --mermaid-dark-display: block;
-  --mermaid-light-display: none;
-}
-</style>
-
-<script type="module">
-import mermaid from "https://unpkg.com/mermaid@latest/dist/mermaid.esm.min.mjs";
-
-document.documentElement.classList.add("mermaid-enabled");
-
-mermaid.initialize({startOnLoad:true});
-
-requestAnimationFrame(function check() {
-  let some = false;
-  document.querySelectorAll("div.mermaid:not([data-inserted])").forEach(div => {
-    some = true;
-    if (div.querySelector("svg")) {
-      div.dataset.inserted = true;
-    }
-  });
-
-  if (some) {
-    requestAnimationFrame(check);
-  }
-});
-</script>
-
