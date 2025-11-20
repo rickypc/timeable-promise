@@ -112,6 +112,7 @@ export default {
   enumMembersFormat: 'table',
   expandObjects: true,
   gitRevision: 'main',
+  groupOrder: ['Functions', '*'],
   hidePageHeader: true,
   indexFormat: 'table',
   name: 'Timeable Promise',

@@ -92,3 +92,15 @@
  * ```
  */
 export * from './chunk';
+export * from './concurrent';
+export * from './concurrents';
+export * from './consecutive';
+export * from './consecutives';
+export { type ArrayExecutor, type Settled } from './outcome';
+export * from './parallel';
+export * from './poll';
+export * from './sequential';
+export * from './sleep';
+export * from './toNumber';
+export * from './untilSettledOrTimedOut';
+export * from './waitFor';
