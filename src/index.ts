@@ -37,30 +37,32 @@
  * ```mermaid
  * graph LR
  *
+ * %% --- Subgraphs ---
  * subgraph Core
- *   append
- *   outcome
- *   toNumber
+ *   append["📎 append"]
+ *   outcome["🎯 outcome"]
+ *   toNumber["🔢 toNumber"]
  * end
  *
  * subgraph Concurrency
- *   concurrent
- *   concurrents
- *   parallel
+ *   concurrent["⚡ concurrent"]
+ *   concurrents["⚡⚡ concurrents"]
+ *   parallel["🔀 parallel"]
  * end
  *
  * subgraph Sequencing
- *   consecutive
- *   consecutives
- *   sequential
+ *   consecutive["➡️ consecutive"]
+ *   consecutives["➡️➡️ consecutives"]
+ *   sequential["⏩ sequential"]
  * end
  *
- * poll
- * sleep
- * waitFor
- * untilSettledOrTimedOut
+ * poll["⏱️ poll"]
+ * sleep["💤 sleep"]
+ * waitFor["⏳ waitFor"]
+ * untilSettledOrTimedOut["⏰ untilSettledOrTimedOut"]
  *
- * chunk --> toNumber
+ * %% --- Links ---
+ * chunk["📦 chunk"] --> toNumber
  * concurrent --> chunk
  *
  * concurrents --> concurrent
@@ -89,6 +91,17 @@
  * sequential --> outcome
  *
  * waitFor --> untilSettledOrTimedOut
+ *
+ * %% --- Styling with original fills + black text ---
+ * classDef core fill:#f9f,stroke:#333,stroke-width:2px,color:#000;
+ * classDef concurrency fill:#bbf,stroke:#333,stroke-width:2px,color:#000;
+ * classDef sequencing fill:#bfb,stroke:#333,stroke-width:2px,color:#000;
+ * classDef utility fill:#ffd,stroke:#333,stroke-width:2px,color:#000;
+ *
+ * class append,outcome,toNumber core;
+ * class concurrent,concurrents,parallel concurrency;
+ * class consecutive,consecutives,sequential sequencing;
+ * class poll,sleep,waitFor,untilSettledOrTimedOut,chunk utility;
  * ```
  */
 export * from './chunk';

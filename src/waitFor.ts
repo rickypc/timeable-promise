@@ -9,7 +9,7 @@ import { untilSettledOrTimedOut } from './untilSettledOrTimedOut';
 
 /**
  * Wait until a predicate returns true or timeout occurs.
- * @example
+ * @example Wait for predicate to become true
  * let inflight = true;
  * const predicate = () => !inflight;
  * const timeout = 5000;
@@ -18,9 +18,9 @@ import { untilSettledOrTimedOut } from './untilSettledOrTimedOut';
  *   inflight = false; // long process done
  * }, 1000);
  *
- * console.time("waitFor");
+ * console.time('waitFor');
  * await waitFor(predicate, timeout, 200);
- * console.timeEnd("waitFor");
+ * console.timeEnd('waitFor');
  * @param {() => boolean} predicate - Function returning a boolean, checked
  *   repeatedly.
  * @param {number} timeout - Max time to wait in ms.

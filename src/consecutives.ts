@@ -15,10 +15,7 @@ import { toNumber } from './toNumber';
  * Internally calls `consecutive` for each group, then appends the results together.
  * This means the output looks similar to `consecutive`, but the orchestration differs:
  * `consecutives` manages multiple consecutive runs, while `consecutive` handles a single run.
- * @example
- * // consecutives -> orchestrates multiple consecutive runs
- *
- * // With concurrency (groups of size 2)
+ * @example With concurrency (groups of size 2)
  * const consecutivesSettled1 = await consecutives([1, 2, 3, 4, 5], async (group) => {
  *   return group.map(x => x * 2);
  * }, 2);
@@ -28,8 +25,7 @@ import { toNumber } from './toNumber';
  * //   { status: 'fulfilled', value: [6, 8] },
  * //   { status: 'fulfilled', value: [10] }
  * // ]
- *
- * // Without concurrency (each item treated as its own group, still sequential)
+ * @example Without concurrency (each item treated as its own group)
  * const consecutivesSettled2 = await consecutives([1, 2, 3], async (value) => {
  *   return value * 2;
  * });

@@ -5,22 +5,24 @@
  * @license AGPL-3.0-or-later
  */
 
-const { FlatCompat } = require('@eslint/eslintrc');
-const globals = require('globals');
-const jest = require('eslint-plugin-jest');
-const js = require('@eslint/js');
-const jsdoc = require('eslint-plugin-jsdoc');
-const noSecrets = require('eslint-plugin-no-secrets');
-const security = require('eslint-plugin-security');
-const ts = require('typescript-eslint');
-const yml = require('eslint-plugin-yml');
-const ymlParser = require('yaml-eslint-parser');
+import { dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { FlatCompat } from '@eslint/eslintrc';
+import globals from 'globals';
+import jest from 'eslint-plugin-jest';
+import js from '@eslint/js';
+import jsdoc from 'eslint-plugin-jsdoc';
+import noSecrets from 'eslint-plugin-no-secrets';
+import security from 'eslint-plugin-security';
+import ts from 'typescript-eslint';
+import yml from 'eslint-plugin-yml';
+import ymlParser from 'yaml-eslint-parser';
 
-const compat = new FlatCompat({ baseDirectory: __dirname });
+const compat = new FlatCompat({ baseDirectory: dirname(fileURLToPath(import.meta.url)) });
 
-module.exports = [
+export default [
   // Order Matters™!
-  { ignores: ['dist/'] },
+  { ignores: ['{dist,supports}/'] },
   ...compat.config({ extends: ['airbnb-base'] }),
   js.configs.recommended,
   jest.configs['flat/recommended'],

@@ -16,10 +16,7 @@ import { toNumber } from './toNumber';
  * together. While the output format looks similar to `concurrent`,
  * the orchestration differs: `concurrents` manages multiple concurrent runs,
  * whereas `concurrent` handles a single run.
- * @example
- * // concurrents -> orchestrates multiple concurrent runs
- *
- * // With concurrency (groups of size 2)
+ * @example With concurrency (groups of size 2)
  * const concurrentsSettled1 = await concurrents([1, 2, 3, 4, 5], async (group) => {
  *   return group.map(x => x * 2);
  * }, 2);
@@ -29,8 +26,7 @@ import { toNumber } from './toNumber';
  * //   { status: 'fulfilled', value: [6, 8] },
  * //   { status: 'fulfilled', value: [10] }
  * // ]
- *
- * // Without concurrency (each item treated as its own group, still concurrent)
+ * @example Without concurrency (each item treated as its own group)
  * const concurrentsSettled2 = await concurrents([1, 2, 3], async (value) => {
  *   return value * 2;
  * });

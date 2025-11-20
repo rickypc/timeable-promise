@@ -3,8 +3,8 @@
     "allowJs": true,
     "baseUrl": ".",
     "checkJs": false,
-    "module": "nodenext",
-    "moduleResolution": "nodenext",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
     "noEmit": true,
     "paths": {
       "#root/*": [

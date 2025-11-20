@@ -95,7 +95,6 @@ Documentation and other similar content are provided under
 [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](https://bit.ly/2SMCRlS).
     `);
   },
-  'typedoc-plugin-mermaid': 'typedoc-plugin-mermaid',
 };
 
 export default {

@@ -14,10 +14,7 @@ import { toNumber } from './toNumber';
  * and each group is processed one after another. While the output is always a
  * settled results array, the input shape differs: either individual items or
  * grouped chunks.
- * @example
- * // consecutive -> one sequence of items or groups
- *
- * // With concurrency (groups of size 2)
+ * @example With concurrency (groups of size 2)
  * const consecutiveSettled1 = await consecutive([1, 2, 3, 4, 5], async (group) => {
  *   return group.map(x => x * 2);
  * }, 2);
@@ -27,8 +24,7 @@ import { toNumber } from './toNumber';
  * //   { status: 'fulfilled', value: [6, 8] },
  * //   { status: 'fulfilled', value: [10] }
  * // ]
- *
- * // Without concurrency (each item processed one by one)
+ * @example Without concurrency (each item processed one by one)
  * const consecutiveSettled2 = await consecutive([1, 2, 3], async (value) => {
  *   return value * 2;
  * });

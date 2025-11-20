@@ -16,7 +16,7 @@ export type PollHandle = {
  * Provides polling support without congestion when the executor takes longer
  * than the interval. The executor receives a `stopped` function to check
  * if polling has been stopped.
- * @example
+ * @example Basic polling with stop control
  * const timer = poll((stopped) => {
  *   // Do something promising here...
  *   if (!stopped()) {

@@ -16,10 +16,7 @@ import { toNumber } from './toNumber';
  * If a concurrency value is provided, items are grouped into chunks of that size
  * and processed sequentially via `consecutives`. Otherwise, the entire array is
  * processed sequentially via `consecutive`.
- * @example
- * // sequential -> orchestrator for consecutive/consecutives
- *
- * // With concurrency (groups of size 2)
+ * @example With concurrency (groups of size 2)
  * const sequentialSettled1 = await sequential([1, 2, 3, 4, 5], async (group) => {
  *   return group.map(x => x * 2);
  * }, 2);
@@ -29,8 +26,7 @@ import { toNumber } from './toNumber';
  * //   { status: 'fulfilled', value: [6, 8] },
  * //   { status: 'fulfilled', value: [10] }
  * // ]
- *
- * // Without concurrency (all items processed one by one)
+ * @example Without concurrency (all items processed one by one)
  * const sequentialSettled2 = await sequential([1, 2, 3], async (value) => {
  *   return value * 2;
  * });

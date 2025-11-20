@@ -16,10 +16,7 @@ import { toNumber } from './toNumber';
  * If a concurrency value is provided, items are grouped into chunks of that size
  * and processed concurrently via `concurrents`. Otherwise, the entire array is
  * processed concurrently via `concurrent`.
- * @example
- * // parallel -> orchestrator for concurrent/concurrents
- *
- * // With concurrency (groups of size 2)
+ * @example With concurrency (groups of size 2)
  * const parallelSettled1 = await parallel([1, 2, 3, 4, 5], async (group) => {
  *   return group.map(x => x * 2);
  * }, 2);
@@ -29,8 +26,7 @@ import { toNumber } from './toNumber';
  * //   { status: 'fulfilled', value: [6, 8] },
  * //   { status: 'fulfilled', value: [10] }
  * // ]
- *
- * // Without concurrency (all items processed concurrently)
+ * @example Without concurrency (all items processed concurrently)
  * const parallelSettled2 = await parallel([1, 2, 3], async (value) => {
  *   return value * 2;
  * });

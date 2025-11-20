@@ -7,7 +7,7 @@
 
 /**
  * Appends items from one array onto the end of another.
- * @example
+ * @example Basic append
  * const appended = append([1, 2], [3, 4]);
  * console.log(appended); // [1, 2, 3, 4]
  * @param {T[]} accumulator - The accumulator array.

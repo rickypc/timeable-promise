@@ -14,10 +14,7 @@ import { chunk } from './chunk';
  * that size and each chunk is processed in parallel. The output is always
  * a settled results array, but the input shape differs: either individual
  * items or grouped chunks.
- * @example
- * // concurrent -> one concurrent run of items or groups
- *
- * // With concurrency (groups of size 2)
+ * @example With concurrency (groups of size 2)
  * const concurrentSettled1 = await concurrent([1, 2, 3, 4, 5], async (chunk) => {
  *   return chunk.map(x => x * 2);
  * }, 2);
@@ -27,8 +24,7 @@ import { chunk } from './chunk';
  * //   { status: 'fulfilled', value: [6, 8] },
  * //   { status: 'fulfilled', value: [10] }
  * // ]
- *
- * // Without concurrency (each item processed as its own chunk)
+ * @example Without concurrency (each item processed individually)
  * const concurrentSettled2 = await concurrent([1, 2, 3], async (value) => {
  *   return value * 2;
  * });

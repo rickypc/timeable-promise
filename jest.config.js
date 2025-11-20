@@ -7,7 +7,7 @@
 
 process.env.TZ = 'UTC';
 
-module.exports = {
+export default {
   clearMocks: true,
   collectCoverage: true,
   collectCoverageFrom: ['src/*.ts'],
