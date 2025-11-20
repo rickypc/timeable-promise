@@ -1,23 +1,11 @@
-/*!
- * index.test.js - Benchmark tests for TimeablePromise functionality.
- *  Copyright (c) 2018 - 2023 Richard Huang <rickypc@users.noreply.github.com>
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU Affero General Public License as
- *  published by the Free Software Foundation, either version 3 of the
- *  License, or (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU Affero General Public License for more details.
- *
- *  You should have received a copy of the GNU Affero General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+/**
+ * @copyright Copyright (c) 2018-2025 Richard Huang <rickypc@users.noreply.github.com>
+ * @description Performance tests for the aggregated functionality exposed via the barrel file.
+ * @file index.test.ts
+ * @license AGPL-3.0-or-later
  */
 
-const run = require('./runner.js');
-const {
+import {
   chunk,
   concurrent,
   concurrents,
@@ -30,7 +18,8 @@ const {
   toNumber,
   untilSettledOrTimedOut,
   waitFor,
-} = require('../index.js');
+} from '#root/src/index';
+import run from './runner';
 
 (async () => {
   await run('chunk', () => chunk(['a', 'b', 'c'], 2));
@@ -50,7 +39,7 @@ const {
     await parallel(['a', 'b', 'c'], (value) => value);
   });
   await run('poll', async () => {
-    const timer = poll(() => {}, 1);
+    const timer = poll(() => { }, 1);
     setTimeout(() => timer.stop(), 3);
     await sleep(5);
   });
@@ -60,8 +49,8 @@ const {
   await run('sleep', () => sleep(1));
   await run('toNumber', () => toNumber('1'));
   await run('untilSettledOrTimedOut', () => untilSettledOrTimedOut(
-    (resolve) => resolve(),
-    (resolve) => resolve(),
+    (resolve) => resolve(undefined),
+    (resolve) => resolve(undefined),
     1,
   ));
   await run('waitFor', () => waitFor(() => true, 2, 1));

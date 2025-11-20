@@ -1,8 +1,10 @@
 {
   "compilerOptions": {
     "allowJs": true,
+    "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
     "checkJs": false,
+    "esModuleInterop": true,
     "module": "ESNext",
     "moduleResolution": "bundler",
     "noEmit": true,
