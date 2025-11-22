@@ -4,6 +4,7 @@
 # License: AGPL-3.0-or-later
 
 *coverage
+dist
 *.lock
 *.log
 node_modules

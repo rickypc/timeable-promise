@@ -12,6 +12,7 @@ import globals from 'globals';
 import jest from 'eslint-plugin-jest';
 import js from '@eslint/js';
 import jsdoc from 'eslint-plugin-jsdoc';
+import { type Linter } from 'eslint';
 import noSecrets from 'eslint-plugin-no-secrets';
 import security from 'eslint-plugin-security';
 import ts from 'typescript-eslint';
@@ -19,8 +20,7 @@ import yml from 'eslint-plugin-yml';
 import ymlParser from 'yaml-eslint-parser';
 
 const compat = new FlatCompat({ baseDirectory: dirname(fileURLToPath(import.meta.url)) });
-
-export default [
+const config: Linter.Config[] = [
   // Order Matters™!
   { ignores: ['{dist,supports}/'] },
   ...compat.config({ extends: ['airbnb-base'] }),
@@ -53,3 +53,5 @@ export default [
     ...ts.configs.recommendedTypeChecked[0],
   },
 ];
+
+export default config;

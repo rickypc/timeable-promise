@@ -5,11 +5,35 @@
  * @license AGPL-3.0-or-later
  */
 
+// import { type Application, Configuration, type TypeDocOptions } from 'typedoc';
 import { Configuration } from 'typedoc';
+// import { type MarkdownRenderer } from 'typedoc-plugin-markdown';
+
+/*
+type MarkdownOptions = {
+  $schema: string;
+  enumMembersFormat: 'list' | 'table';
+  expandObjects: boolean;
+  hidePageHeader: boolean;
+  indexFormat: 'group' | 'list' | 'table';
+  outputFileStrategy: 'members' | 'modules' | 'none';
+  parametersFormat: 'list' | 'table';
+  propertiesFormat: 'list' | 'table';
+  typeDeclarationFormat: 'list' | 'table';
+  useCodeBlocks: boolean;
+};
+
+type TypeDocConfig = Partial<Omit<TypeDocOptions, 'plugin'>> & {
+  // eslint-disable-next-line no-unused-vars
+  plugin: (string | ((app: Application) => void))[];
+} & MarkdownOptions;
+*/
 
 const plugins = {
   'typedoc-plugin-markdown': 'typedoc-plugin-markdown',
-  'typedoc-plugin-markdown-index-end': (app) => {
+  // 'typedoc-plugin-markdown-index-end': (app: Application) => {
+  'typedoc-plugin-markdown-index-end': /** @param {import('typedoc').Application} app - Application */(app) => {
+    // (app.renderer as MarkdownRenderer).markdownHooks.on('index.page.end', () => `
     app.renderer.markdownHooks.on('index.page.end', () => `
 ## Development Dependencies
 
@@ -97,6 +121,7 @@ Documentation and other similar content are provided under
   },
 };
 
+/** @type {import('typedoc').TypeDocOptions} */
 export default {
   $schema: 'https://typedoc-plugin-markdown.org/schema.json',
   blockTags: [
@@ -125,3 +150,4 @@ export default {
   typeDeclarationFormat: 'table',
   useCodeBlocks: true,
 };
+// } satisfies TypeDocConfig;
