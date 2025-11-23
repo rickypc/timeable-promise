@@ -47,51 +47,45 @@ that have been declared in the project's \`package.json\` file, installing them
 into the \`node_modules\` folder.
 
 \`\`\`bash
-$ yarn
-# or
-$ npm install
+yarn || npm install
 \`\`\`
 
-Run Performance, Leak, Lint, and Unit Tests
+Run Leak, Lint, Performance, Type and Unit Tests
 -
 To make sure we did not break anything, let's run all the tests:
 
 \`\`\`bash
-$ yarn test
-# or
-$ npm run test: lint; npm run test: unit; npm run test: perf; npm run test: leak
-\`\`\`
-
-Run performance tests only:
-
-\`\`\`bash
-$ yarn test: perf
-# or
-$ npm run test: perf
+yarn test || npm run test
 \`\`\`
 
 Run leak tests only:
 
 \`\`\`bash
-$ yarn test: leak
-# or
-$ npm run test: leak
+yarn test:leak || npm run test:leak
 \`\`\`
 
 Run linter only:
 
 \`\`\`bash
-$ yarn test: lint
-# or
-$ npm run test: lint
+yarn test:lint || npm run test:lint
+\`\`\`
+
+Run performance tests only:
+
+\`\`\`bash
+yarn test:perf || npm run test:perf
+\`\`\`
+
+Run type check only:
+
+\`\`\`bash
+yarn test:type || npm run test:type
 \`\`\`
 
 Run unit tests only:
 
 \`\`\`bash
-$ yarn test: unit
-# or
-$ npm run test: unit
+yarn test:unit || npm run test:unit
 \`\`\`
 
 ## Contributing

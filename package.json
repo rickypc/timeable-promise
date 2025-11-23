@@ -65,10 +65,11 @@
   "scripts": {
     "build": "rspack build",
     "docs": "typedoc",
-    "test": "yarn test:lint && yarn test:unit && yarn test:perf && yarn test:leak",
+    "test": "yarn test:lint && yarn test:type && yarn test:unit && yarn test:perf && yarn test:leak",
     "test:leak": "time find tests/leak -name '*.test.ts' -type f -print0 | sort -z | xargs -0 -I{} tsx {}",
     "test:lint": "eslint .",
     "test:perf": "time find tests/perf -name '*.test.ts' -type f -print0 | sort -z | xargs -0 -I{} tsx {}",
+    "test:type": "tsc",
     "test:unit": "jest"
   },
   "type": "module",

@@ -25,9 +25,7 @@
  * ## Installation
  *
  * ```bash
- * $ yarn add timeable-promise
- * # or
- * $ npm install --save timeable-promise
+ * yarn add timeable-promise || npm install --save timeable-promise
  * ```
  *
  * ## API Call Graph
