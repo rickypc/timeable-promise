@@ -67,17 +67,17 @@ export function untilSettledOrTimedOut<T>(
   timeoutExecutor: TimeoutExecutor<T>,
   timeout: number,
 ): Promise<T> {
-  let timedout = false;
+  let timedOut = false;
   let timer: number | ReturnType<typeof setTimeout> | null = null;
   return new Promise<T>((resolve, reject) => {
     timer = setTimeout(() => {
-      timedout = true;
+      timedOut = true;
       timer = null;
       timeoutExecutor(resolve, reject);
     }, timeout);
-    executor(resolve, reject, () => !timedout);
+    executor(resolve, reject, () => !timedOut);
   }).finally(() => {
-    if (!timedout) {
+    if (!timedOut) {
       clearTimeout(timer as number);
     }
     timer = null;

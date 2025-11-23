@@ -11,10 +11,12 @@ export default {
   clearMocks: true,
   collectCoverage: true,
   collectCoverageFrom: ['src/*.ts'],
-  coverageDirectory: './coverage/',
+  coverageDirectory: '<rootDir>/coverage/',
   coverageReporters: ['cobertura', 'lcov', 'text'],
   errorOnDeprecated: true,
   logHeapUsage: true,
+  moduleNameMapper: { '^timeable-promise$': '<rootDir>/src/index.ts' },
+  modulePathIgnorePatterns: ['<rootDir>/dist/'],
   testEnvironment: 'node',
   testRegex: 'tests/unit/.*.test.ts$',
   transform: {

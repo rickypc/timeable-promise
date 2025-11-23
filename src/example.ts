@@ -20,7 +20,7 @@ const {
   waitFor,
 } = require('timeable-promise');
 
-(async (): Promise<string> => {
+module.exports.examples = async (): Promise<string> => {
   const flat = ['a', 'b', 'c'];
   const nested = [['a', 'b'], ['c']];
 
@@ -67,14 +67,16 @@ const {
     // eslint-disable-next-line no-unused-vars
     async (resolve: (_: boolean) => void, _: unknown, pending: () => boolean) => {
       const value = true;
+      // istanbul ignore else
       if (pending()) {
         resolve(value);
       }
     },
+    // istanbul ignore next
     // eslint-disable-next-line no-unused-vars
     (_: unknown, reject: (_: Error) => void) => reject(Error('timeout')),
     1,
-  ).catch(() => false);
+  ).catch(/* istanbul ignore next */() => false);
   // eslint-disable-next-line no-console
   console.log('11. Settle -> finished before timeout -> return', settled);
 
@@ -84,6 +86,7 @@ const {
       const value = await new Promise<boolean>((done) => {
         setTimeout(done, 3, true);
       });
+      // istanbul ignore if
       if (pending()) {
         resolve(value);
       }
@@ -97,9 +100,15 @@ const {
 
   let inflight = true;
   setTimeout(() => { inflight = false; }, 1);
-  await waitFor(() => !inflight, 3);
+  await waitFor(() => !inflight, 3, 2);
   // eslint-disable-next-line no-console
   console.log('13. WaitFor -> waited ~3ms until condition met');
 
   return 'Timeable Promise Examples';
-})();
+};
+
+// Auto-run only when executed directly.
+// istanbul ignore if
+if (require.main === module) {
+  module.exports.examples();
+}
