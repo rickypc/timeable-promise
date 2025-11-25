@@ -6,11 +6,14 @@
  */
 
 import {
+  append,
+  type ArrayExecutor,
   chunk,
   concurrent,
   concurrents,
   consecutive,
   consecutives,
+  outcome,
   parallel,
   poll,
   sequential,
@@ -19,9 +22,15 @@ import {
   untilSettledOrTimedOut,
   waitFor,
 } from '#root/src/index';
-import { run } from '#root/tests/resilient/runner';
+import run from '#root/tests/resilient/runner';
 
 describe('index.ts', () => {
+  describe('append', () => {
+    it('should be resilient', async () => {
+      expect(await run(() => append([1, 2], [3, 4]))).toBeTruthy();
+    });
+  });
+
   describe('chunk', () => {
     it('should be resilient', async () => {
       expect(await run(() => chunk([1, 2, 3], 2))).toBeTruthy();
@@ -53,6 +62,13 @@ describe('index.ts', () => {
     it('should be resilient', async () => {
       expect(await run(() => consecutives([['a', 'b'], ['c']], (value) => value)))
         .toBeTruthy();
+    });
+  });
+
+  describe('outcome', () => {
+    it('should be resilient', async () => {
+      const executor: ArrayExecutor<number> = async (x: number, y: number) => x + y;
+      expect(await run(() => outcome(executor, 2, 3, [2]))).toBeTruthy();
     });
   });
 

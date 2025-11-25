@@ -5,8 +5,8 @@
  * @license AGPL-3.0-or-later
  */
 
-import { run } from '#root/tests/resilient/runner';
-import { waitFor } from '#root/src/waitFor';
+import run from '#root/tests/resilient/runner';
+import waitFor from '#root/src/waitFor';
 
 describe('waitFor', () => {
   it('should be resilient', async () => {

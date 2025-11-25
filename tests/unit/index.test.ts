@@ -6,11 +6,14 @@
  */
 
 import {
+  append,
+  type ArrayExecutor,
   chunk,
   concurrent,
   concurrents,
   consecutive,
   consecutives,
+  outcome,
   parallel,
   poll,
   sequential,
@@ -22,6 +25,13 @@ import {
 import { hrtimeToMs } from '#root/tests/utils';
 
 describe('index.ts', () => {
+  describe('append', () => {
+    it('should append numbers to an existing array', () => {
+      const result = append([1, 2], [3, 4]);
+      expect(result).toEqual([1, 2, 3, 4]);
+    });
+  });
+
   describe('chunk', () => {
     it('should return chunked array', () => {
       expect(chunk([1, 2, 3], 2)).toEqual([[1, 2], [3]]);
@@ -64,6 +74,16 @@ describe('index.ts', () => {
         { status: 'fulfilled', value: 'c' },
       ]);
     }, 2);
+  });
+
+  describe('outcome', () => {
+    it('should resolve with fulfilled status and value', async () => {
+      const executor: ArrayExecutor<number> = async (x: number, y: number) => x + y;
+
+      const result = await outcome(executor, 2, 3, [2]);
+
+      expect(result).toEqual({ status: 'fulfilled', value: 5 });
+    });
   });
 
   describe('parallel', () => {

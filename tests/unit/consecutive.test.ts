@@ -5,7 +5,7 @@
  * @license AGPL-3.0-or-later
  */
 
-import { consecutive } from '#root/src/consecutive';
+import consecutive from '#root/src/consecutive';
 
 describe('consecutive', () => {
   it('should fulfilled with concurrency', async () => {

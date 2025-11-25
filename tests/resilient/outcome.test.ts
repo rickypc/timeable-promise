@@ -5,8 +5,8 @@
  * @license AGPL-3.0-or-later
  */
 
-import { type ArrayExecutor, outcome } from '#root/src/outcome';
-import { run } from '#root/tests/resilient/runner';
+import outcome, { type ArrayExecutor } from '#root/src/outcome';
+import run from '#root/tests/resilient/runner';
 
 describe('outcome', () => {
   it('should be resilient', async () => {

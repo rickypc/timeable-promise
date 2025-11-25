@@ -5,8 +5,8 @@
  * @license AGPL-3.0-or-later
  */
 
-import { concurrents } from '#root/src/concurrents';
-import { run } from '#root/tests/resilient/runner';
+import concurrents from '#root/src/concurrents';
+import run from '#root/tests/resilient/runner';
 
 describe('concurrents', () => {
   it('should be resilient', async () => {

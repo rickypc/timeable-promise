@@ -5,8 +5,8 @@
  * @license AGPL-3.0-or-later
  */
 
-import { run } from '#root/tests/resilient/runner';
-import { toNumber } from '#root/src/toNumber';
+import run from '#root/tests/resilient/runner';
+import toNumber from '#root/src/toNumber';
 
 describe('toNumber', () => {
   it('should be resilient', async () => {

@@ -37,7 +37,7 @@ export type Settled<T> = PromiseSettledResult<T>;
  * @returns {Promise<Settled<T>>} A settled outcome object.
  * @template T - The element type of the array.
  */
-export async function outcome<T>(
+export default async function outcome<T>(
   executor: ArrayExecutor<T>,
   ...args: Parameters<ArrayExecutor<T>>
 ): Promise<Settled<T>> {

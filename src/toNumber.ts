@@ -27,7 +27,6 @@
  *   (default = 0).
  * @returns {number} A numeric value.
  */
-// eslint-disable-next-line import/prefer-default-export
-export function toNumber(value: unknown, defaultValue: number = 0): number {
+export default function toNumber(value: unknown, defaultValue: number = 0): number {
   return 1 / (value as any) ? +value! : defaultValue;
 }

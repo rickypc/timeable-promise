@@ -5,8 +5,8 @@
  * @license AGPL-3.0-or-later
  */
 
-import { run } from '#root/tests/resilient/runner';
-import { sequential } from '#root/src/sequential';
+import run from '#root/tests/resilient/runner';
+import sequential from '#root/src/sequential';
 
 describe('sequential', () => {
   it('should be resilient', async () => {

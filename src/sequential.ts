@@ -6,10 +6,10 @@
  */
 
 import { type ArrayExecutor, type Settled } from './outcome';
-import { chunk } from './chunk';
-import { consecutive } from './consecutive';
-import { consecutives } from './consecutives';
-import { toNumber } from './toNumber';
+import chunk from './chunk';
+import consecutive from './consecutive';
+import consecutives from './consecutives';
+import toNumber from './toNumber';
 
 /**
  * Provides sequential execution of an executor across array items.
@@ -50,8 +50,7 @@ import { toNumber } from './toNumber';
  *   settled results.
  * @template T - The element type of the array.
  */
-// eslint-disable-next-line import/prefer-default-export
-export function sequential<T>(
+export default function sequential<T>(
   array: T[],
   executor: ArrayExecutor<T>,
   concurrency: number = 0,

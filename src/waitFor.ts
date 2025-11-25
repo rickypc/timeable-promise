@@ -5,7 +5,7 @@
  * @license AGPL-3.0-or-later
  */
 
-import { untilSettledOrTimedOut } from './untilSettledOrTimedOut';
+import untilSettledOrTimedOut from './untilSettledOrTimedOut';
 
 /**
  * Wait until a predicate returns true or timeout occurs.
@@ -31,8 +31,7 @@ import { untilSettledOrTimedOut } from './untilSettledOrTimedOut';
  * @returns {Promise<void>} A promise that resolves when predicate is true or
  *   timeout expires.
  */
-// eslint-disable-next-line import/prefer-default-export
-export function waitFor(
+export default function waitFor(
   predicate: () => boolean,
   timeout: number,
   interval: number = 1000,

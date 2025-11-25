@@ -5,7 +5,7 @@
  * @license AGPL-3.0-or-later
  */
 
-import { append } from '#root/src/append';
+import append from '#root/src/append';
 
 describe('append', () => {
   it('should append numbers to an existing array', () => {

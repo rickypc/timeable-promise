@@ -5,8 +5,8 @@
  * @license AGPL-3.0-or-later
  */
 
-import { consecutives } from '#root/src/consecutives';
-import { run } from '#root/tests/resilient/runner';
+import consecutives from '#root/src/consecutives';
+import run from '#root/tests/resilient/runner';
 
 describe('consecutives', () => {
   it('should be resilient', async () => {

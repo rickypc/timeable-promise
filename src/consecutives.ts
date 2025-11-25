@@ -5,10 +5,10 @@
  * @license AGPL-3.0-or-later
  */
 
-import { append } from './append';
+import append from './append';
 import { type ArrayExecutor, type Settled } from './outcome';
-import { consecutive } from './consecutive';
-import { toNumber } from './toNumber';
+import consecutive from './consecutive';
+import toNumber from './toNumber';
 
 /**
  * Runs the executor sequentially across multiple groups of an array.
@@ -49,8 +49,7 @@ import { toNumber } from './toNumber';
  *   settled results.
  * @template T - The element type of the array.
  */
-// eslint-disable-next-line import/prefer-default-export
-export function consecutives<T>(
+export default function consecutives<T>(
   array: T[],
   executor: ArrayExecutor<T>,
   concurrency: number = 0,

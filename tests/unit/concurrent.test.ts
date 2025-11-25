@@ -5,7 +5,7 @@
  * @license AGPL-3.0-or-later
  */
 
-import { concurrent } from '#root/src/concurrent';
+import concurrent from '#root/src/concurrent';
 
 describe('concurrent', () => {
   it('should fulfilled with concurrency', async () => {

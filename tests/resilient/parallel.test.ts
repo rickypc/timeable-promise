@@ -5,8 +5,8 @@
  * @license AGPL-3.0-or-later
  */
 
-import { parallel } from '#root/src/parallel';
-import { run } from '#root/tests/resilient/runner';
+import parallel from '#root/src/parallel';
+import run from '#root/tests/resilient/runner';
 
 describe('parallel', () => {
   it('should be resilient', async () => {

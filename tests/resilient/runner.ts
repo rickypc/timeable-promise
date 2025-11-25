@@ -25,7 +25,7 @@ export type ResilientOptions = {
  * @returns {Promise<boolean>} The leak resilient status.
  * @template T - The type of the resolved return value.
  */
-export async function run<T>(
+export default async function run<T>(
   fn: () => T,
   {
     concurrency = 200,

@@ -5,8 +5,8 @@
  * @license AGPL-3.0-or-later
  */
 
-import { poll } from '#root/src/poll';
-import { run } from '#root/tests/resilient/runner';
+import poll from '#root/src/poll';
+import run from '#root/tests/resilient/runner';
 
 describe('poll', () => {
   it('should be resilient', async () => {

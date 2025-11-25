@@ -5,7 +5,7 @@
  * @license AGPL-3.0-or-later
  */
 
-import { parallel } from '#root/src/parallel';
+import parallel from '#root/src/parallel';
 
 describe('parallel', () => {
   it('should fulfilled with concurrency', async () => {

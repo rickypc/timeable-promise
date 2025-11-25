@@ -102,16 +102,17 @@
  * class poll,sleep,waitFor,untilSettledOrTimedOut,chunk utility;
  * ```
  */
-export * from './chunk';
-export * from './concurrent';
-export * from './concurrents';
-export * from './consecutive';
-export * from './consecutives';
-export { type ArrayExecutor, type Settled } from './outcome';
-export * from './parallel';
-export * from './poll';
-export * from './sequential';
-export * from './sleep';
-export * from './toNumber';
-export * from './untilSettledOrTimedOut';
-export * from './waitFor';
+export { default as append } from './append';
+export { default as chunk } from './chunk';
+export { default as concurrent } from './concurrent';
+export { default as concurrents } from './concurrents';
+export { default as consecutive } from './consecutive';
+export { default as consecutives } from './consecutives';
+export { type ArrayExecutor, default as outcome, type Settled } from './outcome';
+export { default as parallel } from './parallel';
+export { default as poll, type PollExecutor, type PollHandle } from './poll';
+export { default as sequential } from './sequential';
+export { default as sleep } from './sleep';
+export { default as toNumber } from './toNumber';
+export { type PromiseExecutor, type TimeoutExecutor, default as untilSettledOrTimedOut } from './untilSettledOrTimedOut';
+export { default as waitFor } from './waitFor';

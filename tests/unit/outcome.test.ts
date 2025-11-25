@@ -5,7 +5,7 @@
  * @license AGPL-3.0-or-later
  */
 
-import { type ArrayExecutor, outcome } from '#root/src/outcome';
+import outcome, { type ArrayExecutor } from '#root/src/outcome';
 
 describe('outcome', () => {
   it('should resolve with fulfilled status and value', async () => {

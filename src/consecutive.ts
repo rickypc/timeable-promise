@@ -5,8 +5,8 @@
  * @license AGPL-3.0-or-later
  */
 
-import { type ArrayExecutor, outcome, type Settled } from './outcome';
-import { toNumber } from './toNumber';
+import outcome, { type ArrayExecutor, type Settled } from './outcome';
+import toNumber from './toNumber';
 
 /**
  * Runs the executor sequentially across items in a single array.
@@ -48,8 +48,7 @@ import { toNumber } from './toNumber';
  *   settled results.
  * @template T - The element type of the array.
  */
-// eslint-disable-next-line import/prefer-default-export
-export function consecutive<T>(
+export default function consecutive<T>(
   array: T[],
   executor: ArrayExecutor<T>,
   concurrency: number = 0,

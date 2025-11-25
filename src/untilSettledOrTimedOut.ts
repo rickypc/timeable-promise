@@ -62,7 +62,7 @@ export type TimeoutExecutor<T> = (
  *   or timeoutExecutor result.
  * @template T - The type of the resolved return value.
  */
-export function untilSettledOrTimedOut<T>(
+export default function untilSettledOrTimedOut<T>(
   executor: PromiseExecutor<T>,
   timeoutExecutor: TimeoutExecutor<T>,
   timeout: number,

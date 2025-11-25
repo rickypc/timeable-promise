@@ -5,9 +5,9 @@
  * @license AGPL-3.0-or-later
  */
 
-import { run } from '#root/tests/resilient/runner';
+import run from '#root/tests/resilient/runner';
 
-const { examples } = require('#root/src/example');
+const example = require('#root/src/example');
 
 describe('example.ts', () => {
   it('should be resilient', async () => {
@@ -17,7 +17,7 @@ describe('example.ts', () => {
     // eslint-disable-next-line no-console
     console.log = () => {};
     // 60000ns.
-    expect(await run(async () => examples(), { leak: 3072, perf: 0.0060 })).toBeTruthy();
+    expect(await run(async () => example(), { leak: 3072, perf: 0.0060 })).toBeTruthy();
     // eslint-disable-next-line no-console
     console.log = original;
   });

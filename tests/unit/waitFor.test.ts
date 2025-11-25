@@ -6,7 +6,7 @@
  */
 
 import { hrtimeToMs } from '#root/tests/utils';
-import { waitFor } from '#root/src/waitFor';
+import waitFor from '#root/src/waitFor';
 
 describe('waitFor', () => {
   afterEach(() => jest.useRealTimers());

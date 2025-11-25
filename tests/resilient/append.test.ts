@@ -5,8 +5,8 @@
  * @license AGPL-3.0-or-later
  */
 
-import { append } from '#root/src/append';
-import { run } from '#root/tests/resilient/runner';
+import append from '#root/src/append';
+import run from '#root/tests/resilient/runner';
 
 describe('append', () => {
   it('should be resilient', async () => {

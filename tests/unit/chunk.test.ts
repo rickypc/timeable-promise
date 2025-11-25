@@ -5,7 +5,7 @@
  * @license AGPL-3.0-or-later
  */
 
-import { chunk } from '#root/src/chunk';
+import chunk from '#root/src/chunk';
 
 describe('chunk', () => {
   it('should return chunked array', () => {

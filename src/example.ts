@@ -20,7 +20,7 @@ const {
   waitFor,
 } = require('timeable-promise');
 
-module.exports.examples = async (): Promise<string> => {
+module.exports = async (): Promise<string> => {
   let flat: string[] | null = ['a', 'b', 'c'];
   let nested: string[][] | null = [['a', 'b'], ['c']];
 
@@ -124,5 +124,5 @@ module.exports.examples = async (): Promise<string> => {
 // Auto-run only when executed directly.
 // istanbul ignore if
 if (require.main === module) {
-  module.exports.examples();
+  module.exports();
 }

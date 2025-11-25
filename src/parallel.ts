@@ -6,10 +6,10 @@
  */
 
 import { type ArrayExecutor, type Settled } from './outcome';
-import { chunk } from './chunk';
-import { concurrent } from './concurrent';
-import { concurrents } from './concurrents';
-import { toNumber } from './toNumber';
+import chunk from './chunk';
+import concurrent from './concurrent';
+import concurrents from './concurrents';
+import toNumber from './toNumber';
 
 /**
  * Provides parallel execution of an executor across array items.
@@ -50,8 +50,7 @@ import { toNumber } from './toNumber';
  *   results.
  * @template T - The element type of the array.
  */
-// eslint-disable-next-line import/prefer-default-export
-export function parallel<T>(
+export default function parallel<T>(
   array: T[],
   executor: ArrayExecutor<T>,
   concurrency: number = 0,

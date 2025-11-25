@@ -5,8 +5,8 @@
  * @license AGPL-3.0-or-later
  */
 
-import { poll } from '#root/src/poll';
-import { sleep } from '#root/src/sleep';
+import poll from '#root/src/poll';
+import sleep from '#root/src/sleep';
 
 describe('poll', () => {
   afterEach(() => jest.useRealTimers());

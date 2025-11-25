@@ -5,8 +5,8 @@
  * @license AGPL-3.0-or-later
  */
 
-import { chunk } from '#root/src/chunk';
-import { run } from '#root/tests/resilient/runner';
+import chunk from '#root/src/chunk';
+import run from '#root/tests/resilient/runner';
 
 describe('chunk', () => {
   it('should be resilient', async () => {

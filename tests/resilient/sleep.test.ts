@@ -5,8 +5,8 @@
  * @license AGPL-3.0-or-later
  */
 
-import { run } from '#root/tests/resilient/runner';
-import { sleep } from '#root/src/sleep';
+import run from '#root/tests/resilient/runner';
+import sleep from '#root/src/sleep';
 
 describe('sleep', () => {
   it('should be resilient', async () => {

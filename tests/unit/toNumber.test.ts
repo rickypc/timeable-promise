@@ -5,7 +5,7 @@
  * @license AGPL-3.0-or-later
  */
 
-import { toNumber } from '#root/src/toNumber';
+import toNumber from '#root/src/toNumber';
 
 describe('toNumber', () => {
   it.each`

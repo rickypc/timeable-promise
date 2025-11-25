@@ -38,7 +38,7 @@ export type PollHandle = {
  *   the beginning (default = false).
  * @returns {PollHandle} An object with a `stop` function to end polling.
  */
-export function poll(
+export default function poll(
   executor: PollExecutor,
   interval: number = 1000,
   immediately: boolean = false,

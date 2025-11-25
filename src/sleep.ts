@@ -17,8 +17,7 @@
  * @param {number} timeout - Timeout in milliseconds.
  * @returns {Promise<void>} A promise that resolves after the given timeout.
  */
-// eslint-disable-next-line import/prefer-default-export
-export function sleep(timeout: number): Promise<void> {
+export default function sleep(timeout: number): Promise<void> {
   return new Promise((resolve) => {
     setTimeout(resolve, timeout);
   });

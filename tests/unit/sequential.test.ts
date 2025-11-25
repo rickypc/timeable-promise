@@ -5,7 +5,7 @@
  * @license AGPL-3.0-or-later
  */
 
-import { sequential } from '#root/src/sequential';
+import sequential from '#root/src/sequential';
 
 describe('sequential', () => {
   it('should fulfilled with concurrency', async () => {

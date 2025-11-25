@@ -5,13 +5,13 @@
  * @license AGPL-3.0-or-later
  */
 
-const { examples } = require('#root/src/example');
+const example = require('#root/src/example');
 
 describe('example.ts', () => {
   it('runs the example and returns the expected string', async () => {
     const spy = jest.spyOn(console, 'log').mockImplementation(() => {});
 
-    const result = await examples();
+    const result = await example();
 
     expect(result).toBe('Timeable Promise Examples');
     expect(spy).toHaveBeenNthCalledWith(1, '1. Chunk ->', [[1, 2], [3, 4]]);

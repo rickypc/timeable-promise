@@ -5,8 +5,8 @@
  * @license AGPL-3.0-or-later
  */
 
-import { sleep } from '#root/src/sleep';
-import { untilSettledOrTimedOut } from '#root/src/untilSettledOrTimedOut';
+import sleep from '#root/src/sleep';
+import untilSettledOrTimedOut from '#root/src/untilSettledOrTimedOut';
 
 describe('untilSettledOrTimedOut', () => {
   afterEach(() => jest.useRealTimers());

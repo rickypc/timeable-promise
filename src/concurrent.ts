@@ -6,7 +6,7 @@
  */
 
 import { type ArrayExecutor, type Settled } from './outcome';
-import { chunk } from './chunk';
+import chunk from './chunk';
 
 /**
  * Runs the executor concurrently across items in a single array.
@@ -48,8 +48,7 @@ import { chunk } from './chunk';
  *   settled results.
  * @template T - The element type of the array.
  */
-// eslint-disable-next-line import/prefer-default-export
-export function concurrent<T>(
+export default function concurrent<T>(
   array: T[],
   executor: ArrayExecutor<T>,
   concurrency: number = 0,

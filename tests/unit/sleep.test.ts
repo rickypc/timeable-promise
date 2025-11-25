@@ -6,7 +6,7 @@
  */
 
 import { hrtimeToMs } from '#root/tests/utils';
-import { sleep } from '#root/src/sleep';
+import sleep from '#root/src/sleep';
 
 describe('sleep', () => {
   afterEach(() => jest.useRealTimers());

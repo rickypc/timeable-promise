@@ -20,8 +20,7 @@
  *   or the original array if size is 0.
  * @template T - The element type of the array.
  */
-// eslint-disable-next-line import/prefer-default-export
-export function chunk<T>(array: T[], size: number = 0): T[] | T[][] {
+export default function chunk<T>(array: T[], size: number = 0): T[] | T[][] {
   if (size > 0) {
     const length = array.length || 0;
     const response: T[][] = new Array(Math.ceil(length / size));
