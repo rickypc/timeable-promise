@@ -103,7 +103,7 @@ module.exports.examples = async (): Promise<string> => {
     },
     // eslint-disable-next-line no-unused-vars
     (_: unknown, reject: (_: Error) => void) => reject(Error('timeout')),
-    1,
+    2,
   ).catch(() => false);
   // eslint-disable-next-line no-console
   console.log('12. Timeout -> took too long -> rejected -> return', timedOut);

@@ -6,6 +6,7 @@
  */
 
 import { HeapDiff } from '@airbnb/node-memwatch';
+import { hrtimeToMs } from '#root/tests/utils';
 import { Suite } from 'bench-node';
 
 export type ResilientOptions = {
@@ -15,25 +16,6 @@ export type ResilientOptions = {
   leak?: number;
   perf?: number;
 };
-
-/**
- * Converts a high-resolution time tuple from `process.hrtime()` into
- * milliseconds.
- * @example
- * _Convert to ms:_
- * ```ts
- * const start = process.hrtime();
- * // ... some operation ...
- * const elapsedMs = hrtimeToMs(process.hrtime(start));
- * console.log(`Elapsed: ${elapsedMs}ms`);
- * ```
- * @param {[number, number]} hrtime - A tuple `[seconds, nanoseconds]`
- *   returned by `process.hrtime()`.
- * @returns {number} The total elapsed time in milliseconds.
- */
-export function hrtimeToMs(hrtime: [number, number]): number {
-  return (hrtime[0] * 1000000000 + hrtime[1]) / 1000000;
-}
 
 /**
  * Run fn under stress and check memory resiliency.
@@ -94,17 +76,15 @@ export async function run<T>(
     const diff = heapDiff.end();
     const end = process.hrtime(begin);
     if (errors.length) {
-      if (verbose) {
-        // eslint-disable-next-line no-console
-        console.error(`--- ${testName}: Runner Errors ---`);
-        // eslint-disable-next-line no-console
-        errors.forEach((error) => console.error(error));
-      }
+      // eslint-disable-next-line no-console
+      console.error(`--- ${testName}: Runner Errors ---`);
+      // eslint-disable-next-line no-console
+      errors.forEach((error) => console.error(error));
       return false;
     }
     const growth = diff.change.details.reduce((acc, change: any) => acc + change['+'], 0);
     const response = growth < leak;
-    if (verbose) {
+    if (!response || verbose) {
       // eslint-disable-next-line no-console
       console.info(`${testName}: Growth=${growth} | Threshold=${leak} | Duration=${hrtimeToMs(end)}ms | ${response ? 'RESILIENT ✅' : 'LEAK ❌'}`);
     }
@@ -130,7 +110,7 @@ export async function run<T>(
     // After end assignment.
     const duration = hrtimeToMs(end);
     const response = totalTime < perf;
-    if (verbose) {
+    if (!response || verbose) {
       // eslint-disable-next-line no-console
       console.info(`${testName}: Total=${totalTime} | Threshold=${perf} | Duration=${duration}ms | ${response ? 'FAST ✅' : 'SLOW ❌'}\n`);
     }

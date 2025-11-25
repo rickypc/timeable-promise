@@ -5,9 +5,8 @@
  * @license AGPL-3.0-or-later
  */
 
+import { hrtimeToMs } from '#root/tests/utils';
 import { waitFor } from '#root/src/waitFor';
-
-const hrtimeToMs = (value: number[]) => (value[0] * 1000000000 + value[1]) / 1000000;
 
 describe('waitFor', () => {
   afterEach(() => jest.useRealTimers());
