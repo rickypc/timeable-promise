@@ -9,16 +9,12 @@ import { hrtimeToMs } from '#root/tests/utils';
 import sleep from '#root/src/sleep';
 
 describe('sleep', () => {
-  afterEach(() => jest.useRealTimers());
-  beforeEach(() => jest.useFakeTimers());
-
-  test('should sleep', async () => {
+  // Concurrent for style; single test runs like sequential.
+  test.concurrent('should idle', async () => {
     const begin = process.hrtime();
-    const promise = sleep(100);
-    await jest.advanceTimersByTimeAsync(100);
-    await promise;
+    await sleep(1);
     const end = process.hrtime(begin);
 
-    expect(hrtimeToMs(end)).toBeGreaterThan(50);
+    expect(hrtimeToMs(end)).toBeGreaterThan(0.5);
   });
 });

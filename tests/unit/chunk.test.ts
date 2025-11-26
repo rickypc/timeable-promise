@@ -8,16 +8,16 @@
 import chunk from '#root/src/chunk';
 
 describe('chunk', () => {
-  test('should return chunked array', () => {
+  test.concurrent('should return chunked array', () => {
     expect(chunk([1, 2, 3], 2)).toEqual([[1, 2], [3]]);
   });
 
-  test('should return original array', () => {
+  test.concurrent('should return original array', () => {
     expect(chunk([1, 2, 3])).toEqual([1, 2, 3]);
     expect(chunk(undefined as any)).toBeUndefined();
   });
 
-  test('should return empty array', () => {
+  test.concurrent('should return empty array', () => {
     expect(chunk('' as any, 2)).toEqual([]);
   });
 });

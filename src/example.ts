@@ -47,14 +47,14 @@ module.exports = async (): Promise<string> => {
   // eslint-disable-next-line no-console
   console.log('6. Parallel -> ran', flat.join(', '), 'in parallel -> all fulfilled');
 
-  let timer = poll(() => {}, 1);
-  setTimeout(() => {
-    timer.stop();
-    // Cleanups.
-    timer = null;
-  }, 3);
+  let timer = poll(() => {}, 2);
+  // Test-only wait; real-world may not await.
+  await sleep(3);
+  timer.stop();
   // eslint-disable-next-line no-console
   console.log('7. Poll -> ticked repeatedly until stopped');
+  // Cleanups.
+  timer = null;
 
   await sequential(flat, async (value: number) => value);
   // eslint-disable-next-line no-console
@@ -93,9 +93,9 @@ module.exports = async (): Promise<string> => {
   let timedOut = await untilSettledOrTimedOut(
     // eslint-disable-next-line no-unused-vars
     async (resolve: (_: boolean) => void, _: unknown, pending: () => boolean) => {
-      const value = await new Promise<boolean>((done) => {
-        setTimeout(done, 3, true);
-      });
+      // Test-only delay to simulate long processing; real-world may not await.
+      await sleep(3);
+      const value = true;
       // istanbul ignore if
       if (pending()) {
         resolve(value);

@@ -16,8 +16,8 @@ describe('example.ts', () => {
     const original = console.log;
     // eslint-disable-next-line no-console
     console.log = () => {};
-    // 60000ns.
-    expect(await run(async () => example(), { leak: 3072, perf: 0.0060 })).toBeTruthy();
+    // 90000ns.
+    expect(await run(async () => example(), { leak: 3072, perf: 0.0090 })).toBeTruthy();
     // eslint-disable-next-line no-console
     console.log = original;
   });

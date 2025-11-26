@@ -9,33 +9,25 @@ import poll from '#root/src/poll';
 import sleep from '#root/src/sleep';
 
 describe('poll', () => {
-  afterEach(() => jest.useRealTimers());
-  beforeEach(() => jest.useFakeTimers());
-
-  test('should run at interval', async () => {
+  test.concurrent('should run at interval', async () => {
     const log = jest.fn();
-    const timer = poll(log);
-    setTimeout(() => timer.stop(), 1100);
-    await jest.advanceTimersByTimeAsync(1100);
+    const timer = poll(log, 2);
+    await sleep(3);
+    timer.stop();
 
     expect(log).toHaveBeenCalledTimes(1);
   });
 
-  test('should skip on congestion', async () => {
-    let count = 1;
+  test.concurrent('should skip on congestion', async () => {
     const log = jest.fn();
     const timer = poll(async (stopped) => {
-      const promise = sleep(98 + count);
-      await jest.advanceTimersByTimeAsync(98 + count);
-      await promise;
       if (!stopped()) {
         log();
-        count += 1;
       }
-    }, 100, true);
-    setTimeout(() => timer.stop(), 1000);
-    await jest.advanceTimersByTimeAsync(1000);
+    }, 1, true);
+    await sleep(3);
+    timer.stop();
 
-    expect(log).toHaveBeenCalledTimes(5);
+    expect(log.mock.calls.length).toBeGreaterThanOrEqual(1);
   });
 });

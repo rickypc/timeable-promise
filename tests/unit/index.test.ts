@@ -25,148 +25,100 @@ import {
 import { hrtimeToMs } from '#root/tests/utils';
 
 describe('index.ts', () => {
-  describe('append', () => {
-    test('should append numbers to an existing array', () => {
-      expect(append([1, 2], [3, 4])).toEqual([1, 2, 3, 4]);
-    });
+  test.concurrent('append should append numbers to an existing array', () => {
+    expect(append([1, 2], [3, 4])).toEqual([1, 2, 3, 4]);
   });
 
-  describe('chunk', () => {
-    test('should return chunked array', () => {
-      expect(chunk([1, 2, 3], 2)).toEqual([[1, 2], [3]]);
-    });
+  test.concurrent('chunk should return chunked array', () => {
+    expect(chunk([1, 2, 3], 2)).toEqual([[1, 2], [3]]);
   });
 
-  describe('concurrent', () => {
-    test('should fulfilled with concurrency', async () => {
-      expect(await concurrent(['a', 'b', 'c'], (value) => value, 2)).toEqual([
-        { status: 'fulfilled', value: ['a', 'b'] },
-        { status: 'fulfilled', value: ['c'] },
-      ]);
-    });
+  test.concurrent('concurrent should fulfilled with concurrency', async () => {
+    expect(await concurrent(['a', 'b', 'c'], (value) => value, 2)).toEqual([
+      { status: 'fulfilled', value: ['a', 'b'] },
+      { status: 'fulfilled', value: ['c'] },
+    ]);
   });
 
-  describe('concurrents', () => {
-    test('should fulfilled with concurrency', async () => {
-      expect(await concurrents([['a', 'b'], ['c']], (value) => value)).toEqual([
-        { status: 'fulfilled', value: 'a' },
-        { status: 'fulfilled', value: 'b' },
-        { status: 'fulfilled', value: 'c' },
-      ]);
-    }, 2);
+  test.concurrent('concurrents should fulfilled with concurrency', async () => {
+    expect(await concurrents([['a', 'b'], ['c']], (value) => value)).toEqual([
+      { status: 'fulfilled', value: 'a' },
+      { status: 'fulfilled', value: 'b' },
+      { status: 'fulfilled', value: 'c' },
+    ]);
+  }, 2);
+
+  test.concurrent('consecutive should fulfilled with concurrency', async () => {
+    expect(await consecutive(['a', 'b', 'c'], (value) => value, 2)).toEqual([
+      { status: 'fulfilled', value: ['a', 'b'] },
+      { status: 'fulfilled', value: ['c'] },
+    ]);
   });
 
-  describe('consecutive', () => {
-    test('should fulfilled with concurrency', async () => {
-      expect(await consecutive(['a', 'b', 'c'], (value) => value, 2)).toEqual([
-        { status: 'fulfilled', value: ['a', 'b'] },
-        { status: 'fulfilled', value: ['c'] },
-      ]);
-    });
+  test.concurrent('consecutives should fulfilled with concurrency', async () => {
+    expect(await consecutives([['a', 'b'], ['c']], (value) => value)).toEqual([
+      { status: 'fulfilled', value: 'a' },
+      { status: 'fulfilled', value: 'b' },
+      { status: 'fulfilled', value: 'c' },
+    ]);
+  }, 2);
+
+  test.concurrent('outcome should resolve with fulfilled status and value', async () => {
+    const executor: ArrayExecutor<number> = async (x: number, y: number) => x + y;
+    const result = await outcome(executor, 2, 3, [2]);
+    expect(result).toEqual({ status: 'fulfilled', value: 5 });
   });
 
-  describe('consecutives', () => {
-    test('should fulfilled with concurrency', async () => {
-      expect(await consecutives([['a', 'b'], ['c']], (value) => value)).toEqual([
-        { status: 'fulfilled', value: 'a' },
-        { status: 'fulfilled', value: 'b' },
-        { status: 'fulfilled', value: 'c' },
-      ]);
-    }, 2);
+  test.concurrent('parallel should fulfilled with concurrency', async () => {
+    expect(await parallel(['a', 'b', 'c'], (value) => value, 2)).toEqual([
+      { status: 'fulfilled', value: ['a', 'b'] },
+      { status: 'fulfilled', value: ['c'] },
+    ]);
+  }, 2);
+
+  test.concurrent('poll should run at interval', async () => {
+    const log = jest.fn();
+    const timer = poll(log, 2);
+    await sleep(3);
+    timer.stop();
+
+    expect(log).toHaveBeenCalledTimes(1);
   });
 
-  describe('outcome', () => {
-    test('should resolve with fulfilled status and value', async () => {
-      const executor: ArrayExecutor<number> = async (x: number, y: number) => x + y;
+  test.concurrent('sequential should fulfilled with concurrency', async () => {
+    expect(await sequential(['a', 'b', 'c'], (value) => value, 2)).toEqual([
+      { status: 'fulfilled', value: ['a', 'b'] },
+      { status: 'fulfilled', value: ['c'] },
+    ]);
+  }, 2);
 
-      const result = await outcome(executor, 2, 3, [2]);
+  test.concurrent('sleep should idle', async () => {
+    const begin = process.hrtime();
+    await sleep(1);
+    const end = process.hrtime(begin);
 
-      expect(result).toEqual({ status: 'fulfilled', value: 5 });
-    });
+    expect(hrtimeToMs(end)).toBeGreaterThan(0.5);
   });
 
-  describe('parallel', () => {
-    test('should fulfilled with concurrency', async () => {
-      expect(await parallel(['a', 'b', 'c'], (value) => value, 2)).toEqual([
-        { status: 'fulfilled', value: ['a', 'b'] },
-        { status: 'fulfilled', value: ['c'] },
-      ]);
-    }, 2);
+  test.concurrent('toNumber should return expected', () => {
+    expect(toNumber('1')).toBe(1);
   });
 
-  describe('poll', () => {
-    test('should run at interval', async () => {
-      jest.useFakeTimers();
-      const log = jest.fn();
-      const timer = poll(log);
-      setTimeout(() => timer.stop(), 1100);
-      await jest.advanceTimersByTimeAsync(1100);
-
-      expect(log).toHaveBeenCalledTimes(1);
-      jest.useRealTimers();
-    });
+  test.concurrent('untilSettledOrTimedOut should return resolved', async () => {
+    const actual = await untilSettledOrTimedOut(async (resolve, _, pending) => {
+      expect(pending()).toBeTruthy();
+      resolve('executor');
+    }, (resolve) => resolve('timeout'), 1);
+    expect(actual).toBe('executor');
   });
 
-  describe('sequential', () => {
-    test('should fulfilled with concurrency', async () => {
-      expect(await sequential(['a', 'b', 'c'], (value) => value, 2)).toEqual([
-        { status: 'fulfilled', value: ['a', 'b'] },
-        { status: 'fulfilled', value: ['c'] },
-      ]);
-    }, 2);
-  });
+  test.concurrent('waitFor should return resolved', async () => {
+    let inflight = true;
+    setTimeout(() => { inflight = false; }, 1);
+    const begin = process.hrtime();
+    await waitFor(() => !inflight, 2, 1);
+    const end = process.hrtime(begin);
 
-  describe('sleep', () => {
-    test('should sleep', async () => {
-      jest.useFakeTimers();
-      const begin = process.hrtime();
-      const promise = sleep(100);
-      await jest.advanceTimersByTimeAsync(100);
-      await promise;
-      const end = process.hrtime(begin);
-
-      expect(hrtimeToMs(end)).toBeGreaterThan(50);
-      jest.useRealTimers();
-    });
-  });
-
-  describe('toNumber', () => {
-    test('should return expected', () => {
-      expect(toNumber('1')).toBe(1);
-    });
-  });
-
-  describe('untilSettledOrTimedOut', () => {
-    test('should return resolved', async () => {
-      jest.useFakeTimers();
-      const actual = await untilSettledOrTimedOut(async (resolve, _, pending) => {
-        const promise = sleep(10);
-        await jest.advanceTimersByTimeAsync(10);
-        await promise;
-        expect(pending()).toBeTruthy();
-        resolve('executor');
-      }, (resolve) => resolve('timeout'), 100);
-      expect(actual).toBe('executor');
-      jest.useRealTimers();
-    });
-  });
-
-  describe('waitFor', () => {
-    test('should return resolved', async () => {
-      jest.useFakeTimers();
-      let inflight = true;
-      setTimeout(() => {
-        inflight = false;
-      }, 50);
-
-      const begin = process.hrtime();
-      const promise = waitFor(() => !inflight, 100, 50);
-      await jest.advanceTimersByTimeAsync(50);
-      await promise;
-      const end = process.hrtime(begin);
-
-      expect(hrtimeToMs(end)).toBeLessThan(100);
-      jest.useRealTimers();
-    });
+    expect(hrtimeToMs(end)).toBeLessThan(5);
   });
 });

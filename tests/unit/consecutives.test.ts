@@ -8,7 +8,7 @@
 import consecutives from '#root/src/consecutives';
 
 describe('consecutives', () => {
-  test('should fulfilled with concurrency', async () => {
+  test.concurrent('should fulfilled with concurrency', async () => {
     expect(await consecutives([['a', 'b'], ['c']], (value) => value)).toEqual([
       { status: 'fulfilled', value: 'a' },
       { status: 'fulfilled', value: 'b' },
@@ -16,7 +16,7 @@ describe('consecutives', () => {
     ]);
   }, 2);
 
-  test('should fulfilled without concurrency', async () => {
+  test.concurrent('should fulfilled without concurrency', async () => {
     expect(await consecutives([['a', 'b'], ['c']], (value) => value)).toEqual([
       { status: 'fulfilled', value: 'a' },
       { status: 'fulfilled', value: 'b' },
@@ -24,7 +24,7 @@ describe('consecutives', () => {
     ]);
   });
 
-  test('should rejected with concurrency', async () => {
+  test.concurrent('should rejected with concurrency', async () => {
     expect(await consecutives([['a', 'b'], ['c']], () => Promise.reject(Error('error')), 2))
       .toEqual([
         { reason: expect.any(Error), status: 'rejected' },
@@ -32,7 +32,7 @@ describe('consecutives', () => {
       ]);
   });
 
-  test('should rejected without concurrency', async () => {
+  test.concurrent('should rejected without concurrency', async () => {
     expect(await consecutives([['a', 'b'], ['c']], () => Promise.reject(Error('error'))))
       .toEqual([
         { reason: expect.any(Error), status: 'rejected' },

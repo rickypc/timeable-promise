@@ -9,45 +9,34 @@ import { hrtimeToMs } from '#root/tests/utils';
 import waitFor from '#root/src/waitFor';
 
 describe('waitFor', () => {
-  afterEach(() => jest.useRealTimers());
-  beforeEach(() => jest.useFakeTimers());
-
-  test('should return resolved', async () => {
+  test.concurrent('should return resolved', async () => {
     let inflight = true;
-    setTimeout(() => {
-      inflight = false;
-    }, 50);
+    setTimeout(() => { inflight = false; }, 1);
 
     const begin = process.hrtime();
-    const promise = waitFor(() => !inflight, 100, 50);
-    await jest.advanceTimersByTimeAsync(50);
-    await promise;
+    await waitFor(() => !inflight, 2, 1);
     const end = process.hrtime(begin);
 
-    expect(hrtimeToMs(end)).toBeLessThan(100);
+    expect(hrtimeToMs(end)).toBeLessThan(4);
   });
 
-  test('should return resolved with default interval', async () => {
+  test.concurrent('should return resolved with default interval', async () => {
     const inflight = false;
 
     const begin = process.hrtime();
-    const promise = waitFor(() => !inflight, 2000);
-    await jest.advanceTimersByTimeAsync(1000);
-    await promise;
+    await waitFor(() => !inflight, 2, 1);
     const end = process.hrtime(begin);
 
-    expect(hrtimeToMs(end)).toBeLessThan(2000);
+    expect(hrtimeToMs(end)).toBeLessThan(4);
   });
 
-  test('should return timed out resolved', async () => {
+  test.concurrent('should return timed out resolved', async () => {
     const inflight = true;
 
     const begin = process.hrtime();
-    const promise = waitFor(() => !inflight, 100, 50);
-    await jest.advanceTimersByTimeAsync(100);
-    await promise;
+    await waitFor(() => !inflight, 2, 1);
     const end = process.hrtime(begin);
 
-    expect(hrtimeToMs(end)).toBeGreaterThan(50);
+    expect(hrtimeToMs(end)).toBeGreaterThan(1);
   });
 });

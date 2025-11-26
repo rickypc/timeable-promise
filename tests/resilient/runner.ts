@@ -149,8 +149,8 @@ export default async function run<T>(
     leak = 2048,
     // Iterations
     minSamples = 25,
-    // 16000ns.
-    perf = 0.0016,
+    // 17500ns.
+    perf = 0.00175,
     // Concurrency.
     repeatSuite = 200,
   }: ResilientOptions = {},

@@ -8,7 +8,8 @@
 const example = require('#root/src/example');
 
 describe('example.ts', () => {
-  test('runs the example and returns the expected string', async () => {
+  // Concurrent for style; single test runs like sequential.
+  test.concurrent('runs the example and returns the expected string', async () => {
     const spy = jest.spyOn(console, 'log').mockImplementation(() => {});
 
     const result = await example();

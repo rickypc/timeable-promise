@@ -82,13 +82,10 @@ describe('index.ts', () => {
   describe('poll', () => {
     test('should be resilient', async () => {
       expect(await run(async () => {
-        const timer = poll(() => { });
-        await new Promise<void>((resolve) => {
-          setTimeout(() => {
-            timer.stop();
-            resolve();
-          }, 0);
-        });
+        const timer = poll(() => {});
+        // 1ns.
+        await sleep(0.000001);
+        timer.stop();
       })).toBeTruthy();
     });
   });
