@@ -9,7 +9,7 @@ import run from '#root/tests/resilient/runner';
 import untilSettledOrTimedOut from '#root/src/untilSettledOrTimedOut';
 
 describe('untilSettledOrTimedOut', () => {
-  it('should be resilient', async () => {
+  test('should be resilient', async () => {
     expect(await run(async () => {
       await untilSettledOrTimedOut(
         (resolve) => resolve('executor'),

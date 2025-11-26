@@ -9,7 +9,7 @@ import run from '#root/tests/resilient/runner';
 import sleep from '#root/src/sleep';
 
 describe('sleep', () => {
-  it('should be resilient', async () => {
+  test('should be resilient', async () => {
     // 1ns.
     expect(await run(() => sleep(0.000001))).toBeTruthy();
   });

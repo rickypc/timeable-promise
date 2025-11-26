@@ -9,7 +9,7 @@ import outcome, { type ArrayExecutor } from '#root/src/outcome';
 import run from '#root/tests/resilient/runner';
 
 describe('outcome', () => {
-  it('should be resilient', async () => {
+  test('should be resilient', async () => {
     const executor: ArrayExecutor<number> = async (x: number, y: number) => x + y;
     expect(await run(() => outcome(executor, 2, 3, [2]))).toBeTruthy();
   });

@@ -12,7 +12,7 @@ describe('waitFor', () => {
   afterEach(() => jest.useRealTimers());
   beforeEach(() => jest.useFakeTimers());
 
-  it('should return resolved', async () => {
+  test('should return resolved', async () => {
     let inflight = true;
     setTimeout(() => {
       inflight = false;
@@ -27,7 +27,7 @@ describe('waitFor', () => {
     expect(hrtimeToMs(end)).toBeLessThan(100);
   });
 
-  it('should return resolved with default interval', async () => {
+  test('should return resolved with default interval', async () => {
     const inflight = false;
 
     const begin = process.hrtime();
@@ -39,7 +39,7 @@ describe('waitFor', () => {
     expect(hrtimeToMs(end)).toBeLessThan(2000);
   });
 
-  it('should return timed out resolved', async () => {
+  test('should return timed out resolved', async () => {
     const inflight = true;
 
     const begin = process.hrtime();

@@ -8,7 +8,7 @@
 import concurrents from '#root/src/concurrents';
 
 describe('concurrents', () => {
-  it('should fulfilled with concurrency', async () => {
+  test('should fulfilled with concurrency', async () => {
     expect(await concurrents([['a', 'b'], ['c']], (value) => value)).toEqual([
       { status: 'fulfilled', value: 'a' },
       { status: 'fulfilled', value: 'b' },
@@ -16,7 +16,7 @@ describe('concurrents', () => {
     ]);
   }, 2);
 
-  it('should fulfilled without concurrency', async () => {
+  test('should fulfilled without concurrency', async () => {
     expect(await concurrents([['a', 'b'], ['c']], (value) => value)).toEqual([
       { status: 'fulfilled', value: 'a' },
       { status: 'fulfilled', value: 'b' },
@@ -24,7 +24,7 @@ describe('concurrents', () => {
     ]);
   });
 
-  it('should rejected with concurrency', async () => {
+  test('should rejected with concurrency', async () => {
     expect(await concurrents([['a', 'b'], ['c']], () => Promise.reject(Error('error')), 2))
       .toEqual([
         { reason: expect.any(Error), status: 'rejected' },
@@ -32,7 +32,7 @@ describe('concurrents', () => {
       ]);
   });
 
-  it('should rejected without concurrency', async () => {
+  test('should rejected without concurrency', async () => {
     expect(await concurrents([['a', 'b'], ['c']], () => Promise.reject(Error('error'))))
       .toEqual([
         { reason: expect.any(Error), status: 'rejected' },

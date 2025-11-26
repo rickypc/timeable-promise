@@ -9,7 +9,7 @@ import parallel from '#root/src/parallel';
 import run from '#root/tests/resilient/runner';
 
 describe('parallel', () => {
-  it('should be resilient', async () => {
+  test('should be resilient', async () => {
     expect(await run(() => parallel(['a', 'b', 'c'], (value) => value, 2)))
       .toBeTruthy();
   });

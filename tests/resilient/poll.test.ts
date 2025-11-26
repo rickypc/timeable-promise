@@ -9,7 +9,7 @@ import poll from '#root/src/poll';
 import run from '#root/tests/resilient/runner';
 
 describe('poll', () => {
-  it('should be resilient', async () => {
+  test('should be resilient', async () => {
     expect(await run(async () => {
       const timer = poll(() => {});
       await new Promise<void>((resolve) => {

@@ -8,7 +8,7 @@
 import toNumber from '#root/src/toNumber';
 
 describe('toNumber', () => {
-  it.each`
+  test.concurrent.each`
     value        | defaultValue | expected
     ${undefined}   ${0}           ${0}
     ${undefined}   ${1}           ${1}

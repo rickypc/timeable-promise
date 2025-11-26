@@ -12,7 +12,7 @@ describe('poll', () => {
   afterEach(() => jest.useRealTimers());
   beforeEach(() => jest.useFakeTimers());
 
-  it('should run at interval', async () => {
+  test('should run at interval', async () => {
     const log = jest.fn();
     const timer = poll(log);
     setTimeout(() => timer.stop(), 1100);
@@ -21,7 +21,7 @@ describe('poll', () => {
     expect(log).toHaveBeenCalledTimes(1);
   });
 
-  it('should skip on congestion', async () => {
+  test('should skip on congestion', async () => {
     let count = 1;
     const log = jest.fn();
     const timer = poll(async (stopped) => {

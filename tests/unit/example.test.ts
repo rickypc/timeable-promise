@@ -8,7 +8,7 @@
 const example = require('#root/src/example');
 
 describe('example.ts', () => {
-  it('runs the example and returns the expected string', async () => {
+  test('runs the example and returns the expected string', async () => {
     const spy = jest.spyOn(console, 'log').mockImplementation(() => {});
 
     const result = await example();

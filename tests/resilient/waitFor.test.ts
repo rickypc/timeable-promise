@@ -9,7 +9,7 @@ import run from '#root/tests/resilient/runner';
 import waitFor from '#root/src/waitFor';
 
 describe('waitFor', () => {
-  it('should be resilient', async () => {
+  test('should be resilient', async () => {
     // 1ns.
     expect(await run(() => waitFor(() => true, 0.000001, 0.000001))).toBeTruthy();
   });

@@ -12,7 +12,7 @@ describe('sleep', () => {
   afterEach(() => jest.useRealTimers());
   beforeEach(() => jest.useFakeTimers());
 
-  it('should sleep', async () => {
+  test('should sleep', async () => {
     const begin = process.hrtime();
     const promise = sleep(100);
     await jest.advanceTimersByTimeAsync(100);

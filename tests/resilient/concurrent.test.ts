@@ -9,7 +9,7 @@ import concurrent from '#root/src/concurrent';
 import run from '#root/tests/resilient/runner';
 
 describe('concurrent', () => {
-  it('should be resilient', async () => {
+  test('should be resilient', async () => {
     expect(await run(() => concurrent(['a', 'b', 'c'], (value) => value, 2)))
       .toBeTruthy();
   });

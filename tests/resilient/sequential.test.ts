@@ -9,7 +9,7 @@ import run from '#root/tests/resilient/runner';
 import sequential from '#root/src/sequential';
 
 describe('sequential', () => {
-  it('should be resilient', async () => {
+  test('should be resilient', async () => {
     expect(await run(() => sequential(['a', 'b', 'c'], (value) => value, 2)))
       .toBeTruthy();
   });

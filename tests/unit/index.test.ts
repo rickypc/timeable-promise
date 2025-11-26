@@ -26,20 +26,19 @@ import { hrtimeToMs } from '#root/tests/utils';
 
 describe('index.ts', () => {
   describe('append', () => {
-    it('should append numbers to an existing array', () => {
-      const result = append([1, 2], [3, 4]);
-      expect(result).toEqual([1, 2, 3, 4]);
+    test('should append numbers to an existing array', () => {
+      expect(append([1, 2], [3, 4])).toEqual([1, 2, 3, 4]);
     });
   });
 
   describe('chunk', () => {
-    it('should return chunked array', () => {
+    test('should return chunked array', () => {
       expect(chunk([1, 2, 3], 2)).toEqual([[1, 2], [3]]);
     });
   });
 
   describe('concurrent', () => {
-    it('should fulfilled with concurrency', async () => {
+    test('should fulfilled with concurrency', async () => {
       expect(await concurrent(['a', 'b', 'c'], (value) => value, 2)).toEqual([
         { status: 'fulfilled', value: ['a', 'b'] },
         { status: 'fulfilled', value: ['c'] },
@@ -48,7 +47,7 @@ describe('index.ts', () => {
   });
 
   describe('concurrents', () => {
-    it('should fulfilled with concurrency', async () => {
+    test('should fulfilled with concurrency', async () => {
       expect(await concurrents([['a', 'b'], ['c']], (value) => value)).toEqual([
         { status: 'fulfilled', value: 'a' },
         { status: 'fulfilled', value: 'b' },
@@ -58,7 +57,7 @@ describe('index.ts', () => {
   });
 
   describe('consecutive', () => {
-    it('should fulfilled with concurrency', async () => {
+    test('should fulfilled with concurrency', async () => {
       expect(await consecutive(['a', 'b', 'c'], (value) => value, 2)).toEqual([
         { status: 'fulfilled', value: ['a', 'b'] },
         { status: 'fulfilled', value: ['c'] },
@@ -67,7 +66,7 @@ describe('index.ts', () => {
   });
 
   describe('consecutives', () => {
-    it('should fulfilled with concurrency', async () => {
+    test('should fulfilled with concurrency', async () => {
       expect(await consecutives([['a', 'b'], ['c']], (value) => value)).toEqual([
         { status: 'fulfilled', value: 'a' },
         { status: 'fulfilled', value: 'b' },
@@ -77,7 +76,7 @@ describe('index.ts', () => {
   });
 
   describe('outcome', () => {
-    it('should resolve with fulfilled status and value', async () => {
+    test('should resolve with fulfilled status and value', async () => {
       const executor: ArrayExecutor<number> = async (x: number, y: number) => x + y;
 
       const result = await outcome(executor, 2, 3, [2]);
@@ -87,7 +86,7 @@ describe('index.ts', () => {
   });
 
   describe('parallel', () => {
-    it('should fulfilled with concurrency', async () => {
+    test('should fulfilled with concurrency', async () => {
       expect(await parallel(['a', 'b', 'c'], (value) => value, 2)).toEqual([
         { status: 'fulfilled', value: ['a', 'b'] },
         { status: 'fulfilled', value: ['c'] },
@@ -96,7 +95,7 @@ describe('index.ts', () => {
   });
 
   describe('poll', () => {
-    it('should run at interval', async () => {
+    test('should run at interval', async () => {
       jest.useFakeTimers();
       const log = jest.fn();
       const timer = poll(log);
@@ -109,7 +108,7 @@ describe('index.ts', () => {
   });
 
   describe('sequential', () => {
-    it('should fulfilled with concurrency', async () => {
+    test('should fulfilled with concurrency', async () => {
       expect(await sequential(['a', 'b', 'c'], (value) => value, 2)).toEqual([
         { status: 'fulfilled', value: ['a', 'b'] },
         { status: 'fulfilled', value: ['c'] },
@@ -118,7 +117,7 @@ describe('index.ts', () => {
   });
 
   describe('sleep', () => {
-    it('should sleep', async () => {
+    test('should sleep', async () => {
       jest.useFakeTimers();
       const begin = process.hrtime();
       const promise = sleep(100);
@@ -132,13 +131,13 @@ describe('index.ts', () => {
   });
 
   describe('toNumber', () => {
-    it('should return expected', () => {
+    test('should return expected', () => {
       expect(toNumber('1')).toBe(1);
     });
   });
 
   describe('untilSettledOrTimedOut', () => {
-    it('should return resolved', async () => {
+    test('should return resolved', async () => {
       jest.useFakeTimers();
       const actual = await untilSettledOrTimedOut(async (resolve, _, pending) => {
         const promise = sleep(10);
@@ -153,7 +152,7 @@ describe('index.ts', () => {
   });
 
   describe('waitFor', () => {
-    it('should return resolved', async () => {
+    test('should return resolved', async () => {
       jest.useFakeTimers();
       let inflight = true;
       setTimeout(() => {

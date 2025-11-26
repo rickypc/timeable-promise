@@ -9,7 +9,7 @@ import consecutive from '#root/src/consecutive';
 import run from '#root/tests/resilient/runner';
 
 describe('consecutive', () => {
-  it('should be resilient', async () => {
+  test('should be resilient', async () => {
     expect(await run(() => consecutive(['a', 'b', 'c'], (value) => value, 2)))
       .toBeTruthy();
   });

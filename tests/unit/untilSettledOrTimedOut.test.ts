@@ -12,7 +12,7 @@ describe('untilSettledOrTimedOut', () => {
   afterEach(() => jest.useRealTimers());
   beforeEach(() => jest.useFakeTimers());
 
-  it('should return resolved', async () => {
+  test('should return resolved', async () => {
     const actual = await untilSettledOrTimedOut(async (resolve, _, pending) => {
       const promise = sleep(10);
       await jest.advanceTimersByTimeAsync(10);
@@ -23,7 +23,7 @@ describe('untilSettledOrTimedOut', () => {
     expect(actual).toBe('executor');
   });
 
-  it('should return rejected', async () => {
+  test('should return rejected', async () => {
     const actual = await untilSettledOrTimedOut(async (_, reject, pending) => {
       const promise = sleep(10);
       await jest.advanceTimersByTimeAsync(10);
@@ -37,7 +37,7 @@ describe('untilSettledOrTimedOut', () => {
     expect(actual).toBeUndefined();
   });
 
-  it('should return timed out resolved', async () => {
+  test('should return timed out resolved', async () => {
     const actual = await untilSettledOrTimedOut(async (resolve, _, pending) => {
       const promise = sleep(200);
       await jest.advanceTimersByTimeAsync(200);
@@ -48,7 +48,7 @@ describe('untilSettledOrTimedOut', () => {
     expect(actual).toBe('timeout');
   });
 
-  it('should return timed out rejected', async () => {
+  test('should return timed out rejected', async () => {
     const actual = await untilSettledOrTimedOut(async (resolve, _, pending) => {
       const promise = sleep(200);
       await jest.advanceTimersByTimeAsync(200);

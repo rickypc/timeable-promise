@@ -10,7 +10,7 @@ import run from '#root/tests/resilient/runner';
 const example = require('#root/src/example');
 
 describe('example.ts', () => {
-  it('should be resilient', async () => {
+  test('should be resilient', async () => {
     // Use direct reassignment to avoid extra memory overhead in leak tests.
     // eslint-disable-next-line no-console
     const original = console.log;

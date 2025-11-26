@@ -5,43 +5,28 @@
  * @license AGPL-3.0-or-later
  */
 
-import outcome, { type ArrayExecutor } from '#root/src/outcome';
+import outcome from '#root/src/outcome';
 
 describe('outcome', () => {
-  it('should resolve with fulfilled status and value', async () => {
-    const executor: ArrayExecutor<number> = async (x: number, y: number) => x + y;
-
-    const result = await outcome(executor, 2, 3, [2]);
-
-    expect(result).toEqual({ status: 'fulfilled', value: 5 });
+  test('should resolve with fulfilled status and value', async () => {
+    expect(await outcome(async (x: number, y: number) => x + y, 2, 3, [2]))
+      .toEqual({ status: 'fulfilled', value: 5 });
   });
 
-  it('should resolve with rejected status and reason', async () => {
-    const error = new Error('failure');
-    const executor: ArrayExecutor<number> = async () => {
-      throw error;
-    };
-
-    const result = await outcome(executor, 2, 3, [2]);
-
-    expect(result).toEqual({ reason: error, status: 'rejected' });
+  test('should resolve with rejected status and reason', async () => {
+    const reason = new Error('failure');
+    expect(await outcome(async () => { throw reason; }, 2, 3, [2]))
+      .toEqual({ reason, status: 'rejected' });
   });
 
-  it('should handle string results correctly', async () => {
-    const executor: ArrayExecutor<string> = async (name: string) => `Hello, ${name}`;
-
-    const result = await outcome(executor, 'Alice', 1, ['Alice']);
-
-    expect(result).toEqual({ status: 'fulfilled', value: 'Hello, Alice' });
+  test('should handle string results correctly', async () => {
+    expect(await outcome(async (name: string) => `Hello, ${name}`, 'Alice', 1, ['Alice']))
+      .toEqual({ status: 'fulfilled', value: 'Hello, Alice' });
   });
 
-  it('should propagate rejection reasons of any type', async () => {
-    const executor: ArrayExecutor<string> = async () => {
-      throw new Error('bad reason');
-    };
-
-    const result = await outcome(executor, '', 1, ['']);
-
-    expect(result).toEqual({ reason: new Error('bad reason'), status: 'rejected' });
+  test('should propagate rejection reasons of any type', async () => {
+    const reason = new Error('bad reason');
+    expect(await outcome(async () => { throw reason; }, '', 1, ['']))
+      .toEqual({ reason, status: 'rejected' });
   });
 });

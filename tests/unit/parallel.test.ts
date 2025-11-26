@@ -8,14 +8,14 @@
 import parallel from '#root/src/parallel';
 
 describe('parallel', () => {
-  it('should fulfilled with concurrency', async () => {
+  test('should fulfilled with concurrency', async () => {
     expect(await parallel(['a', 'b', 'c'], (value) => value, 2)).toEqual([
       { status: 'fulfilled', value: ['a', 'b'] },
       { status: 'fulfilled', value: ['c'] },
     ]);
   }, 2);
 
-  it('should fulfilled without concurrency', async () => {
+  test('should fulfilled without concurrency', async () => {
     expect(await parallel(['a', 'b', 'c'], (value) => value)).toEqual([
       { status: 'fulfilled', value: 'a' },
       { status: 'fulfilled', value: 'b' },
@@ -23,7 +23,7 @@ describe('parallel', () => {
     ]);
   });
 
-  it('should rejected with concurrency', async () => {
+  test('should rejected with concurrency', async () => {
     expect(await parallel(['a', 'b', 'c'], () => Promise.reject(Error('error')), 2))
       .toEqual([
         { reason: expect.any(Error), status: 'rejected' },
@@ -31,7 +31,7 @@ describe('parallel', () => {
       ]);
   });
 
-  it('should rejected without concurrency', async () => {
+  test('should rejected without concurrency', async () => {
     expect(await parallel(['a', 'b', 'c'], () => Promise.reject(Error('error'))))
       .toEqual([
         { reason: expect.any(Error), status: 'rejected' },

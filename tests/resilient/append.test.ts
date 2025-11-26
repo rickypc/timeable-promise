@@ -9,7 +9,7 @@ import append from '#root/src/append';
 import run from '#root/tests/resilient/runner';
 
 describe('append', () => {
-  it('should be resilient', async () => {
+  test('should be resilient', async () => {
     expect(await run(() => append([1, 2], [3, 4]))).toBeTruthy();
   });
 });

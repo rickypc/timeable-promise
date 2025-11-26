@@ -9,7 +9,7 @@ import run from '#root/tests/resilient/runner';
 import toNumber from '#root/src/toNumber';
 
 describe('toNumber', () => {
-  it('should be resilient', async () => {
+  test('should be resilient', async () => {
     expect(await run(() => toNumber('0'))).toBeTruthy();
   });
 });
