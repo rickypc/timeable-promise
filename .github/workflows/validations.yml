@@ -1,18 +1,7 @@
-#  validations.yml - Github actions for TimeablePromise functionality.
-#  Copyright (c) 2018 - 2023 Richard Huang <rickypc@users.noreply.github.com>
-#
-#  This program is free software: you can redistribute it and/or modify
-#  it under the terms of the GNU Affero General Public License as
-#  published by the Free Software Foundation, either version 3 of the
-#  License, or (at your option) any later version.
-#
-#  This program is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#  GNU Affero General Public License for more details.
-#
-#  You should have received a copy of the GNU Affero General Public License
-#  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# Copyright (c) 2018-2025 Richard Huang <rickypc@users.noreply.github.com>
+# Description: Validations GHA.
+# File: validations.yml
+# License: AGPL-3.0-or-later
 
 name: Validations
 on:
@@ -20,31 +9,59 @@ on:
     types: [ edited, opened, reopened, synchronize ]
   push:
     branches:
-      - master
+      - main
 jobs:
-  checks:
-    name: Benchmark, Flow, Leak, Lint, Outdated, Unit Test
+  deps:
+    name: Deps
+    needs: setup
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - run: yarn outdated
+  leak:
+    name: Leak
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - run: yarn test:leak
+  lint:
+    name: Lint
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - run: yarn test:lint
+  perf:
+    name: Perf
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - run: yarn test:perf
+  setup:
+    name: Setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
-          node-version: '18.x'
-      - name: Install dependencies
+          cache: 'yarn'
+          node-version: '24.x'
+      - name: Install
         run: yarn
-      - name: Benchmark code
-        run: yarn test:bench
-      - name: Check memory leak
-        run: yarn test:leak
-      - name: Static analyze code
-        run: yarn test:lint
-      - name: Check outdated dependencies
-        run: yarn outdated
-      - name: Check code functionality
-        run: yarn test:unit
-      - name: Upload to Codecov
-        uses: codecov/codecov-action@v3
+  types:
+    name: Types
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - run: yarn test:type
+  unit:
+    name: Unit
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - run: yarn test:unit
+      - name: Codecov
+        uses: codecov/codecov-action@v5
         with:
+          fail_ci_if_error: true
           flags: unittests

@@ -1,13 +1,14 @@
 # Timeable Promise
 
-[![Version](https://img.shields.io/npm/v/timeable-promise)](https://bit.ly/2YFweqU)
+[![Version](https://img.shields.io/npm/v/timeable-promise?logo=npm)](https://bit.ly/2YFweqU)
 [![Downloads](https://img.shields.io/npm/dt/timeable-promise)](https://bit.ly/2YFweqU)
-[![Dependency Status](https://img.shields.io/librariesio/github/rickypc/timeable-promise)](https://bit.ly/3MUJErG)
-[![Code Style](https://img.shields.io/badge/code%20style-Airbnb-red)](https://bit.ly/2JYN1gk)
-[![Build](https://img.shields.io/github/actions/workflow/status/rickypc/timeable-promise/validations.yml)](https://bit.ly/43aA0qF)
-[![Coverage](https://img.shields.io/codecov/c/github/rickypc/timeable-promise)](https://bit.ly/2LPRiVj)
-[![Vulnerability](https://img.shields.io/snyk/vulnerabilities/github/rickypc/timeable-promise)](https://bit.ly/2yP3kGa)
-[![License](https://img.shields.io/npm/l/timeable-promise)](https://bit.ly/2yi7gyO)
+[![Dependencies](https://img.shields.io/librariesio/github/rickypc/timeable-promise?logo=librariesdotio)](https://bit.ly/3MUJErG)
+[![Style](https://img.shields.io/badge/style-Airbnb-red?logo=eslint)](https://bit.ly/2JYN1gk)
+![TypeScript](https://img.shields.io/badge/dynamic/json?url=https://raw.githubusercontent.com/rickypc/timeable-promise/main/package.json&query=$.devDependencies.typescript&label=typescript&logo=typescript&logoColor=fff&color=3178C6)
+[![Checks](https://img.shields.io/github/actions/workflow/status/rickypc/timeable-promise/validations.yml?logo=githubactions)](https://bit.ly/43aA0qF)
+[![Coverage](https://img.shields.io/codecov/c/github/rickypc/timeable-promise?logo=codecov)](https://bit.ly/2LPRiVj)
+[![Vulnerabilities](https://snyk.io/test/github/rickypc/timeable-promise/badge.svg)](https://bit.ly/2yP3kGa)
+[![License](https://img.shields.io/npm/l/timeable-promise?logo=opensourceinitiative)](https://bit.ly/2yi7gyO)
 
 Collection of asynchronous utilities for managing concurrency,
 sequencing, and timing. Provides helpers for running tasks in
@@ -19,6 +20,30 @@ and working with settled promise results.
 ```bash
 yarn add timeable-promise || npm install --save timeable-promise
 ```
+
+## Importing
+
+This package supports two styles of import:
+
+1. Named exports from the entry point:
+```ts
+import { chunk, ..., waitFor } from 'timeable-promise';
+```
+
+2. Direct path imports for individual utilities:
+```ts
+import chunk from 'timeable-promise/chunk';
+```
+
+Use whichever style fits your project. Named exports are convenient when you
+need several utilities at once, while direct path imports can reduce bundle
+size if you only need one.
+
+> This package is written in TypeScript and provides type definitions
+> out of the box. Your editor will offer autocomplete and type safety
+> automatically.
+
+For the full list of exports, refer to the [API Call Graph](#api-call-graph).
 
 ## API Call Graph
 
@@ -96,13 +121,52 @@ class poll,sleep,waitFor,untilSettledOrTimedOut,chunk utility;
 
 ## Functions
 
+### append()
+
+```ts
+function append<T>(accumulator, array): T[];
+```
+
+Defined in: [append.ts:21](https://github.com/rickypc/timeable-promise/blob/main/src/append.ts#L21)
+
+Appends items from one array onto the end of another.
+
+#### Type Parameters
+
+| Type Parameter | Description |
+| ------ | ------ |
+| `T` | The element type of the array. |
+
+#### Parameters
+
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `accumulator` | `T`[] | The accumulator array. |
+| `array` | `T`[] | The array items that will be appended. |
+
+#### Returns
+
+`T`[]
+
+The appended accumulator array.
+
+#### Example
+
+_Basic append:_
+```ts
+const appended = append<number>([1, 2], [3, 4]);
+console.log(appended); // [1, 2, 3, 4]
+```
+
+***
+
 ### chunk()
 
 ```ts
 function chunk<T>(array, size): T[] | T[][];
 ```
 
-Defined in: [chunk.ts:24](https://github.com/rickypc/timeable-promise/blob/main/src/chunk.ts#L24)
+Defined in: [chunk.ts:23](https://github.com/rickypc/timeable-promise/blob/main/src/chunk.ts#L23)
 
 Splits an array into chunks of a given size.
 The final chunk will contain the remaining elements.
@@ -146,7 +210,7 @@ function concurrent<T>(
 concurrency): Promise<Settled<T>[]>;
 ```
 
-Defined in: [concurrent.ts:52](https://github.com/rickypc/timeable-promise/blob/main/src/concurrent.ts#L52)
+Defined in: [concurrent.ts:51](https://github.com/rickypc/timeable-promise/blob/main/src/concurrent.ts#L51)
 
 Runs the executor concurrently across items in a single array.
 If a concurrency value is provided, items are grouped into chunks of
@@ -214,7 +278,7 @@ function concurrents<T>(
 concurrency): Promise<Settled<T>[]>;
 ```
 
-Defined in: [concurrents.ts:55](https://github.com/rickypc/timeable-promise/blob/main/src/concurrents.ts#L55)
+Defined in: [concurrents.ts:54](https://github.com/rickypc/timeable-promise/blob/main/src/concurrents.ts#L54)
 
 Runs the executor concurrently across multiple groups of an array.
 Internally calls `concurrent` for each group, then appends the results
@@ -282,7 +346,7 @@ function consecutive<T>(
 concurrency): Promise<Settled<T>[]>;
 ```
 
-Defined in: [consecutive.ts:52](https://github.com/rickypc/timeable-promise/blob/main/src/consecutive.ts#L52)
+Defined in: [consecutive.ts:51](https://github.com/rickypc/timeable-promise/blob/main/src/consecutive.ts#L51)
 
 Runs the executor sequentially across items in a single array.
 If a concurrency value is provided, items are grouped into chunks of that size
@@ -350,7 +414,7 @@ function consecutives<T>(
 concurrency): Promise<Settled<T>[]>;
 ```
 
-Defined in: [consecutives.ts:53](https://github.com/rickypc/timeable-promise/blob/main/src/consecutives.ts#L53)
+Defined in: [consecutives.ts:52](https://github.com/rickypc/timeable-promise/blob/main/src/consecutives.ts#L52)
 
 Runs the executor sequentially across multiple groups of an array.
 Internally calls `consecutive` for each group, then appends the results together.
@@ -408,6 +472,51 @@ console.log(consecutivesSettled2);
 
 ***
 
+### outcome()
+
+```ts
+function outcome<T>(executor, ...args): Promise<Settled<T>>;
+```
+
+Defined in: [outcome.ts:40](https://github.com/rickypc/timeable-promise/blob/main/src/outcome.ts#L40)
+
+Executes an executor and returns a PromiseSettledResult-like outcome.
+
+#### Type Parameters
+
+| Type Parameter | Description |
+| ------ | ------ |
+| `T` | The element type of the array. |
+
+#### Parameters
+
+| Parameter | Type | Description |
+| ------ | ------ | ------ |
+| `executor` | [`ArrayExecutor`](#arrayexecutor)\<`T`\> | Function to execute. |
+| ...`args` | \[`T`, `number`, `T`[], `PromiseSettledResult`\<`T`\>[]\] | Arguments passed to the executor. |
+
+#### Returns
+
+`Promise`\<[`Settled`](#settled)\<`T`\>\>
+
+A settled outcome object.
+
+#### Examples
+
+_Fulfilled outcome:_
+```ts
+const ok = await outcome<number>(async (x: number) => x * 2, 5);
+console.log(ok); // { status: 'fulfilled', value: 10 }
+```
+
+_Rejected outcome:_
+```ts
+const err = await outcome(() => { throw new Error('fail'); });
+console.log(err); // { reason: Error('fail'), status: 'rejected' }
+```
+
+***
+
 ### parallel()
 
 ```ts
@@ -417,7 +526,7 @@ function parallel<T>(
 concurrency): Promise<Settled<T>[]>;
 ```
 
-Defined in: [parallel.ts:54](https://github.com/rickypc/timeable-promise/blob/main/src/parallel.ts#L54)
+Defined in: [parallel.ts:53](https://github.com/rickypc/timeable-promise/blob/main/src/parallel.ts#L53)
 
 Provides parallel execution of an executor across array items.
 If a concurrency value is provided, items are grouped into chunks of that size
@@ -532,7 +641,7 @@ function sequential<T>(
 concurrency): Promise<Settled<T>[]>;
 ```
 
-Defined in: [sequential.ts:54](https://github.com/rickypc/timeable-promise/blob/main/src/sequential.ts#L54)
+Defined in: [sequential.ts:53](https://github.com/rickypc/timeable-promise/blob/main/src/sequential.ts#L53)
 
 Provides sequential execution of an executor across array items.
 If a concurrency value is provided, items are grouped into chunks of that size
@@ -596,7 +705,7 @@ console.log(sequentialSettled2);
 function sleep(timeout): Promise<void>;
 ```
 
-Defined in: [sleep.ts:21](https://github.com/rickypc/timeable-promise/blob/main/src/sleep.ts#L21)
+Defined in: [sleep.ts:20](https://github.com/rickypc/timeable-promise/blob/main/src/sleep.ts#L20)
 
 Suspends execution for the given timeout duration.
 
@@ -629,7 +738,7 @@ console.timeEnd('sleep');
 function toNumber(value, defaultValue): number;
 ```
 
-Defined in: [toNumber.ts:31](https://github.com/rickypc/timeable-promise/blob/main/src/toNumber.ts#L31)
+Defined in: [toNumber.ts:30](https://github.com/rickypc/timeable-promise/blob/main/src/toNumber.ts#L30)
 
 Converts a value to a number. If conversion fails, returns the default value.
 
@@ -742,7 +851,7 @@ function waitFor(
 interval): Promise<void>;
 ```
 
-Defined in: [waitFor.ts:35](https://github.com/rickypc/timeable-promise/blob/main/src/waitFor.ts#L35)
+Defined in: [waitFor.ts:34](https://github.com/rickypc/timeable-promise/blob/main/src/waitFor.ts#L34)
 
 Wait until a predicate returns true or timeout occurs.
 

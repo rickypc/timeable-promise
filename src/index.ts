@@ -8,14 +8,15 @@
 /**
  * @packageDocumentation
  *
- * [![Version](https://img.shields.io/npm/v/timeable-promise)](https://bit.ly/2YFweqU)
+ * [![Version](https://img.shields.io/npm/v/timeable-promise?logo=npm)](https://bit.ly/2YFweqU)
  * [![Downloads](https://img.shields.io/npm/dt/timeable-promise)](https://bit.ly/2YFweqU)
- * [![Dependency Status](https://img.shields.io/librariesio/github/rickypc/timeable-promise)](https://bit.ly/3MUJErG)
- * [![Code Style](https://img.shields.io/badge/code%20style-Airbnb-red)](https://bit.ly/2JYN1gk)
- * [![Build](https://img.shields.io/github/actions/workflow/status/rickypc/timeable-promise/validations.yml)](https://bit.ly/43aA0qF)
- * [![Coverage](https://img.shields.io/codecov/c/github/rickypc/timeable-promise)](https://bit.ly/2LPRiVj)
- * [![Vulnerability](https://img.shields.io/snyk/vulnerabilities/github/rickypc/timeable-promise)](https://bit.ly/2yP3kGa)
- * [![License](https://img.shields.io/npm/l/timeable-promise)](https://bit.ly/2yi7gyO)
+ * [![Dependencies](https://img.shields.io/librariesio/github/rickypc/timeable-promise?logo=librariesdotio)](https://bit.ly/3MUJErG)
+ * [![Style](https://img.shields.io/badge/style-Airbnb-red?logo=eslint)](https://bit.ly/2JYN1gk)
+ * ![TypeScript](https://img.shields.io/badge/dynamic/json?url=https://raw.githubusercontent.com/rickypc/timeable-promise/main/package.json&query=$.devDependencies.typescript&label=typescript&logo=typescript&logoColor=fff&color=3178C6)
+ * [![Checks](https://img.shields.io/github/actions/workflow/status/rickypc/timeable-promise/validations.yml?logo=githubactions)](https://bit.ly/43aA0qF)
+ * [![Coverage](https://img.shields.io/codecov/c/github/rickypc/timeable-promise?logo=codecov)](https://bit.ly/2LPRiVj)
+ * [![Vulnerabilities](https://snyk.io/test/github/rickypc/timeable-promise/badge.svg)](https://bit.ly/2yP3kGa)
+ * [![License](https://img.shields.io/npm/l/timeable-promise?logo=opensourceinitiative)](https://bit.ly/2yi7gyO)
  *
  * Collection of asynchronous utilities for managing concurrency,
  * sequencing, and timing. Provides helpers for running tasks in
@@ -27,6 +28,30 @@
  * ```bash
  * yarn add timeable-promise || npm install --save timeable-promise
  * ```
+ *
+ * ## Importing
+ *
+ * This package supports two styles of import:
+ *
+ * 1. Named exports from the entry point:
+ * ```ts
+ * import { chunk, ..., waitFor } from 'timeable-promise';
+ * ```
+ *
+ * 2. Direct path imports for individual utilities:
+ * ```ts
+ * import chunk from 'timeable-promise/chunk';
+ * ```
+ *
+ * Use whichever style fits your project. Named exports are convenient when you
+ * need several utilities at once, while direct path imports can reduce bundle
+ * size if you only need one.
+ *
+ * > This package is written in TypeScript and provides type definitions
+ * > out of the box. Your editor will offer autocomplete and type safety
+ * > automatically.
+ *
+ * For the full list of exports, refer to the [API Call Graph](#api-call-graph).
  *
  * ## API Call Graph
  *
