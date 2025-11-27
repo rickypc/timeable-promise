@@ -34,6 +34,20 @@ runs:
     - name: Validate
       run: |
         echo "::group::Running Validation"
-        ${{inputs.command}}
-        echo "::endgroup::"
+        OUTPUT=$(mktemp)
+        set +e
+        ${{inputs.command}} 2>&1 | tee "$OUTPUT"
+        EXIT_CODE=${PIPESTATUS[0]}
+        set -e
+        if [ $EXIT_CODE -ne 0 ]; then
+          echo "### ❌ Command failed: \`${{inputs.command}}\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          cat "$OUTPUT" >> $GITHUB_STEP_SUMMARY
+          rm -f "$OUTPUT"
+          echo "::endgroup::"
+          exit $EXIT_CODE
+        else
+          rm -f "$OUTPUT"
+          echo "::endgroup::"
+        fi
       shell: bash
