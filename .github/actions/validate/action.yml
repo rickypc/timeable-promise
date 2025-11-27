@@ -1,23 +1,24 @@
 # Copyright (c) 2018-2025 Richard Huang <rickypc@users.noreply.github.com>
-# Description: Setup composite GHA.
+# Description: Validate composite GHA.
 # File: action.yml
 # License: AGPL-3.0-or-later
 
-description: Checkout, setup Node.js, and install dependencies
+description: Setup Node.js, install dependencies, run a validation command.
 name: Setup
 inputs:
   cache-dependency-path:
     default: package.json
     description: Path to dependency file for caching
     required: false
+  command:
+    description: Validation command to run after install
+    required: true
   node-version:
     description: Node.js version to use
     required: true
 runs:
   using: composite
   steps:
-    - name: Checkout
-      uses: actions/checkout@v4
     - name: Setup Node
       uses: actions/setup-node@v4
       with:
@@ -25,5 +26,14 @@ runs:
         cache-dependency-path: ${{inputs.cache-dependency-path}}
         node-version: ${{inputs.node-version}}
     - name: Install
-      run: yarn
+      run: |
+        echo "::group::Install Dependencies"
+        yarn
+        echo "::endgroup::"
+      shell: bash
+    - name: Validate
+      run: |
+        echo "::group::Running Validation"
+        ${{inputs.command}}
+        echo "::endgroup::"
       shell: bash

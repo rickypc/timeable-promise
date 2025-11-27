@@ -17,56 +17,74 @@ jobs:
     name: Deps
     runs-on: ubuntu-latest
     steps:
-      - name: Setup
-        uses: ./.github/actions/setup
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Validate
+        uses: ./.github/actions/validate
         with:
-          node-version:${{env.NODE_LTS}}
-      - run: yarn outdated
+          cache-dependency-path: package.json
+          command: yarn outdated
+          node-version: ${{env.NODE_LTS}}
   leak:
     name: Leak
     runs-on: ubuntu-latest
     steps:
-      - name: Setup
-        uses: ./.github/actions/setup
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Validate
+        uses: ./.github/actions/validate
         with:
-          node-version:${{env.NODE_LTS}}
-      - run: yarn test:leak
+          cache-dependency-path: package.json
+          command: yarn test:leak
+          node-version: ${{env.NODE_LTS}}
   lint:
     name: Lint
     runs-on: ubuntu-latest
     steps:
-      - name: Setup
-        uses: ./.github/actions/setup
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Validate
+        uses: ./.github/actions/validate
         with:
-          node-version:${{env.NODE_LTS}}
-      - run: yarn test:lint
+          cache-dependency-path: package.json
+          command: yarn test:lint
+          node-version: ${{env.NODE_LTS}}
   perf:
     name: Perf
     runs-on: ubuntu-latest
     steps:
-      - name: Setup
-        uses: ./.github/actions/setup
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Validate
+        uses: ./.github/actions/validate
         with:
-          node-version:${{env.NODE_LTS}}
-      - run: yarn test:perf
+          cache-dependency-path: package.json
+          command: yarn test:perf
+          node-version: ${{env.NODE_LTS}}
   types:
     name: Types
     runs-on: ubuntu-latest
     steps:
-      - name: Setup
-        uses: ./.github/actions/setup
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Validate
+        uses: ./.github/actions/validate
         with:
-          node-version:${{env.NODE_LTS}}
-      - run: yarn test:type
+          cache-dependency-path: package.json
+          command: yarn test:type
+          node-version: ${{env.NODE_LTS}}
   unit:
     name: Unit
     runs-on: ubuntu-latest
     steps:
-      - name: Setup
-        uses: ./.github/actions/setup
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Validate
+        uses: ./.github/actions/validate
         with:
-          node-version:${{env.NODE_LTS}}
-      - run: yarn test:unit
+          cache-dependency-path: package.json
+          command: yarn test:unit
+          node-version: ${{env.NODE_LTS}}
       - name: Codecov
         uses: codecov/codecov-action@v5
         with:
