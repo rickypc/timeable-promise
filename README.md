@@ -5,7 +5,7 @@
 [![Dependencies](https://img.shields.io/librariesio/github/rickypc/timeable-promise?logo=librariesdotio)](https://bit.ly/3MUJErG)
 [![Style](https://img.shields.io/badge/style-Airbnb-red?logo=eslint)](https://bit.ly/2JYN1gk)
 ![TypeScript](https://img.shields.io/badge/dynamic/json?url=https://raw.githubusercontent.com/rickypc/timeable-promise/main/package.json&query=$.devDependencies.typescript&label=typescript&logo=typescript&logoColor=fff&color=3178C6)
-[![Checks](https://img.shields.io/github/actions/workflow/status/rickypc/timeable-promise/validations.yml?logo=githubactions)](https://bit.ly/43aA0qF)
+[![Checks](https://img.shields.io/github/actions/workflow/status/rickypc/timeable-promise/validations.yml?logo=githubactions&label=checks)](https://bit.ly/43aA0qF)
 [![Coverage](https://img.shields.io/codecov/c/github/rickypc/timeable-promise?logo=codecov)](https://bit.ly/2LPRiVj)
 [![Vulnerabilities](https://snyk.io/test/github/rickypc/timeable-promise/badge.svg)](https://bit.ly/2yP3kGa)
 [![License](https://img.shields.io/npm/l/timeable-promise?logo=opensourceinitiative)](https://bit.ly/2yi7gyO)
