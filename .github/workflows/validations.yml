@@ -3,6 +3,8 @@
 # File: validations.yml
 # License: AGPL-3.0-or-later
 
+env:
+  NODE_LTS: 24
 name: Validations
 on:
   pull_request:
@@ -13,53 +15,57 @@ on:
 jobs:
   deps:
     name: Deps
-    needs: setup
     runs-on: ubuntu-latest
     steps:
+      - name: Setup
+        uses: ./.github/actions/setup
+        with:
+          node-version:${{env.NODE_LTS}}
       - run: yarn outdated
   leak:
     name: Leak
-    needs: setup
     runs-on: ubuntu-latest
     steps:
+      - name: Setup
+        uses: ./.github/actions/setup
+        with:
+          node-version:${{env.NODE_LTS}}
       - run: yarn test:leak
   lint:
     name: Lint
-    needs: setup
     runs-on: ubuntu-latest
     steps:
+      - name: Setup
+        uses: ./.github/actions/setup
+        with:
+          node-version:${{env.NODE_LTS}}
       - run: yarn test:lint
   perf:
     name: Perf
-    needs: setup
     runs-on: ubuntu-latest
     steps:
-      - run: yarn test:perf
-  setup:
-    name: Setup
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - name: Setup
+        uses: ./.github/actions/setup
         with:
-          cache: yarn
-          cache-dependency-path: package.json
-          node-version: 24
-      - name: Install
-        run: yarn
+          node-version:${{env.NODE_LTS}}
+      - run: yarn test:perf
   types:
     name: Types
-    needs: setup
     runs-on: ubuntu-latest
     steps:
+      - name: Setup
+        uses: ./.github/actions/setup
+        with:
+          node-version:${{env.NODE_LTS}}
       - run: yarn test:type
   unit:
     name: Unit
-    needs: setup
     runs-on: ubuntu-latest
     steps:
+      - name: Setup
+        uses: ./.github/actions/setup
+        with:
+          node-version:${{env.NODE_LTS}}
       - run: yarn test:unit
       - name: Codecov
         uses: codecov/codecov-action@v5
