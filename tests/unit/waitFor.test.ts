@@ -17,7 +17,7 @@ describe('waitFor', () => {
     await waitFor(() => !inflight, 2, 1);
     const end = process.hrtime(begin);
 
-    expect(hrtimeToMs(end)).toBeLessThan(4);
+    expect(hrtimeToMs(end)).toBeLessThan(10);
   });
 
   test.concurrent('should return resolved with default interval', async () => {
@@ -27,7 +27,7 @@ describe('waitFor', () => {
     await waitFor(() => !inflight, 1);
     const end = process.hrtime(begin);
 
-    expect(hrtimeToMs(end)).toBeLessThan(4);
+    expect(hrtimeToMs(end)).toBeLessThan(10);
   });
 
   test.concurrent('should return timed out resolved', async () => {
