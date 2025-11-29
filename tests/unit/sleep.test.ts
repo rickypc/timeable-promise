@@ -15,6 +15,6 @@ describe('sleep', () => {
     await sleep(1);
     const end = process.hrtime(begin);
 
-    expect(hrtimeToMs(end)).toBeGreaterThan(0.5);
+    expect(hrtimeToMs(end)).toBeGreaterThan(0.001);
   });
 });

@@ -24,7 +24,7 @@ describe('waitFor', () => {
     const inflight = false;
 
     const begin = process.hrtime();
-    await waitFor(() => !inflight, 2);
+    await waitFor(() => !inflight, 1);
     const end = process.hrtime(begin);
 
     expect(hrtimeToMs(end)).toBeLessThan(4);

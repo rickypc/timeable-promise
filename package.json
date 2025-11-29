@@ -65,11 +65,15 @@
     "publish": "git tag $(npm pkg get version | tr -d '\"') && git push --tags && npm publish ./dist",
     "publish:dry": "yarn prepublishOnly && npm publish ./dist --dry-run && echo \"\\033[1;32mgit commit && git push origin && yarn publish\\033[0m\" || echo \"\\033[1;31m$(npm pkg get name | tr -d '\"') v$(npm pkg get version | tr -d '\"') is published. Do you want to bump up the version and modify CHANGELOG?\\033[0m\"",
     "test": "yarn test:lint && yarn test:type && yarn test:unit && yarn test:perf && yarn test:leak",
-    "test:leak": "RESILIENT_TYPE=leak jest",
+    "test:deps:ci": "yarn outdated --json | jq -r 'select(.type == \"table\") | .data.body[] | @tsv' | sed 's/\\t/ | /g'",
+    "test:leak": "sh -c 'RESILIENT_TYPE=leak jest \"$@\"' --",
+    "test:leak:ci": "CI=true yarn test:leak",
     "test:lint": "eslint .",
-    "test:perf": "RESILIENT_TYPE=perf node --allow-natives-syntax ./node_modules/.bin/jest",
+    "test:perf": "sh -c 'RESILIENT_TYPE=perf node --allow-natives-syntax ./node_modules/.bin/jest \"$@\"' --",
+    "test:perf:ci": "CI=true yarn test:perf",
     "test:type": "tsc",
-    "test:unit": "jest"
+    "test:unit": "sh -c 'jest \"$@\"' --",
+    "test:unit:ci": "CI=true yarn test:unit"
   },
   "type": "module",
   "version": "1.7.0"

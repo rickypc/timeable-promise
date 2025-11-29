@@ -22,8 +22,7 @@ jobs:
       - name: Validate
         uses: ./.github/actions/validate
         with:
-          cache-dependency-path: package.json
-          command: yarn outdated
+          command: yarn test:deps:ci
           node-version: ${{env.NODE_LTS}}
   leak:
     name: Leak
@@ -34,8 +33,7 @@ jobs:
       - name: Validate
         uses: ./.github/actions/validate
         with:
-          cache-dependency-path: package.json
-          command: yarn test:leak
+          command: yarn test:leak:ci
           node-version: ${{env.NODE_LTS}}
   lint:
     name: Lint
@@ -46,7 +44,6 @@ jobs:
       - name: Validate
         uses: ./.github/actions/validate
         with:
-          cache-dependency-path: package.json
           command: yarn test:lint
           node-version: ${{env.NODE_LTS}}
   perf:
@@ -58,8 +55,7 @@ jobs:
       - name: Validate
         uses: ./.github/actions/validate
         with:
-          cache-dependency-path: package.json
-          command: yarn test:perf
+          command: yarn test:perf:ci
           node-version: ${{env.NODE_LTS}}
   types:
     name: Types
@@ -70,7 +66,6 @@ jobs:
       - name: Validate
         uses: ./.github/actions/validate
         with:
-          cache-dependency-path: package.json
           command: yarn test:type
           node-version: ${{env.NODE_LTS}}
   unit:
@@ -82,8 +77,7 @@ jobs:
       - name: Validate
         uses: ./.github/actions/validate
         with:
-          cache-dependency-path: package.json
-          command: yarn test:unit
+          command: yarn test:unit:ci
           node-version: ${{env.NODE_LTS}}
       - name: Codecov
         uses: codecov/codecov-action@v5

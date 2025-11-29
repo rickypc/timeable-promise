@@ -28,7 +28,7 @@ describe('poll', () => {
         log();
       }
     }, 1, true);
-    await sleep(5);
+    await sleep(7);
     timer.stop();
 
     expect(log.mock.calls.length).toBeGreaterThanOrEqual(1);

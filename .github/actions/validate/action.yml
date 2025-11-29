@@ -7,7 +7,7 @@ description: Setup Node.js, install dependencies, run a validation command.
 name: Setup
 inputs:
   cache-dependency-path:
-    default: package.json
+    default: '**/package.json'
     description: Path to dependency file for caching
     required: false
   command:
@@ -45,9 +45,11 @@ runs:
           cat "$OUTPUT" >> $GITHUB_STEP_SUMMARY
           rm -f "$OUTPUT"
           echo "::endgroup::"
+          echo "::error title=Running Validation::Exit code $EXIT_CODE"
           exit $EXIT_CODE
         else
           rm -f "$OUTPUT"
           echo "::endgroup::"
+          echo "::notice title=Running Validation::Succeeded"
         fi
       shell: bash
