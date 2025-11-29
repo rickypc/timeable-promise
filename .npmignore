@@ -6,9 +6,12 @@
 .editorconfig
 CHANGELOG.md
 CONTRIBUTING.md
-*.config.js
+*.config.*s
 *coverage
 .git*
 Makefile
+.searchignore
+src
 supports
+tests
 tsconfig.json
