@@ -1,3 +1,7 @@
+### 1.7.3 (2025.11.29)
+
+* Third time’s a charm.
+
 ### 1.7.2 (2025.11.29)
 
 * Another attempt to correct previous release.
