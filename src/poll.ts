@@ -40,6 +40,7 @@ export type PollHandle = {
  */
 export default function poll(
   executor: PollExecutor,
+  // istanbul ignore next
   interval: number = 1000,
   immediately: boolean = false,
 ): PollHandle {

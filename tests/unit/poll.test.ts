@@ -19,13 +19,16 @@ describe('poll', () => {
   });
 
   test.concurrent('should skip on congestion', async () => {
+    let first = true;
     const log = jest.fn();
     const timer = poll(async (stopped) => {
+      await sleep(first ? 2.05 : 0.15);
+      first = false;
       if (!stopped()) {
         log();
       }
     }, 1, true);
-    await sleep(3);
+    await sleep(5);
     timer.stop();
 
     expect(log.mock.calls.length).toBeGreaterThanOrEqual(1);

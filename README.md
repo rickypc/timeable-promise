@@ -163,30 +163,31 @@ console.log(appended); // [1, 2, 3, 4]
 ### chunk()
 
 ```ts
-function chunk<T>(array, size): T[] | T[][];
+function chunk<T, U>(array, size): U;
 ```
 
-Defined in: [chunk.ts:23](https://github.com/rickypc/timeable-promise/blob/main/src/chunk.ts#L23)
+Defined in: [chunk.ts:26](https://github.com/rickypc/timeable-promise/blob/main/src/chunk.ts#L26)
 
 Splits an array into chunks of a given size.
 The final chunk will contain the remaining elements.
 
 #### Type Parameters
 
-| Type Parameter | Description |
-| ------ | ------ |
-| `T` | The element type of the array. |
+| Type Parameter | Default type | Description |
+| ------ | ------ | ------ |
+| `T` | - | The item type of the array. |
+| `U` *extends* `T`[] \| `T`[][] | `T`[] | The result type, which can be either: - `T[]` when no chunking is applied (size is 0 or omitted). - `T[][]` when chunking is applied (size > 0). |
 
 #### Parameters
 
 | Parameter | Type | Default value | Description |
 | ------ | ------ | ------ | ------ |
 | `array` | `T`[] | `undefined` | The original array. |
-| `size` | `number` | `0` | The group size (default = 0). |
+| `size` | `number` | `0` | The chunk size (default = 0). |
 
 #### Returns
 
-`T`[] \| `T`[][]
+`U`
 
 A new array containing chunked subarrays,
   or the original array if size is 0.
@@ -204,13 +205,13 @@ console.log(chunked); // [[1, 2], [3, 4], [5]]
 ### concurrent()
 
 ```ts
-function concurrent<T>(
+function concurrent<T, U>(
    array, 
    executor, 
-concurrency): Promise<Settled<T>[]>;
+concurrency): Promise<Settled<U>[]>;
 ```
 
-Defined in: [concurrent.ts:51](https://github.com/rickypc/timeable-promise/blob/main/src/concurrent.ts#L51)
+Defined in: [concurrent.ts:52](https://github.com/rickypc/timeable-promise/blob/main/src/concurrent.ts#L52)
 
 Runs the executor concurrently across items in a single array.
 If a concurrency value is provided, items are grouped into chunks of
@@ -220,21 +221,22 @@ items or grouped chunks.
 
 #### Type Parameters
 
-| Type Parameter | Description |
-| ------ | ------ |
-| `T` | The element type of the array. |
+| Type Parameter | Default type | Description |
+| ------ | ------ | ------ |
+| `T` | - | The item type of the array. |
+| `U` | `T` | The result type returned by the executor. |
 
 #### Parameters
 
 | Parameter | Type | Default value | Description |
 | ------ | ------ | ------ | ------ |
 | `array` | `T`[] | `undefined` | The array items to be processed by executor. |
-| `executor` | [`ArrayExecutor`](#arrayexecutor)\<`T`\> | `undefined` | Executor function applied to each chunk. |
+| `executor` | [`ItemExecutor`](#itemexecutor)\<`T`, `U`\> | `undefined` | Executor function applied to each chunk. |
 | `concurrency` | `number` | `0` | The maximum concurrent execution size (default = 0). |
 
 #### Returns
 
-`Promise`\<[`Settled`](#settled)\<`T`\>[]\>
+`Promise`\<[`Settled`](#settled)\<`U`\>[]\>
 
 A promise resolving to an array of
   settled results.
@@ -272,13 +274,13 @@ console.log(concurrentSettled2);
 ### concurrents()
 
 ```ts
-function concurrents<T>(
+function concurrents<T, U>(
    array, 
    executor, 
-concurrency): Promise<Settled<T>[]>;
+concurrency): Promise<Settled<U>[]>;
 ```
 
-Defined in: [concurrents.ts:54](https://github.com/rickypc/timeable-promise/blob/main/src/concurrents.ts#L54)
+Defined in: [concurrents.ts:55](https://github.com/rickypc/timeable-promise/blob/main/src/concurrents.ts#L55)
 
 Runs the executor concurrently across multiple groups of an array.
 Internally calls `concurrent` for each group, then appends the results
@@ -288,21 +290,22 @@ whereas `concurrent` handles a single run.
 
 #### Type Parameters
 
-| Type Parameter | Description |
-| ------ | ------ |
-| `T` | The element type of the array. |
+| Type Parameter | Default type | Description |
+| ------ | ------ | ------ |
+| `T` | - | The item type of the array. |
+| `U` | `T` | The result type returned by the executor. |
 
 #### Parameters
 
 | Parameter | Type | Default value | Description |
 | ------ | ------ | ------ | ------ |
 | `array` | `T`[] | `undefined` | The array groups to be processed by executor. |
-| `executor` | [`ArrayExecutor`](#arrayexecutor)\<`T`\> | `undefined` | Executor function applied to each group. |
+| `executor` | [`ItemExecutor`](#itemexecutor)\<`T`, `U`\> | `undefined` | Executor function applied to each group. |
 | `concurrency` | `number` | `0` | The maximum concurrent group size (default = 0). |
 
 #### Returns
 
-`Promise`\<[`Settled`](#settled)\<`T`\>[]\>
+`Promise`\<[`Settled`](#settled)\<`U`\>[]\>
 
 A promise resolving to an array of
   settled results.
@@ -340,13 +343,13 @@ console.log(concurrentsSettled2);
 ### consecutive()
 
 ```ts
-function consecutive<T>(
+function consecutive<T, U>(
    array, 
    executor, 
-concurrency): Promise<Settled<T>[]>;
+concurrency): Promise<Settled<U>[]>;
 ```
 
-Defined in: [consecutive.ts:51](https://github.com/rickypc/timeable-promise/blob/main/src/consecutive.ts#L51)
+Defined in: [consecutive.ts:52](https://github.com/rickypc/timeable-promise/blob/main/src/consecutive.ts#L52)
 
 Runs the executor sequentially across items in a single array.
 If a concurrency value is provided, items are grouped into chunks of that size
@@ -356,21 +359,22 @@ grouped chunks.
 
 #### Type Parameters
 
-| Type Parameter | Description |
-| ------ | ------ |
-| `T` | The element type of the array. |
+| Type Parameter | Default type | Description |
+| ------ | ------ | ------ |
+| `T` | - | The item type of the array. |
+| `U` | `T` | The result type returned by the executor. |
 
 #### Parameters
 
 | Parameter | Type | Default value | Description |
 | ------ | ------ | ------ | ------ |
 | `array` | `T`[] | `undefined` | The array items to be processed by executor. |
-| `executor` | [`ArrayExecutor`](#arrayexecutor)\<`T`\> | `undefined` | Executor function applied to each item or group. |
+| `executor` | [`ItemExecutor`](#itemexecutor)\<`T`, `U`\> | `undefined` | Executor function applied to each item or group. |
 | `concurrency` | `number` | `0` | The maximum group size (default = 0). |
 
 #### Returns
 
-`Promise`\<[`Settled`](#settled)\<`T`\>[]\>
+`Promise`\<[`Settled`](#settled)\<`U`\>[]\>
 
 A promise resolving to an array of
   settled results.
@@ -408,13 +412,13 @@ console.log(consecutiveSettled2);
 ### consecutives()
 
 ```ts
-function consecutives<T>(
+function consecutives<T, U>(
    array, 
    executor, 
-concurrency): Promise<Settled<T>[]>;
+concurrency): Promise<Settled<U>[]>;
 ```
 
-Defined in: [consecutives.ts:52](https://github.com/rickypc/timeable-promise/blob/main/src/consecutives.ts#L52)
+Defined in: [consecutives.ts:53](https://github.com/rickypc/timeable-promise/blob/main/src/consecutives.ts#L53)
 
 Runs the executor sequentially across multiple groups of an array.
 Internally calls `consecutive` for each group, then appends the results together.
@@ -423,21 +427,22 @@ This means the output looks similar to `consecutive`, but the orchestration diff
 
 #### Type Parameters
 
-| Type Parameter | Description |
-| ------ | ------ |
-| `T` | The element type of the array. |
+| Type Parameter | Default type | Description |
+| ------ | ------ | ------ |
+| `T` | - | The item type of the array. |
+| `U` | `T` | The result type returned by the executor. |
 
 #### Parameters
 
 | Parameter | Type | Default value | Description |
 | ------ | ------ | ------ | ------ |
 | `array` | `T`[] | `undefined` | The array groups to be processed by executor. |
-| `executor` | [`ArrayExecutor`](#arrayexecutor)\<`T`\> | `undefined` | Executor function applied to each group or item. |
+| `executor` | [`ItemExecutor`](#itemexecutor)\<`T`, `U`\> | `undefined` | Executor function applied to each group or item. |
 | `concurrency` | `number` | `0` | The maximum group size (default = 0). |
 
 #### Returns
 
-`Promise`\<[`Settled`](#settled)\<`T`\>[]\>
+`Promise`\<[`Settled`](#settled)\<`U`\>[]\>
 
 A promise resolving to an array of
   settled results.
@@ -475,29 +480,30 @@ console.log(consecutivesSettled2);
 ### outcome()
 
 ```ts
-function outcome<T>(executor, ...args): Promise<Settled<T>>;
+function outcome<T, U>(executor, ...args): Promise<Settled<U>>;
 ```
 
-Defined in: [outcome.ts:40](https://github.com/rickypc/timeable-promise/blob/main/src/outcome.ts#L40)
+Defined in: [outcome.ts:42](https://github.com/rickypc/timeable-promise/blob/main/src/outcome.ts#L42)
 
 Executes an executor and returns a PromiseSettledResult-like outcome.
 
 #### Type Parameters
 
-| Type Parameter | Description |
-| ------ | ------ |
-| `T` | The element type of the array. |
+| Type Parameter | Default type | Description |
+| ------ | ------ | ------ |
+| `T` | - | The item type of the array. |
+| `U` | `T` | The result type returned by the executor. |
 
 #### Parameters
 
 | Parameter | Type | Description |
 | ------ | ------ | ------ |
-| `executor` | [`ArrayExecutor`](#arrayexecutor)\<`T`\> | Function to execute. |
-| ...`args` | \[`T`, `number`, `T`[], `PromiseSettledResult`\<`T`\>[]\] | Arguments passed to the executor. |
+| `executor` | [`ItemExecutor`](#itemexecutor)\<`T`, `U`\> | Function to execute. |
+| ...`args` | \[`T`[], `number`, `T`[][], `PromiseSettledResult`\<`U`\>[]\] | Arguments passed to the executor. |
 
 #### Returns
 
-`Promise`\<[`Settled`](#settled)\<`T`\>\>
+`Promise`\<[`Settled`](#settled)\<`U`\>\>
 
 A settled outcome object.
 
@@ -520,13 +526,13 @@ console.log(err); // { reason: Error('fail'), status: 'rejected' }
 ### parallel()
 
 ```ts
-function parallel<T>(
+function parallel<T, U>(
    array, 
    executor, 
-concurrency): Promise<Settled<T>[]>;
+concurrency): Promise<Settled<U>[]>;
 ```
 
-Defined in: [parallel.ts:53](https://github.com/rickypc/timeable-promise/blob/main/src/parallel.ts#L53)
+Defined in: [parallel.ts:54](https://github.com/rickypc/timeable-promise/blob/main/src/parallel.ts#L54)
 
 Provides parallel execution of an executor across array items.
 If a concurrency value is provided, items are grouped into chunks of that size
@@ -535,21 +541,22 @@ processed concurrently via `concurrent`.
 
 #### Type Parameters
 
-| Type Parameter | Description |
-| ------ | ------ |
-| `T` | The element type of the array. |
+| Type Parameter | Default type | Description |
+| ------ | ------ | ------ |
+| `T` | - | The item type of the array. |
+| `U` | `T` | The result type returned by the executor. |
 
 #### Parameters
 
 | Parameter | Type | Default value | Description |
 | ------ | ------ | ------ | ------ |
 | `array` | `T`[] | `undefined` | The array that is being processed in parallel. |
-| `executor` | [`ArrayExecutor`](#arrayexecutor)\<`T`\> | `undefined` | Executor function applied to each item or group. |
+| `executor` | [`ItemExecutor`](#itemexecutor)\<`T`, `U`\> | `undefined` | Executor function applied to each item or group. |
 | `concurrency` | `number` | `0` | The maximum group size (default = 0). |
 
 #### Returns
 
-`Promise`\<[`Settled`](#settled)\<`T`\>[]\>
+`Promise`\<[`Settled`](#settled)\<`U`\>[]\>
 
 A promise resolving to an array of settled
   results.
@@ -635,13 +642,13 @@ setTimeout(() => {
 ### sequential()
 
 ```ts
-function sequential<T>(
+function sequential<T, U>(
    array, 
    executor, 
-concurrency): Promise<Settled<T>[]>;
+concurrency): Promise<Settled<U>[]>;
 ```
 
-Defined in: [sequential.ts:53](https://github.com/rickypc/timeable-promise/blob/main/src/sequential.ts#L53)
+Defined in: [sequential.ts:54](https://github.com/rickypc/timeable-promise/blob/main/src/sequential.ts#L54)
 
 Provides sequential execution of an executor across array items.
 If a concurrency value is provided, items are grouped into chunks of that size
@@ -650,21 +657,22 @@ processed sequentially via `consecutive`.
 
 #### Type Parameters
 
-| Type Parameter | Description |
-| ------ | ------ |
-| `T` | The element type of the array. |
+| Type Parameter | Default type | Description |
+| ------ | ------ | ------ |
+| `T` | - | The item type of the array. |
+| `U` | `T` | The result type returned by the executor. |
 
 #### Parameters
 
 | Parameter | Type | Default value | Description |
 | ------ | ------ | ------ | ------ |
 | `array` | `T`[] | `undefined` | The array that is being processed sequentially. |
-| `executor` | [`ArrayExecutor`](#arrayexecutor)\<`T`\> | `undefined` | Executor function applied to each item or group. |
+| `executor` | [`ItemExecutor`](#itemexecutor)\<`T`, `U`\> | `undefined` | Executor function applied to each item or group. |
 | `concurrency` | `number` | `0` | The maximum group size (default = 0). |
 
 #### Returns
 
-`Promise`\<[`Settled`](#settled)\<`T`\>[]\>
+`Promise`\<[`Settled`](#settled)\<`U`\>[]\>
 
 A promise resolving to an array of
   settled results.
@@ -778,12 +786,12 @@ console.log(toNumber(null));        // 0
 
 ```ts
 function untilSettledOrTimedOut<T>(
-   executor, 
+   promiseExecutor, 
    timeoutExecutor, 
 timeout): Promise<T>;
 ```
 
-Defined in: [untilSettledOrTimedOut.ts:65](https://github.com/rickypc/timeable-promise/blob/main/src/untilSettledOrTimedOut.ts#L65)
+Defined in: [untilSettledOrTimedOut.ts:67](https://github.com/rickypc/timeable-promise/blob/main/src/untilSettledOrTimedOut.ts#L67)
 
 Provides timeout support for a Promise. The executor runs until either
 it settles or the timeout expires, in which case the timeoutExecutor
@@ -799,7 +807,7 @@ is invoked.
 
 | Parameter | Type | Description |
 | ------ | ------ | ------ |
-| `executor` | [`PromiseExecutor`](#promiseexecutor)\<`T`\> | Executor function, receives resolve, reject, and a `pending` function. |
+| `promiseExecutor` | [`PromiseExecutor`](#promiseexecutor)\<`T`\> | Executor function, receives resolve, reject, and a `pending` function. |
 | `timeoutExecutor` | [`TimeoutExecutor`](#timeoutexecutor)\<`T`\> | Function invoked if timeout occurs, receives resolve and reject. |
 | `timeout` | `number` | Timeout in milliseconds. |
 
@@ -889,32 +897,33 @@ console.timeEnd('waitFor');
 
 ## Type Aliases
 
-### ArrayExecutor()
+### ItemExecutor()
 
 ```ts
-type ArrayExecutor<T> = (value, index, array, accumulator?) => T | Promise<T>;
+type ItemExecutor<T, U> = (value, index, array, accumulator?) => Promise<U> | U;
 ```
 
 Defined in: [outcome.ts:8](https://github.com/rickypc/timeable-promise/blob/main/src/outcome.ts#L8)
 
 #### Type Parameters
 
-| Type Parameter |
-| ------ |
-| `T` |
+| Type Parameter | Default type |
+| ------ | ------ |
+| `T` | - |
+| `U` | `T` |
 
 #### Parameters
 
 | Parameter | Type |
 | ------ | ------ |
-| `value` | `T` |
+| `value` | `T`[] |
 | `index` | `number` |
-| `array` | `T`[] |
-| `accumulator?` | `PromiseSettledResult`\<`T`\>[] |
+| `array` | `T`[][] |
+| `accumulator?` | `PromiseSettledResult`\<`U`\>[] |
 
 #### Returns
 
-`T` \| `Promise`\<`T`\>
+`Promise`\<`U`\> \| `U`
 
 ***
 
@@ -956,13 +965,29 @@ Defined in: [poll.ts:11](https://github.com/rickypc/timeable-promise/blob/main/s
 
 ***
 
+### PromiseConstructor
+
+```ts
+type PromiseConstructor<T> = ConstructorParameters<typeof Promise>[0];
+```
+
+Defined in: [untilSettledOrTimedOut.ts:8](https://github.com/rickypc/timeable-promise/blob/main/src/untilSettledOrTimedOut.ts#L8)
+
+#### Type Parameters
+
+| Type Parameter |
+| ------ |
+| `T` |
+
+***
+
 ### PromiseExecutor()
 
 ```ts
 type PromiseExecutor<T> = (resolve, reject, pending) => void;
 ```
 
-Defined in: [untilSettledOrTimedOut.ts:8](https://github.com/rickypc/timeable-promise/blob/main/src/untilSettledOrTimedOut.ts#L8)
+Defined in: [untilSettledOrTimedOut.ts:10](https://github.com/rickypc/timeable-promise/blob/main/src/untilSettledOrTimedOut.ts#L10)
 
 #### Type Parameters
 
@@ -974,8 +999,8 @@ Defined in: [untilSettledOrTimedOut.ts:8](https://github.com/rickypc/timeable-pr
 
 | Parameter | Type |
 | ------ | ------ |
-| `resolve` | (`value`) => `void` |
-| `reject` | (`reason?`) => `void` |
+| `resolve` | `Parameters`\<[`PromiseConstructor`](#promiseconstructor)\<`T`\>\>\[`0`\] |
+| `reject` | `Parameters`\<[`PromiseConstructor`](#promiseconstructor)\<`T`\>\>\[`1`\] |
 | `pending` | () => `boolean` |
 
 #### Returns
@@ -1006,7 +1031,7 @@ Defined in: [outcome.ts:19](https://github.com/rickypc/timeable-promise/blob/mai
 type TimeoutExecutor<T> = (resolve, reject) => void;
 ```
 
-Defined in: [untilSettledOrTimedOut.ts:17](https://github.com/rickypc/timeable-promise/blob/main/src/untilSettledOrTimedOut.ts#L17)
+Defined in: [untilSettledOrTimedOut.ts:19](https://github.com/rickypc/timeable-promise/blob/main/src/untilSettledOrTimedOut.ts#L19)
 
 #### Type Parameters
 
@@ -1018,8 +1043,8 @@ Defined in: [untilSettledOrTimedOut.ts:17](https://github.com/rickypc/timeable-p
 
 | Parameter | Type |
 | ------ | ------ |
-| `resolve` | (`value`) => `void` |
-| `reject` | (`reason?`) => `void` |
+| `resolve` | `Parameters`\<[`PromiseConstructor`](#promiseconstructor)\<`T`\>\>\[`0`\] |
+| `reject` | `Parameters`\<[`PromiseConstructor`](#promiseconstructor)\<`T`\>\>\[`1`\] |
 
 #### Returns
 

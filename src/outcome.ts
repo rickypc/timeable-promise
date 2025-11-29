@@ -5,16 +5,16 @@
  * @license AGPL-3.0-or-later
  */
 
-export type ArrayExecutor<T> = (
+export type ItemExecutor<T, U = T> = (
   // eslint-disable-next-line no-unused-vars
-  value: T,
+  value: T[],
   // eslint-disable-next-line no-unused-vars
   index: number,
   // eslint-disable-next-line no-unused-vars
-  array: T[],
+  array: T[][],
   // eslint-disable-next-line no-unused-vars
-  accumulator?: PromiseSettledResult<T>[]
-) => T | Promise<T>;
+  accumulator?: PromiseSettledResult<U>[]
+) => Promise<U> | U;
 
 export type Settled<T> = PromiseSettledResult<T>;
 
@@ -32,15 +32,17 @@ export type Settled<T> = PromiseSettledResult<T>;
  * const err = await outcome(() => { throw new Error('fail'); });
  * console.log(err); // { reason: Error('fail'), status: 'rejected' }
  * ```
- * @param {ArrayExecutor<T>} executor - Function to execute.
- * @param {Parameters<ArrayExecutor<T>>} args - Arguments passed to the executor.
- * @returns {Promise<Settled<T>>} A settled outcome object.
- * @template T - The element type of the array.
+ * @param {ItemExecutor<T, U>} executor - Function to execute.
+ * @param {Parameters<ItemExecutor<T, U>>} args - Arguments passed to
+ *   the executor.
+ * @returns {Promise<Settled<U>>} A settled outcome object.
+ * @template T - The item type of the array.
+ * @template U - The result type returned by the executor.
  */
-export default async function outcome<T>(
-  executor: ArrayExecutor<T>,
-  ...args: Parameters<ArrayExecutor<T>>
-): Promise<Settled<T>> {
+export default async function outcome<T, U = T>(
+  executor: ItemExecutor<T, U>,
+  ...args: Parameters<ItemExecutor<T, U>>
+): Promise<Settled<U>> {
   try {
     const value = await executor(...args);
     return { status: 'fulfilled', value };

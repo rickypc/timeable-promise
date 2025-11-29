@@ -133,11 +133,16 @@ export { default as concurrent } from './concurrent';
 export { default as concurrents } from './concurrents';
 export { default as consecutive } from './consecutive';
 export { default as consecutives } from './consecutives';
-export { type ArrayExecutor, default as outcome, type Settled } from './outcome';
+export { type ItemExecutor, default as outcome, type Settled } from './outcome';
 export { default as parallel } from './parallel';
 export { default as poll, type PollExecutor, type PollHandle } from './poll';
 export { default as sequential } from './sequential';
 export { default as sleep } from './sleep';
 export { default as toNumber } from './toNumber';
-export { type PromiseExecutor, type TimeoutExecutor, default as untilSettledOrTimedOut } from './untilSettledOrTimedOut';
+export {
+  type PromiseConstructor,
+  type PromiseExecutor,
+  type TimeoutExecutor,
+  default as untilSettledOrTimedOut,
+} from './untilSettledOrTimedOut';
 export { default as waitFor } from './waitFor';

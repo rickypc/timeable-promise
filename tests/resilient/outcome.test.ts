@@ -5,12 +5,12 @@
  * @license AGPL-3.0-or-later
  */
 
-import outcome, { type ArrayExecutor } from '#root/src/outcome';
+import outcome, { type ItemExecutor } from '#root/src/outcome';
 import run from '#root/tests/resilient/runner';
 
 describe('outcome', () => {
   test('should be resilient', async () => {
-    const executor: ArrayExecutor<number> = async (x: number, y: number) => x + y;
-    expect(await run(() => outcome(executor, 2, 3, [2]))).toBeTruthy();
+    const executor: ItemExecutor<number> = (async (x: number, y: number) => x + y) as any;
+    expect(await run(() => outcome(executor, 2 as any, 3, [2] as any))).toBeTruthy();
   });
 });

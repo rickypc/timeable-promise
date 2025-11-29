@@ -6,8 +6,8 @@
  */
 
 import append from './append';
-import { type ArrayExecutor, type Settled } from './outcome';
 import concurrent from './concurrent';
+import { type ItemExecutor, type Settled } from './outcome';
 import toNumber from './toNumber';
 
 /**
@@ -43,19 +43,20 @@ import toNumber from './toNumber';
  * // ]
  * ```
  * @param {T[]} array - The array groups to be processed by executor.
- * @param {ArrayExecutor<T>} executor - Executor function applied to each
+ * @param {ItemExecutor<T, U>} executor - Executor function applied to each
  *   group.
  * @param {number} concurrency - The maximum concurrent group size
  *   (default = 0).
- * @returns {Promise<Settled<T>[]>} A promise resolving to an array of
+ * @returns {Promise<Settled<U>[]>} A promise resolving to an array of
  *   settled results.
- * @template T - The element type of the array.
+ * @template T - The item type of the array.
+ * @template U - The result type returned by the executor.
  */
-export default function concurrents<T>(
+export default function concurrents<T, U = T>(
   array: T[],
-  executor: ArrayExecutor<T>,
+  executor: ItemExecutor<T, U>,
   concurrency: number = 0,
-): Promise<Settled<T>[]> {
+): Promise<Settled<U>[]> {
   if (toNumber(concurrency)) {
     return array.reduce(async (previous, _, index) => {
       const accumulator = await previous;
@@ -66,13 +67,13 @@ export default function concurrents<T>(
         );
       }
       return accumulator;
-    }, Promise.resolve([] as Settled<T>[]));
+    }, Promise.resolve([] as Settled<U>[]));
   }
   return array.reduce(
     async (previous, value) => append(
       await previous,
       await concurrent(value as T[], executor),
     ),
-    Promise.resolve([] as Settled<T>[]),
+    Promise.resolve([] as Settled<U>[]),
   );
 }

@@ -5,7 +5,7 @@
  * @license AGPL-3.0-or-later
  */
 
-import outcome, { type ArrayExecutor, type Settled } from './outcome';
+import outcome, { type ItemExecutor, type Settled } from './outcome';
 import toNumber from './toNumber';
 
 /**
@@ -41,42 +41,43 @@ import toNumber from './toNumber';
  * // ]
  * ```
  * @param {T[]} array - The array items to be processed by executor.
- * @param {ArrayExecutor<T>} executor - Executor function applied to each
+ * @param {ItemExecutor<T, U>} executor - Executor function applied to each
  *   item or group.
  * @param {number} concurrency - The maximum group size (default = 0).
- * @returns {Promise<Settled<T>[]>} A promise resolving to an array of
+ * @returns {Promise<Settled<U>[]>} A promise resolving to an array of
  *   settled results.
- * @template T - The element type of the array.
+ * @template T - The item type of the array.
+ * @template U - The result type returned by the executor.
  */
-export default function consecutive<T>(
+export default function consecutive<T, U = T>(
   array: T[],
-  executor: ArrayExecutor<T>,
+  executor: ItemExecutor<T, U>,
   concurrency: number = 0,
-): Promise<Settled<T>[]> {
+): Promise<Settled<U>[]> {
   if (toNumber(concurrency)) {
     return array.reduce(async (previous, _, index) => {
       const accumulator = await previous;
       if (index % concurrency === 0) {
         accumulator[accumulator.length] = await outcome(
           executor,
-          array.slice(index, index + concurrency) as T,
+          array.slice(index, index + concurrency),
           index,
-          array,
+          array as T[][],
           accumulator,
         );
       }
       return accumulator;
-    }, Promise.resolve([] as Settled<T>[]));
+    }, Promise.resolve([] as Settled<U>[]));
   }
   return array.reduce(async (previous, value, index) => {
     const accumulator = await previous;
     accumulator[accumulator.length] = await outcome(
       executor,
-      value,
+      value as T[],
       index,
-      array,
+      array as T[][],
       accumulator,
     );
     return accumulator;
-  }, Promise.resolve([] as Settled<T>[]));
+  }, Promise.resolve([] as Settled<U>[]));
 }

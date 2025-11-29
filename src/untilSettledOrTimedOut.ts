@@ -5,20 +5,22 @@
  * @license AGPL-3.0-or-later
  */
 
+export type PromiseConstructor<T> = ConstructorParameters<typeof Promise<T>>[0];
+
 export type PromiseExecutor<T> = (
   // eslint-disable-next-line no-unused-vars
-  resolve: (value: T | PromiseLike<T>) => void,
+  resolve: Parameters<PromiseConstructor<T>>[0],
   // eslint-disable-next-line no-unused-vars
-  reject: (reason?: any) => void,
+  reject: Parameters<PromiseConstructor<T>>[1],
   // eslint-disable-next-line no-unused-vars
   pending: () => boolean
 ) => void;
 
 export type TimeoutExecutor<T> = (
   // eslint-disable-next-line no-unused-vars
-  resolve: (value: T | PromiseLike<T>) => void,
+  resolve: Parameters<PromiseConstructor<T>>[0],
   // eslint-disable-next-line no-unused-vars
-  reject: (reason?: any) => void
+  reject: Parameters<PromiseConstructor<T>>[1],
 ) => void;
 
 /**
@@ -53,8 +55,8 @@ export type TimeoutExecutor<T> = (
  *   .catch(ex => console.log('nay :(', ex));
  * console.log(`resolved with ${response}, yay!`);
  * ```
- * @param {PromiseExecutor<T>} executor - Executor function, receives resolve,
- *   reject, and a `pending` function.
+ * @param {PromiseExecutor<T>} promiseExecutor - Executor function,
+ *   receives resolve, reject, and a `pending` function.
  * @param {TimeoutExecutor<T>} timeoutExecutor - Function invoked if timeout
  *   occurs, receives resolve and reject.
  * @param {number} timeout - Timeout in milliseconds.
@@ -63,7 +65,7 @@ export type TimeoutExecutor<T> = (
  * @template T - The type of the resolved return value.
  */
 export default function untilSettledOrTimedOut<T>(
-  executor: PromiseExecutor<T>,
+  promiseExecutor: PromiseExecutor<T>,
   timeoutExecutor: TimeoutExecutor<T>,
   timeout: number,
 ): Promise<T> {
@@ -75,7 +77,7 @@ export default function untilSettledOrTimedOut<T>(
       timer = null;
       timeoutExecutor(resolve, reject);
     }, timeout);
-    executor(resolve, reject, () => !timedOut);
+    promiseExecutor(resolve, reject, () => !timedOut);
   }).finally(() => {
     if (!timedOut) {
       clearTimeout(timer as number);

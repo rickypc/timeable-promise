@@ -5,8 +5,8 @@
  * @license AGPL-3.0-or-later
  */
 
-import { type ArrayExecutor, type Settled } from './outcome';
 import chunk from './chunk';
+import { type ItemExecutor, type Settled } from './outcome';
 
 /**
  * Runs the executor concurrently across items in a single array.
@@ -41,17 +41,18 @@ import chunk from './chunk';
  * // ]
  * ```
  * @param {T[]} array - The array items to be processed by executor.
- * @param {ArrayExecutor<T>} executor - Executor function applied to each chunk.
+ * @param {ItemExecutor<T, U>} executor - Executor function applied to each chunk.
  * @param {number} concurrency - The maximum concurrent execution size
  *   (default = 0).
- * @returns {Promise<Settled<T>[]>} A promise resolving to an array of
+ * @returns {Promise<Settled<U>[]>} A promise resolving to an array of
  *   settled results.
- * @template T - The element type of the array.
+ * @template T - The item type of the array.
+ * @template U - The result type returned by the executor.
  */
-export default function concurrent<T>(
+export default function concurrent<T, U = T>(
   array: T[],
-  executor: ArrayExecutor<T>,
+  executor: ItemExecutor<T, U>,
   concurrency: number = 0,
-): Promise<Settled<T>[]> {
-  return Promise.allSettled(chunk(array, concurrency).map(executor as ArrayExecutor<any>));
+): Promise<Settled<U>[]> {
+  return Promise.allSettled(chunk(array, concurrency).map(executor as any));
 }

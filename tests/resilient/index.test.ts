@@ -7,12 +7,12 @@
 
 import {
   append,
-  type ArrayExecutor,
   chunk,
   concurrent,
   concurrents,
   consecutive,
   consecutives,
+  type ItemExecutor,
   outcome,
   parallel,
   poll,
@@ -67,8 +67,8 @@ describe('index.ts', () => {
 
   describe('outcome', () => {
     test('should be resilient', async () => {
-      const executor: ArrayExecutor<number> = async (x: number, y: number) => x + y;
-      expect(await run(() => outcome(executor, 2, 3, [2]))).toBeTruthy();
+      const executor: ItemExecutor<number> = (async (x: number, y: number) => x + y) as any;
+      expect(await run(() => outcome(executor, 2 as any, 3, [2] as any))).toBeTruthy();
     });
   });
 
