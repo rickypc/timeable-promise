@@ -6,7 +6,7 @@
   "description": "Various asynchronous operations with timeout support.",
   "devDependencies": {
     "@airbnb/node-memwatch": "3.0.0",
-    "@eslint/eslintrc": "3.3.1",
+    "@eslint/eslintrc": "3.3.3",
     "@eslint/js": "9.39.1",
     "@rspack/cli": "1.6.5",
     "@rspack/core": "1.6.5",
@@ -15,7 +15,7 @@
     "@types/airbnb__node-memwatch": "2.0.4",
     "@types/eslint-plugin-security": "3.0.0",
     "@types/jest": "30.0.0",
-    "bench-node": "0.12.0",
+    "bench-node": "0.13.0",
     "eslint": "9.39.1",
     "eslint-config-airbnb-base": "15.0.0",
     "eslint-import-resolver-typescript": "4.4.4",
@@ -25,12 +25,11 @@
     "eslint-plugin-no-secrets": "2.2.1",
     "eslint-plugin-security": "3.0.1",
     "eslint-plugin-yml": "1.19.0",
-    "globals": "16.5.0",
     "jest": "30.2.0",
     "jiti": "2.6.1",
     "remove-types": "1.0.0",
     "ts-checker-rspack-plugin": "1.2.0",
-    "typedoc": "0.28.14",
+    "typedoc": "0.28.15",
     "typedoc-plugin-markdown": "4.9.0",
     "typescript": "5.9.3",
     "typescript-eslint": "8.48.0",
@@ -56,13 +55,15 @@
   "name": "timeable-promise",
   "repository": {
     "type": "git",
-    "url": "git@github.com:rickypc/timeable-promise.git"
+    "url": "git+ssh://git@github.com/rickypc/timeable-promise.git"
   },
   "scripts": {
-    "build": "yarn docs && yarn build:core",
-    "build:core": "rspack build",
-    "docs": "typedoc",
+    "build": "yarn build:docs && yarn build:dist",
+    "build:dist": "rspack build",
+    "build:docs": "typedoc",
     "prepublishOnly": "yarn test && yarn build",
+    "publish": "git tag $(npm pkg get version | tr -d '\"') && git push --tags && npm publish ./dist",
+    "publish:dry": "yarn prepublishOnly && npm publish ./dist --dry-run && echo \"\\033[1;32mgit commit && git push origin && yarn publish\\033[0m\" || echo \"\\033[1;31m$(npm pkg get name | tr -d '\"') v$(npm pkg get version | tr -d '\"') is published. Do you want to bump up the version and modify CHANGELOG?\\033[0m\"",
     "test": "yarn test:lint && yarn test:type && yarn test:unit && yarn test:perf && yarn test:leak",
     "test:leak": "RESILIENT_TYPE=leak jest",
     "test:lint": "eslint .",
@@ -71,5 +72,5 @@
     "test:unit": "jest"
   },
   "type": "module",
-  "version": "1.6.1"
+  "version": "1.7.0"
 }

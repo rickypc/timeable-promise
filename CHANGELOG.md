@@ -1,3 +1,13 @@
+### 1.7.0 (2025.11.29)
+
+* Add full TypeScript support and type checking
+* Migrate examples, tests, and utilities to TypeScript
+* Refactor runner, exports/imports, and improve tree‑shaking
+* Consolidate performance and leak tests into resilient Jest suite
+* Update configs, GitHub Actions, and documentation
+* Minor improvements to output formatting, labels, and captions
+* Drop UMD build and clean up dependencies
+
 ### 1.6.1 (2023.05.10)
 
 * Adjust `parallel` and `sequential` array input

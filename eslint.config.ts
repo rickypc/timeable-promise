@@ -8,7 +8,6 @@
 import { dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { FlatCompat } from '@eslint/eslintrc';
-import globals from 'globals';
 import jest from 'eslint-plugin-jest';
 import js from '@eslint/js';
 import jsdoc from 'eslint-plugin-jsdoc';
@@ -35,7 +34,7 @@ const config: Linter.Config[] = [
     languageOptions: { parser: ymlParser },
   },
   {
-    languageOptions: { ecmaVersion: 2024, globals: { ...globals.browser } },
+    languageOptions: { ecmaVersion: 2024 },
     plugins: { 'no-secrets': noSecrets },
     rules: {
       'import/extensions': ['error', 'ignorePackages', { js: 'never', ts: 'never' }],
