@@ -33,7 +33,7 @@ runs:
       shell: bash
     - name: Validate
       run: |
-        echo -e "::group::\033[1;34mRunning Validation\033[0m"
+        echo -e "::group::\033[34mRunning Validation\033[0m"
         OUTPUT=$(mktemp)
         set +e
         ${{inputs.command}} 2>&1 | tee "$OUTPUT"
