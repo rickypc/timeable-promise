@@ -62,8 +62,8 @@
     "build:dist": "rspack build",
     "build:docs": "typedoc",
     "prepublishOnly": "yarn test && yarn build",
-    "publish": "git tag $(npm pkg get version | tr -d '\"') && git push --tags && cd ./dist && npm publish",
-    "publish:dry": "yarn prepublishOnly && cd ./dist && npm publish --dry-run && echo \"\\033[1;32mgit commit && git push origin && yarn publish\\033[0m\" || echo \"\\033[1;31m$(npm pkg get name | tr -d '\"') v$(npm pkg get version | tr -d '\"') is published. Do you want to bump up the version and modify CHANGELOG?\\033[0m\"",
+    "publish": "git tag $(npm pkg get version | tr -d '\"') && git push --tags && npm pack ./dist && npm publish ./$(npm pkg get name | tr -d '\"')-$(npm pkg get version | tr -d '\"').tgz --verbose",
+    "publish:dry": "yarn prepublishOnly && npm pack ./dist && npm publish --dry-run ./$(npm pkg get name | tr -d '\"')-$(npm pkg get version | tr -d '\"').tgz --verbose && echo \"\\033[1;32mgit commit && git push origin && yarn publish\\033[0m\" || echo \"\\033[1;31m$(npm pkg get name | tr -d '\"') v$(npm pkg get version | tr -d '\"') is published. Do you want to bump up the version and modify CHANGELOG?\\033[0m\"",
     "test": "yarn test:lint && yarn test:type && yarn test:unit && yarn test:perf && yarn test:leak",
     "test:deps:ci": "yarn outdated --json | jq -r 'select(.type == \"table\") | .data.body[] | @tsv' | sed 's/\\t/ | /g'",
     "test:leak": "sh -c 'RESILIENT_TYPE=leak jest \"$@\"' --",
@@ -76,5 +76,5 @@
     "test:unit:ci": "CI=true yarn test:unit"
   },
   "type": "module",
-  "version": "1.7.1"
+  "version": "1.7.2"
 }

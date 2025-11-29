@@ -1,3 +1,7 @@
+### 1.7.2 (2025.11.29)
+
+* Another attempt to correct previous release.
+
 ### 1.7.1 (2025.11.29)
 
 * Corrected npm publish setup: previous release included wrong files.
