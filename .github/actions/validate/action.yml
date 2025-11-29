@@ -27,13 +27,13 @@ runs:
         node-version: ${{inputs.node-version}}
     - name: Install
       run: |
-        echo "::group::\033[34mInstall Dependencies\033[0m"
+        echo -e "::group::\033[34mInstall Dependencies\033[0m"
         yarn
         echo "::endgroup::"
       shell: bash
     - name: Validate
       run: |
-        echo "::group::\033[1;34mRunning Validation\033[0m"
+        echo -e "::group::\033[1;34mRunning Validation\033[0m"
         OUTPUT=$(mktemp)
         set +e
         ${{inputs.command}} 2>&1 | tee "$OUTPUT"
