@@ -26,14 +26,10 @@ runs:
         cache-dependency-path: ${{inputs.cache-dependency-path}}
         node-version: ${{inputs.node-version}}
     - name: Install
-      run: |
-        echo "::group::Install Dependencies"
-        yarn
-        echo "::endgroup::"
+      run: yarn
       shell: bash
     - name: Validate
       run: |
-        echo "::group::Running Validation"
         OUTPUT=$(mktemp)
         set +e
         ${{inputs.command}} 2>&1 | tee "$OUTPUT"
@@ -44,12 +40,8 @@ runs:
           echo "" >> $GITHUB_STEP_SUMMARY
           cat "$OUTPUT" >> $GITHUB_STEP_SUMMARY
           rm -f "$OUTPUT"
-          echo "::endgroup::"
-          echo "::error title=Running Validation::Exit code $EXIT_CODE"
           exit $EXIT_CODE
         else
           rm -f "$OUTPUT"
-          echo "::endgroup::"
-          echo "::notice title=Running Validation::Succeeded"
         fi
       shell: bash
