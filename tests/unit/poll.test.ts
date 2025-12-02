@@ -24,13 +24,13 @@ export default function testPoll(fn: typeof poll) {
       let first = true;
       const log = jest.fn();
       const timer = fn(async (stopped) => {
-        await sleep(first ? 2.05 : 0.15);
+        await sleep(first ? 200.05 : 15);
         first = false;
         if (!stopped()) {
           log();
         }
-      }, 1, true);
-      await sleep(10);
+      }, 100, true);
+      await sleep(500);
       timer.stop();
 
       expect(log.mock.calls.length).toBeGreaterThanOrEqual(1);
