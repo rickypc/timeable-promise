@@ -8,13 +8,18 @@
 import { hrtimeToMs } from '#root/tests/utils';
 import sleep from '#root/src/sleep';
 
-describe('sleep', () => {
-  // Concurrent for style; single test runs like sequential.
-  test.concurrent('should idle', async () => {
-    const begin = process.hrtime();
-    await sleep(1);
-    const end = process.hrtime(begin);
+// eslint-disable-next-line jest/no-export,jsdoc/require-jsdoc
+export default function testSleep(fn: typeof sleep) {
+  describe('sleep', () => {
+    // Concurrent for style; single test runs like sequential.
+    test.concurrent('should idle', async () => {
+      const begin = process.hrtime();
+      await fn(1);
+      const end = process.hrtime(begin);
 
-    expect(hrtimeToMs(end)).toBeGreaterThan(0.001);
+      expect(hrtimeToMs(end)).toBeGreaterThan(0.001);
+    });
   });
-});
+}
+
+testSleep(sleep);

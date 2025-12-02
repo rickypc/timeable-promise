@@ -8,35 +8,40 @@
 import { hrtimeToMs } from '#root/tests/utils';
 import waitFor from '#root/src/waitFor';
 
-describe('waitFor', () => {
-  test.concurrent('should return resolved', async () => {
-    let inflight = true;
-    setTimeout(() => { inflight = false; }, 1);
+// eslint-disable-next-line jest/no-export,jsdoc/require-jsdoc
+export default function testWaitFor(fn: typeof waitFor) {
+  describe('waitFor', () => {
+    test.concurrent('should return resolved', async () => {
+      let inflight = true;
+      setTimeout(() => { inflight = false; }, 1);
 
-    const begin = process.hrtime();
-    await waitFor(() => !inflight, 2, 1);
-    const end = process.hrtime(begin);
+      const begin = process.hrtime();
+      await fn(() => !inflight, 2, 1);
+      const end = process.hrtime(begin);
 
-    expect(hrtimeToMs(end)).toBeLessThan(10);
+      expect(hrtimeToMs(end)).toBeLessThan(10);
+    });
+
+    test.concurrent('should return resolved with default interval', async () => {
+      const inflight = false;
+
+      const begin = process.hrtime();
+      await fn(() => !inflight, 1);
+      const end = process.hrtime(begin);
+
+      expect(hrtimeToMs(end)).toBeLessThan(10);
+    });
+
+    test.concurrent('should return timed out resolved', async () => {
+      const inflight = true;
+
+      const begin = process.hrtime();
+      await fn(() => !inflight, 2, 1);
+      const end = process.hrtime(begin);
+
+      expect(hrtimeToMs(end)).toBeGreaterThan(1);
+    });
   });
+}
 
-  test.concurrent('should return resolved with default interval', async () => {
-    const inflight = false;
-
-    const begin = process.hrtime();
-    await waitFor(() => !inflight, 1);
-    const end = process.hrtime(begin);
-
-    expect(hrtimeToMs(end)).toBeLessThan(10);
-  });
-
-  test.concurrent('should return timed out resolved', async () => {
-    const inflight = true;
-
-    const begin = process.hrtime();
-    await waitFor(() => !inflight, 2, 1);
-    const end = process.hrtime(begin);
-
-    expect(hrtimeToMs(end)).toBeGreaterThan(1);
-  });
-});
+testWaitFor(waitFor);

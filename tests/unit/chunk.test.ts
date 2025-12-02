@@ -7,17 +7,22 @@
 
 import chunk from '#root/src/chunk';
 
-describe('chunk', () => {
-  test.concurrent('should return chunked array', () => {
-    expect(chunk([1, 2, 3], 2)).toEqual([[1, 2], [3]]);
-  });
+// eslint-disable-next-line jest/no-export,jsdoc/require-jsdoc
+export default function testChunk(fn: typeof chunk) {
+  describe('chunk', () => {
+    test.concurrent('should return chunked array', () => {
+      expect(fn([1, 2, 3], 2)).toEqual([[1, 2], [3]]);
+    });
 
-  test.concurrent('should return original array', () => {
-    expect(chunk([1, 2, 3])).toEqual([1, 2, 3]);
-    expect(chunk(undefined as any)).toBeUndefined();
-  });
+    test.concurrent('should return original array', () => {
+      expect(fn([1, 2, 3])).toEqual([1, 2, 3]);
+      expect(fn(undefined as any)).toBeUndefined();
+    });
 
-  test.concurrent('should return empty array', () => {
-    expect(chunk('' as any, 2)).toEqual([]);
+    test.concurrent('should return empty array', () => {
+      expect(fn('' as any, 2)).toEqual([]);
+    });
   });
-});
+}
+
+testChunk(chunk);
