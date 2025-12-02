@@ -8,9 +8,14 @@
 import run from '#root/tests/resilient/runner';
 import sequential from '#root/src/sequential';
 
-describe('sequential', () => {
-  test('should be resilient', async () => {
-    expect(await run(() => sequential(['a', 'b', 'c'], (value) => value, 2)))
-      .toBeTruthy();
+// eslint-disable-next-line jest/no-export,jsdoc/require-jsdoc
+export default function testSequential(fn: typeof sequential) {
+  describe('sequential', () => {
+    test('should be resilient', async () => {
+      expect(await run(() => fn(['a', 'b', 'c'], (value) => value, 2)))
+        .toBeTruthy();
+    });
   });
-});
+}
+
+testSequential(sequential);

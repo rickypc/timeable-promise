@@ -8,16 +8,21 @@
 import poll from '#root/src/poll';
 import run from '#root/tests/resilient/runner';
 
-describe('poll', () => {
-  test('should be resilient', async () => {
-    expect(await run(async () => {
-      const timer = poll(() => {});
-      await new Promise<void>((resolve) => {
-        setTimeout(() => {
-          timer.stop();
-          resolve();
-        }, 0);
-      });
-    })).toBeTruthy();
+// eslint-disable-next-line jest/no-export,jsdoc/require-jsdoc
+export default function testPoll(fn: typeof poll) {
+  describe('poll', () => {
+    test('should be resilient', async () => {
+      expect(await run(async () => {
+        const timer = fn(() => {});
+        await new Promise<void>((resolve) => {
+          setTimeout(() => {
+            timer.stop();
+            resolve();
+          }, 0);
+        });
+      })).toBeTruthy();
+    });
   });
-});
+}
+
+testPoll(poll);

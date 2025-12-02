@@ -8,8 +8,13 @@
 import run from '#root/tests/resilient/runner';
 import toNumber from '#root/src/toNumber';
 
-describe('toNumber', () => {
-  test('should be resilient', async () => {
-    expect(await run(() => toNumber('0'))).toBeTruthy();
+// eslint-disable-next-line jest/no-export,jsdoc/require-jsdoc
+export default function testToNumber(fn: typeof toNumber) {
+  describe('toNumber', () => {
+    test('should be resilient', async () => {
+      expect(await run(() => fn('0'))).toBeTruthy();
+    });
   });
-});
+}
+
+testToNumber(toNumber);

@@ -8,15 +8,20 @@
 import run from '#root/tests/resilient/runner';
 import untilSettledOrTimedOut from '#root/src/untilSettledOrTimedOut';
 
-describe('untilSettledOrTimedOut', () => {
-  test('should be resilient', async () => {
-    expect(await run(async () => {
-      await untilSettledOrTimedOut(
-        (resolve) => resolve('executor'),
-        (resolve) => resolve('timeout'),
-        // 1ns.
-        0.000001,
-      );
-    })).toBeTruthy();
+// eslint-disable-next-line jest/no-export,jsdoc/require-jsdoc
+export default function testUntilSettledOrTimedOut(fn: typeof untilSettledOrTimedOut) {
+  describe('untilSettledOrTimedOut', () => {
+    test('should be resilient', async () => {
+      expect(await run(async () => {
+        await fn(
+          (resolve) => resolve('executor'),
+          (resolve) => resolve('timeout'),
+          // 1ns.
+          0.000001,
+        );
+      })).toBeTruthy();
+    });
   });
-});
+}
+
+testUntilSettledOrTimedOut(untilSettledOrTimedOut);

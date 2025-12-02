@@ -8,9 +8,14 @@
 import consecutives from '#root/src/consecutives';
 import run from '#root/tests/resilient/runner';
 
-describe('consecutives', () => {
-  test('should be resilient', async () => {
-    expect(await run(() => consecutives([['a', 'b'], ['c']], (value) => value)))
-      .toBeTruthy();
+// eslint-disable-next-line jest/no-export,jsdoc/require-jsdoc
+export default function testConsecutives(fn: typeof consecutives) {
+  describe('consecutives', () => {
+    test('should be resilient', async () => {
+      expect(await run(() => fn([['a', 'b'], ['c']], (value) => value)))
+        .toBeTruthy();
+    });
   });
-});
+}
+
+testConsecutives(consecutives);

@@ -8,9 +8,14 @@
 import concurrent from '#root/src/concurrent';
 import run from '#root/tests/resilient/runner';
 
-describe('concurrent', () => {
-  test('should be resilient', async () => {
-    expect(await run(() => concurrent(['a', 'b', 'c'], (value) => value, 2)))
-      .toBeTruthy();
+// eslint-disable-next-line jest/no-export,jsdoc/require-jsdoc
+export default function testConcurrent(fn: typeof concurrent) {
+  describe('concurrent', () => {
+    test('should be resilient', async () => {
+      expect(await run(() => fn(['a', 'b', 'c'], (value) => value, 2)))
+        .toBeTruthy();
+    });
   });
-});
+}
+
+testConcurrent(concurrent);

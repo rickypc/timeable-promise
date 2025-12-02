@@ -8,9 +8,14 @@
 import run from '#root/tests/resilient/runner';
 import sleep from '#root/src/sleep';
 
-describe('sleep', () => {
-  test('should be resilient', async () => {
-    // 1ns.
-    expect(await run(() => sleep(0.000001))).toBeTruthy();
+// eslint-disable-next-line jest/no-export,jsdoc/require-jsdoc
+export default function testSleep(fn: typeof sleep) {
+  describe('sleep', () => {
+    test('should be resilient', async () => {
+      // 1ns.
+      expect(await run(() => fn(0.000001))).toBeTruthy();
+    });
   });
-});
+}
+
+testSleep(sleep);

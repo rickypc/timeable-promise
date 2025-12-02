@@ -12,7 +12,6 @@ import {
   concurrents,
   consecutive,
   consecutives,
-  type ItemExecutor,
   outcome,
   parallel,
   poll,
@@ -22,111 +21,34 @@ import {
   untilSettledOrTimedOut,
   waitFor,
 } from '#root/src/index';
-import run from '#root/tests/resilient/runner';
+import testAppend from '#root/tests/resilient/append.test';
+import testChunk from '#root/tests/resilient/chunk.test';
+import testConcurrent from '#root/tests/resilient/concurrent.test';
+import testConcurrents from '#root/tests/resilient/concurrents.test';
+import testConsecutive from '#root/tests/resilient/consecutive.test';
+import testConsecutives from '#root/tests/resilient/consecutives.test';
+import testOutcome from '#root/tests/resilient/outcome.test';
+import testParallel from '#root/tests/resilient/parallel.test';
+import testPoll from '#root/tests/resilient/poll.test';
+import testSequential from '#root/tests/resilient/sequential.test';
+import testSleep from '#root/tests/resilient/sleep.test';
+import testToNumber from '#root/tests/resilient/toNumber.test';
+import testUntilSettledOrTimedOut from '#root/tests/resilient/untilSettledOrTimedOut.test';
+import testWaitFor from '#root/tests/resilient/waitFor.test';
 
 describe('index.ts', () => {
-  describe('append', () => {
-    test('should be resilient', async () => {
-      expect(await run(() => append([1, 2], [3, 4]))).toBeTruthy();
-    });
-  });
-
-  describe('chunk', () => {
-    test('should be resilient', async () => {
-      expect(await run(() => chunk([1, 2, 3], 2))).toBeTruthy();
-    });
-  });
-
-  describe('concurrent', () => {
-    test('should be resilient', async () => {
-      expect(await run(() => concurrent(['a', 'b', 'c'], (value) => value, 2)))
-        .toBeTruthy();
-    });
-  });
-
-  describe('concurrents', () => {
-    test('should be resilient', async () => {
-      expect(await run(() => concurrents([['a', 'b'], ['c']], (value) => value)))
-        .toBeTruthy();
-    });
-  });
-
-  describe('consecutive', () => {
-    test('should be resilient', async () => {
-      expect(await run(() => consecutive(['a', 'b', 'c'], (value) => value, 2)))
-        .toBeTruthy();
-    });
-  });
-
-  describe('consecutives', () => {
-    test('should be resilient', async () => {
-      expect(await run(() => consecutives([['a', 'b'], ['c']], (value) => value)))
-        .toBeTruthy();
-    });
-  });
-
-  describe('outcome', () => {
-    test('should be resilient', async () => {
-      const executor: ItemExecutor<number> = (async (x: number, y: number) => x + y) as any;
-      expect(await run(() => outcome(executor, 2 as any, 3, [2] as any))).toBeTruthy();
-    });
-  });
-
-  describe('parallel', () => {
-    test('should be resilient', async () => {
-      expect(await run(() => parallel(['a', 'b', 'c'], (value) => value, 2)))
-        .toBeTruthy();
-    });
-  });
-
-  describe('poll', () => {
-    test('should be resilient', async () => {
-      expect(await run(async () => {
-        const timer = poll(() => {});
-        // 1ns.
-        await sleep(0.000001);
-        timer.stop();
-      })).toBeTruthy();
-    });
-  });
-
-  describe('sequential', () => {
-    test('should be resilient', async () => {
-      expect(await run(() => sequential(['a', 'b', 'c'], (value) => value, 2)))
-        .toBeTruthy();
-    });
-  });
-
-  describe('sleep', () => {
-    test('should be resilient', async () => {
-      // 1ns.
-      expect(await run(() => sleep(0.000001))).toBeTruthy();
-    });
-  });
-
-  describe('toNumber', () => {
-    test('should be resilient', async () => {
-      expect(await run(() => toNumber('0'))).toBeTruthy();
-    });
-  });
-
-  describe('untilSettledOrTimedOut', () => {
-    test('should be resilient', async () => {
-      expect(await run(async () => {
-        await untilSettledOrTimedOut(
-          (resolve) => resolve('executor'),
-          (resolve) => resolve('timeout'),
-          // 1ns.
-          0.000001,
-        );
-      })).toBeTruthy();
-    });
-  });
-
-  describe('waitFor', () => {
-    test('should be resilient', async () => {
-      // 1ns.
-      expect(await run(() => waitFor(() => true, 0.000001, 0.000001))).toBeTruthy();
-    });
-  });
+  testAppend(append);
+  testChunk(chunk);
+  testConcurrent(concurrent);
+  testConcurrents(concurrents);
+  testConsecutive(consecutive);
+  testConsecutives(consecutives);
+  testOutcome(outcome);
+  testParallel(parallel);
+  testPoll(poll);
+  testSequential(sequential);
+  testSleep(sleep);
+  testToNumber(toNumber);
+  testUntilSettledOrTimedOut(untilSettledOrTimedOut);
+  testWaitFor(waitFor);
 });

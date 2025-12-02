@@ -8,9 +8,14 @@
 import run from '#root/tests/resilient/runner';
 import waitFor from '#root/src/waitFor';
 
-describe('waitFor', () => {
-  test('should be resilient', async () => {
-    // 1ns.
-    expect(await run(() => waitFor(() => true, 0.000001, 0.000001))).toBeTruthy();
+// eslint-disable-next-line jest/no-export,jsdoc/require-jsdoc
+export default function testWaitFor(fn: typeof waitFor) {
+  describe('waitFor', () => {
+    test('should be resilient', async () => {
+      // 1ns.
+      expect(await run(() => fn(() => true, 0.000001, 0.000001))).toBeTruthy();
+    });
   });
-});
+}
+
+testWaitFor(waitFor);

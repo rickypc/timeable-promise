@@ -21,7 +21,6 @@ import {
   untilSettledOrTimedOut,
   waitFor,
 } from '#root/src/index';
-import { hrtimeToMs } from '#root/tests/utils';
 import testAppend from '#root/tests/unit/append.test';
 import testChunk from '#root/tests/unit/chunk.test';
 import testConcurrent from '#root/tests/unit/concurrent.test';

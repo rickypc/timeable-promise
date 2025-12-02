@@ -8,9 +8,14 @@
 import outcome, { type ItemExecutor } from '#root/src/outcome';
 import run from '#root/tests/resilient/runner';
 
-describe('outcome', () => {
-  test('should be resilient', async () => {
-    const executor: ItemExecutor<number> = (async (x: number, y: number) => x + y) as any;
-    expect(await run(() => outcome(executor, 2 as any, 3, [2] as any))).toBeTruthy();
+// eslint-disable-next-line jest/no-export,jsdoc/require-jsdoc
+export default function testOutcome(fn: typeof outcome) {
+  describe('outcome', () => {
+    test('should be resilient', async () => {
+      const executor: ItemExecutor<number> = (async (x: number, y: number) => x + y) as any;
+      expect(await run(() => fn(executor, 2 as any, 3, [2] as any))).toBeTruthy();
+    });
   });
-});
+}
+
+testOutcome(outcome);

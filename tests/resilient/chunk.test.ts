@@ -8,8 +8,13 @@
 import chunk from '#root/src/chunk';
 import run from '#root/tests/resilient/runner';
 
-describe('chunk', () => {
-  test('should be resilient', async () => {
-    expect(await run(() => chunk([1, 2, 3], 2))).toBeTruthy();
+// eslint-disable-next-line jest/no-export,jsdoc/require-jsdoc
+export default function testChunk(fn: typeof chunk) {
+  describe('chunk', () => {
+    test('should be resilient', async () => {
+      expect(await run(() => fn([1, 2, 3], 2))).toBeTruthy();
+    });
   });
-});
+}
+
+testChunk(chunk);

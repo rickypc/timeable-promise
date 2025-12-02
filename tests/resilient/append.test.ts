@@ -8,8 +8,13 @@
 import append from '#root/src/append';
 import run from '#root/tests/resilient/runner';
 
-describe('append', () => {
-  test('should be resilient', async () => {
-    expect(await run(() => append([1, 2], [3, 4]))).toBeTruthy();
+// eslint-disable-next-line jest/no-export,jsdoc/require-jsdoc
+export default function testAppend(fn: typeof append) {
+  describe('append', () => {
+    test('should be resilient', async () => {
+      expect(await run(() => fn([1, 2], [3, 4]))).toBeTruthy();
+    });
   });
-});
+}
+
+testAppend(append);

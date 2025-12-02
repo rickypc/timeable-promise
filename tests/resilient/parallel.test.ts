@@ -8,9 +8,14 @@
 import parallel from '#root/src/parallel';
 import run from '#root/tests/resilient/runner';
 
-describe('parallel', () => {
-  test('should be resilient', async () => {
-    expect(await run(() => parallel(['a', 'b', 'c'], (value) => value, 2)))
-      .toBeTruthy();
+// eslint-disable-next-line jest/no-export,jsdoc/require-jsdoc
+export default function testParallel(fn: typeof parallel) {
+  describe('parallel', () => {
+    test('should be resilient', async () => {
+      expect(await run(() => fn(['a', 'b', 'c'], (value) => value, 2)))
+        .toBeTruthy();
+    });
   });
-});
+}
+
+testParallel(parallel);
