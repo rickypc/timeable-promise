@@ -1,3 +1,9 @@
+### 1.7.4 (2025.12.08)
+
+* Remove bit.ly integration
+* Refactor and consolidate tests (polls, barrels, general structure)
+* Standardize and clean up scripts (naming, typos, release flow)
+
 ### 1.7.3 (2025.11.29)
 
 * Third time’s a charm.
