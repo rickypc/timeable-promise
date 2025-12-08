@@ -37,9 +37,9 @@ const plugins = {
     app.renderer.markdownHooks.on('index.page.end', () => `
 ## Development Dependencies
 
-You will need to install [Node.js](https://bit.ly/2SMCGXK) as a local
+You will need to install [Node.js](https://nodejs.org/en/) as a local
 development dependency. The \`npm\` package manager comes bundled with all
-recent releases of \`Node.js\`. You can also use [yarn](https://bit.ly/3nmWS1K)
+recent releases of \`Node.js\`. You can also use [yarn](https://yarnpkg.com)
 as a package manager.
 
 \`yarn\` or \`npm install\` will attempt to resolve any \`npm\` module dependencies
@@ -107,10 +107,10 @@ That's it! Thank you for your contribution!
 Copyright (c) 2018-${new Date().getFullYear()} Richard Huang.
 
 This module is free software, licensed under:
-[GNU Affero General Public License (AGPL-3.0)](https://bit.ly/2yi7gyO).
+[GNU Affero General Public License (AGPL-3.0)](https://www.gnu.org/licenses/agpl-3.0.en.html).
 
 Documentation and other similar content are provided under
-[Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](https://bit.ly/2SMCRlS).
+[Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-nc-sa/4.0/).
     `);
   },
 };

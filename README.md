@@ -1,14 +1,14 @@
 # Timeable Promise
 
-[![Version](https://img.shields.io/npm/v/timeable-promise?logo=npm)](https://bit.ly/2YFweqU)
-[![Downloads](https://img.shields.io/npm/dt/timeable-promise)](https://bit.ly/2YFweqU)
-[![Dependencies](https://img.shields.io/librariesio/github/rickypc/timeable-promise?logo=librariesdotio)](https://bit.ly/3MUJErG)
-[![Style](https://img.shields.io/badge/style-Airbnb-red?logo=eslint)](https://bit.ly/2JYN1gk)
+[![Version](https://img.shields.io/npm/v/timeable-promise?logo=npm)](https://www.npmjs.com/package/timeable-promise)
+[![Downloads](https://img.shields.io/npm/dt/timeable-promise)](https://www.npmjs.com/package/timeable-promise)
+[![Dependencies](https://img.shields.io/librariesio/github/rickypc/timeable-promise?logo=librariesdotio)](https://libraries.io/npm/timeable-promise)
+[![Style](https://img.shields.io/badge/style-Airbnb-red?logo=eslint)](https://github.com/airbnb/javascript)
 ![TypeScript](https://img.shields.io/badge/dynamic/json?url=https://raw.githubusercontent.com/rickypc/timeable-promise/main/package.json&query=$.devDependencies.typescript&label=typescript&logo=typescript&logoColor=fff&color=3178C6)
-[![Checks](https://img.shields.io/github/actions/workflow/status/rickypc/timeable-promise/validations.yml?logo=githubactions&label=checks)](https://bit.ly/43aA0qF)
-[![Coverage](https://img.shields.io/codecov/c/github/rickypc/timeable-promise?logo=codecov)](https://bit.ly/2LPRiVj)
-[![Vulnerabilities](https://snyk.io/test/github/rickypc/timeable-promise/badge.svg)](https://bit.ly/2yP3kGa)
-[![License](https://img.shields.io/npm/l/timeable-promise?logo=opensourceinitiative)](https://bit.ly/2yi7gyO)
+[![Checks](https://img.shields.io/github/actions/workflow/status/rickypc/timeable-promise/validations.yml?logo=githubactions&label=checks)](https://github.com/rickypc/timeable-promise/actions/workflows/validations.yml)
+[![Coverage](https://img.shields.io/codecov/c/github/rickypc/timeable-promise?logo=codecov)](https://app.codecov.io/gh/rickypc/timeable-promise)
+[![Vulnerabilities](https://snyk.io/test/github/rickypc/timeable-promise/badge.svg)](https://snyk.io/test/github/rickypc/timeable-promise?tab=dependencies)
+[![License](https://img.shields.io/npm/l/timeable-promise?logo=opensourceinitiative)](https://www.gnu.org/licenses/agpl-3.0.en.html)
 
 Collection of asynchronous utilities for managing concurrency,
 sequencing, and timing. Provides helpers for running tasks in
@@ -1052,9 +1052,9 @@ Defined in: [untilSettledOrTimedOut.ts:19](https://github.com/rickypc/timeable-p
 
 ## Development Dependencies
 
-You will need to install [Node.js](https://bit.ly/2SMCGXK) as a local
+You will need to install [Node.js](https://nodejs.org/en/) as a local
 development dependency. The `npm` package manager comes bundled with all
-recent releases of `Node.js`. You can also use [yarn](https://bit.ly/3nmWS1K)
+recent releases of `Node.js`. You can also use [yarn](https://yarnpkg.com)
 as a package manager.
 
 `yarn` or `npm install` will attempt to resolve any `npm` module dependencies
@@ -1122,7 +1122,7 @@ That's it! Thank you for your contribution!
 Copyright (c) 2018-2025 Richard Huang.
 
 This module is free software, licensed under:
-[GNU Affero General Public License (AGPL-3.0)](https://bit.ly/2yi7gyO).
+[GNU Affero General Public License (AGPL-3.0)](https://www.gnu.org/licenses/agpl-3.0.en.html).
 
 Documentation and other similar content are provided under
-[Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](https://bit.ly/2SMCRlS).
+[Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-nc-sa/4.0/).
