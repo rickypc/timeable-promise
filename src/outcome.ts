@@ -1,5 +1,5 @@
 /**
- * @copyright Copyright (c) 2018-2025 Richard Huang <rickypc@users.noreply.github.com>
+ * @copyright Copyright © 2018 Richard Huang <rickypc@users.noreply.github.com>
  * @description Wraps executor result into a settled outcome object.
  * @file outcome.ts
  * @license AGPL-3.0-or-later

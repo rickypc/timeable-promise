@@ -1,5 +1,5 @@
 /**
- * @copyright Copyright (c) 2018-2025 Richard Huang <rickypc@users.noreply.github.com>
+ * @copyright Copyright © 2018 Richard Huang <rickypc@users.noreply.github.com>
  * @description Provide sequential execution across array items with optional chunked concurrency.
  * @file sequential.ts
  * @license AGPL-3.0-or-later

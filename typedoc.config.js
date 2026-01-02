@@ -1,5 +1,5 @@
 /**
- * @copyright Copyright (c) 2018-2025 Richard Huang <rickypc@users.noreply.github.com>
+ * @copyright Copyright © 2018 Richard Huang <rickypc@users.noreply.github.com>
  * @description Typedoc settings.
  * @file typedoc.config.js
  * @license AGPL-3.0-or-later
@@ -104,7 +104,7 @@ That's it! Thank you for your contribution!
 
 ## License
 
-Copyright (c) 2018-${new Date().getFullYear()} Richard Huang.
+Copyright © 2018 Richard Huang.
 
 This module is free software, licensed under:
 [GNU Affero General Public License (AGPL-3.0)](https://www.gnu.org/licenses/agpl-3.0.en.html).

@@ -1,5 +1,5 @@
 /**
- * @copyright Copyright (c) 2018-2025 Richard Huang <rickypc@users.noreply.github.com>
+ * @copyright Copyright © 2018 Richard Huang <rickypc@users.noreply.github.com>
  * @description `toNumber()` resilient tests.
  * @file toNumber.test.ts
  * @license AGPL-3.0-or-later

@@ -1,5 +1,5 @@
 /**
- * @copyright Copyright (c) 2018-2025 Richard Huang <rickypc@users.noreply.github.com>
+ * @copyright Copyright © 2018 Richard Huang <rickypc@users.noreply.github.com>
  * @description Run array executors concurrently with optional chunk control.
  * @file concurrent.ts
  * @license AGPL-3.0-or-later

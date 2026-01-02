@@ -1119,7 +1119,7 @@ That's it! Thank you for your contribution!
 
 ## License
 
-Copyright (c) 2018-2025 Richard Huang.
+Copyright © 2018 Richard Huang.
 
 This module is free software, licensed under:
 [GNU Affero General Public License (AGPL-3.0)](https://www.gnu.org/licenses/agpl-3.0.en.html).
