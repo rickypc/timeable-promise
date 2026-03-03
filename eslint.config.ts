@@ -16,7 +16,7 @@ import noSecrets from 'eslint-plugin-no-secrets';
 import security from 'eslint-plugin-security';
 import ts from 'typescript-eslint';
 import yml from 'eslint-plugin-yml';
-import ymlParser from 'yaml-eslint-parser';
+import * as ymlParser from 'yaml-eslint-parser';
 
 const compat = new FlatCompat({ baseDirectory: dirname(fileURLToPath(import.meta.url)) });
 const config: Linter.Config[] = [

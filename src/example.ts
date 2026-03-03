@@ -21,8 +21,8 @@ const {
 } = require('timeable-promise');
 
 module.exports = async (): Promise<string> => {
-  let flat: string[] | null = ['a', 'b', 'c'];
-  let nested: string[][] | null = [['a', 'b'], ['c']];
+  const flat: string[] | null = ['a', 'b', 'c'];
+  const nested: string[][] | null = [['a', 'b'], ['c']];
 
   // eslint-disable-next-line no-console
   console.log('1. Chunk ->', chunk([1, 2, 3, 4], 2));
@@ -47,22 +47,16 @@ module.exports = async (): Promise<string> => {
   // eslint-disable-next-line no-console
   console.log('6. Parallel -> ran', flat.join(', '), 'in parallel -> all fulfilled');
 
-  let timer = poll(() => {}, 2);
+  const timer = poll(() => {}, 2);
   // Test-only wait; real-world may not await.
   await sleep(3);
   timer.stop();
   // eslint-disable-next-line no-console
   console.log('7. Poll -> ticked repeatedly until stopped');
-  // Cleanups.
-  timer = null;
 
   await sequential(flat, async (value: number) => value);
   // eslint-disable-next-line no-console
   console.log('8. Sequential -> ran', flat.join(' -> '), 'in series -> all fulfilled');
-
-  // Cleanups.
-  flat = null;
-  nested = null;
 
   await sleep(1);
   // eslint-disable-next-line no-console
@@ -71,7 +65,7 @@ module.exports = async (): Promise<string> => {
   // eslint-disable-next-line no-console
   console.log('10. ToNumber -> "1" ->', toNumber('1'));
 
-  let settled = await untilSettledOrTimedOut(
+  const settled = await untilSettledOrTimedOut(
     // eslint-disable-next-line no-unused-vars
     async (resolve: (_: boolean) => void, _: unknown, pending: () => boolean) => {
       const value = true;
@@ -87,10 +81,8 @@ module.exports = async (): Promise<string> => {
   ).catch(/* istanbul ignore next */() => false);
   // eslint-disable-next-line no-console
   console.log('11. Settle -> finished before timeout -> return', settled);
-  // Cleanups.
-  settled = null;
 
-  let timedOut = await untilSettledOrTimedOut(
+  const timedOut = await untilSettledOrTimedOut(
     // eslint-disable-next-line no-unused-vars
     async (resolve: (_: boolean) => void, _: unknown, pending: () => boolean) => {
       // Test-only delay to simulate long processing; real-world may not await.
@@ -107,8 +99,6 @@ module.exports = async (): Promise<string> => {
   ).catch(() => false);
   // eslint-disable-next-line no-console
   console.log('12. Timeout -> took too long -> rejected -> return', timedOut);
-  // Cleanups.
-  timedOut = null;
 
   let inflight: boolean | null = true;
   setTimeout(() => { inflight = false; }, 1);
