@@ -18,66 +18,66 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: Validate
         uses: ./.github/actions/validate
         with:
-          command: yarn test:deps:ci
+          command: npm run test:deps:ci
           node-version: ${{env.NODE_LTS}}
   leak:
     name: Leak
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: Validate
         uses: ./.github/actions/validate
         with:
-          command: yarn test:leak:ci
+          command: npm run test:leak:ci
           node-version: ${{env.NODE_LTS}}
   lint:
     name: Lint
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: Validate
         uses: ./.github/actions/validate
         with:
-          command: yarn test:lint
+          command: npm run test:lint
           node-version: ${{env.NODE_LTS}}
   perf:
     name: Perf
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: Validate
         uses: ./.github/actions/validate
         with:
-          command: yarn test:perf:ci
+          command: npm run test:perf:ci
           node-version: ${{env.NODE_LTS}}
   types:
     name: Types
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: Validate
         uses: ./.github/actions/validate
         with:
-          command: yarn test:type
+          command: npm run test:type
           node-version: ${{env.NODE_LTS}}
   unit:
     name: Unit
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: Validate
         uses: ./.github/actions/validate
         with:
-          command: yarn test:unit:ci
+          command: npm run test:unit:ci
           node-version: ${{env.NODE_LTS}}
       - name: Codecov
         uses: codecov/codecov-action@v5

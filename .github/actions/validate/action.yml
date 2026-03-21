@@ -20,15 +20,15 @@ runs:
   using: composite
   steps:
     - name: Setup Node
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v6
       with:
-        cache: yarn
+        cache: npm
         cache-dependency-path: ${{inputs.cache-dependency-path}}
         node-version: ${{inputs.node-version}}
     - name: Install
       run: |
         echo -e "::group::\033[34mInstall Dependencies\033[0m"
-        yarn
+        npm install --legacy-peer-deps
         echo "::endgroup::"
       shell: bash
     - name: Validate

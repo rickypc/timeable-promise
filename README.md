@@ -18,7 +18,7 @@ and working with settled promise results.
 ## Installation
 
 ```bash
-yarn add timeable-promise || npm install --save timeable-promise
+npm install --save timeable-promise
 ```
 
 ## Importing
@@ -163,7 +163,7 @@ console.log(appended); // [1, 2, 3, 4]
 ### chunk()
 
 ```ts
-function chunk<T, U>(array, size): U;
+function chunk<T, U>(array, size?): U;
 ```
 
 Defined in: [chunk.ts:26](https://github.com/rickypc/timeable-promise/blob/main/src/chunk.ts#L26)
@@ -208,7 +208,7 @@ console.log(chunked); // [[1, 2], [3, 4], [5]]
 function concurrent<T, U>(
    array, 
    executor, 
-concurrency): Promise<Settled<U>[]>;
+concurrency?): Promise<Settled<U>[]>;
 ```
 
 Defined in: [concurrent.ts:52](https://github.com/rickypc/timeable-promise/blob/main/src/concurrent.ts#L52)
@@ -277,7 +277,7 @@ console.log(concurrentSettled2);
 function concurrents<T, U>(
    array, 
    executor, 
-concurrency): Promise<Settled<U>[]>;
+concurrency?): Promise<Settled<U>[]>;
 ```
 
 Defined in: [concurrents.ts:55](https://github.com/rickypc/timeable-promise/blob/main/src/concurrents.ts#L55)
@@ -346,7 +346,7 @@ console.log(concurrentsSettled2);
 function consecutive<T, U>(
    array, 
    executor, 
-concurrency): Promise<Settled<U>[]>;
+concurrency?): Promise<Settled<U>[]>;
 ```
 
 Defined in: [consecutive.ts:52](https://github.com/rickypc/timeable-promise/blob/main/src/consecutive.ts#L52)
@@ -415,7 +415,7 @@ console.log(consecutiveSettled2);
 function consecutives<T, U>(
    array, 
    executor, 
-concurrency): Promise<Settled<U>[]>;
+concurrency?): Promise<Settled<U>[]>;
 ```
 
 Defined in: [consecutives.ts:53](https://github.com/rickypc/timeable-promise/blob/main/src/consecutives.ts#L53)
@@ -529,7 +529,7 @@ console.log(err); // { reason: Error('fail'), status: 'rejected' }
 function parallel<T, U>(
    array, 
    executor, 
-concurrency): Promise<Settled<U>[]>;
+concurrency?): Promise<Settled<U>[]>;
 ```
 
 Defined in: [parallel.ts:54](https://github.com/rickypc/timeable-promise/blob/main/src/parallel.ts#L54)
@@ -596,8 +596,8 @@ console.log(parallelSettled2);
 ```ts
 function poll(
    executor, 
-   interval, 
-   immediately): PollHandle;
+   interval?, 
+   immediately?): PollHandle;
 ```
 
 Defined in: [poll.ts:41](https://github.com/rickypc/timeable-promise/blob/main/src/poll.ts#L41)
@@ -645,7 +645,7 @@ setTimeout(() => {
 function sequential<T, U>(
    array, 
    executor, 
-concurrency): Promise<Settled<U>[]>;
+concurrency?): Promise<Settled<U>[]>;
 ```
 
 Defined in: [sequential.ts:54](https://github.com/rickypc/timeable-promise/blob/main/src/sequential.ts#L54)
@@ -743,7 +743,7 @@ console.timeEnd('sleep');
 ### toNumber()
 
 ```ts
-function toNumber(value, defaultValue): number;
+function toNumber(value, defaultValue?): number;
 ```
 
 Defined in: [toNumber.ts:30](https://github.com/rickypc/timeable-promise/blob/main/src/toNumber.ts#L30)
@@ -856,7 +856,7 @@ console.log(`resolved with ${response}, yay!`);
 function waitFor(
    predicate, 
    timeout, 
-interval): Promise<void>;
+interval?): Promise<void>;
 ```
 
 Defined in: [waitFor.ts:34](https://github.com/rickypc/timeable-promise/blob/main/src/waitFor.ts#L34)
@@ -897,7 +897,7 @@ console.timeEnd('waitFor');
 
 ## Type Aliases
 
-### ItemExecutor()
+### ItemExecutor
 
 ```ts
 type ItemExecutor<T, U> = (value, index, array, accumulator?) => Promise<U> | U;
@@ -927,7 +927,7 @@ Defined in: [outcome.ts:8](https://github.com/rickypc/timeable-promise/blob/main
 
 ***
 
-### PollExecutor()
+### PollExecutor
 
 ```ts
 type PollExecutor = (stopped) => Promise<void> | void;
@@ -981,7 +981,7 @@ Defined in: [untilSettledOrTimedOut.ts:8](https://github.com/rickypc/timeable-pr
 
 ***
 
-### PromiseExecutor()
+### PromiseExecutor
 
 ```ts
 type PromiseExecutor<T> = (resolve, reject, pending) => void;
@@ -1025,7 +1025,7 @@ Defined in: [outcome.ts:19](https://github.com/rickypc/timeable-promise/blob/mai
 
 ***
 
-### TimeoutExecutor()
+### TimeoutExecutor
 
 ```ts
 type TimeoutExecutor<T> = (resolve, reject) => void;
@@ -1054,15 +1054,14 @@ Defined in: [untilSettledOrTimedOut.ts:19](https://github.com/rickypc/timeable-p
 
 You will need to install [Node.js](https://nodejs.org/en/) as a local
 development dependency. The `npm` package manager comes bundled with all
-recent releases of `Node.js`. You can also use [yarn](https://yarnpkg.com)
-as a package manager.
+recent releases of `Node.js`.
 
-`yarn` or `npm install` will attempt to resolve any `npm` module dependencies
+`npm install` will attempt to resolve any `npm` module dependencies
 that have been declared in the project's `package.json` file, installing them
 into the `node_modules` folder.
 
 ```bash
-yarn || npm install
+npm install
 ```
 
 Run Leak, Lint, Performance, Type and Unit Tests
@@ -1070,37 +1069,37 @@ Run Leak, Lint, Performance, Type and Unit Tests
 To make sure we did not break anything, let's run all the tests:
 
 ```bash
-yarn test || npm run test
+npm test
 ```
 
 Run leak tests only:
 
 ```bash
-yarn test:leak || npm run test:leak
+npm run test:leak
 ```
 
 Run linter only:
 
 ```bash
-yarn test:lint || npm run test:lint
+npm run test:lint
 ```
 
 Run performance tests only:
 
 ```bash
-yarn test:perf || npm run test:perf
+npm run test:perf
 ```
 
 Run type check only:
 
 ```bash
-yarn test:type || npm run test:type
+npm run test:type
 ```
 
 Run unit tests only:
 
 ```bash
-yarn test:unit || npm run test:unit
+npm run test:unit
 ```
 
 ## Contributing

@@ -39,15 +39,14 @@ const plugins = {
 
 You will need to install [Node.js](https://nodejs.org/en/) as a local
 development dependency. The \`npm\` package manager comes bundled with all
-recent releases of \`Node.js\`. You can also use [yarn](https://yarnpkg.com)
-as a package manager.
+recent releases of \`Node.js\`.
 
-\`yarn\` or \`npm install\` will attempt to resolve any \`npm\` module dependencies
+\`npm install\` will attempt to resolve any \`npm\` module dependencies
 that have been declared in the project's \`package.json\` file, installing them
 into the \`node_modules\` folder.
 
 \`\`\`bash
-yarn || npm install
+npm install
 \`\`\`
 
 Run Leak, Lint, Performance, Type and Unit Tests
@@ -55,37 +54,37 @@ Run Leak, Lint, Performance, Type and Unit Tests
 To make sure we did not break anything, let's run all the tests:
 
 \`\`\`bash
-yarn test || npm run test
+npm test
 \`\`\`
 
 Run leak tests only:
 
 \`\`\`bash
-yarn test:leak || npm run test:leak
+npm run test:leak
 \`\`\`
 
 Run linter only:
 
 \`\`\`bash
-yarn test:lint || npm run test:lint
+npm run test:lint
 \`\`\`
 
 Run performance tests only:
 
 \`\`\`bash
-yarn test:perf || npm run test:perf
+npm run test:perf
 \`\`\`
 
 Run type check only:
 
 \`\`\`bash
-yarn test:type || npm run test:type
+npm run test:type
 \`\`\`
 
 Run unit tests only:
 
 \`\`\`bash
-yarn test:unit || npm run test:unit
+npm run test:unit
 \`\`\`
 
 ## Contributing
