@@ -2,7 +2,6 @@
   "compilerOptions": {
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
-    "baseUrl": ".",
     "checkJs": false,
     "declaration": true,
     "declarationDir": "dist",
@@ -15,15 +14,18 @@
     "outDir": "dist",
     "paths": {
       "#root/*": [
-        "*"
+        "./*"
       ],
       "timeable-promise": [
-        "src/index.ts"
+        "./src/index.ts"
       ]
     },
     "skipLibCheck": true,
     "strict": true,
-    "target": "es2024"
+    "target": "es2024",
+    "types": [
+      "jest"
+    ],
   },
   "include": [
     "*.config.[jt]s",
