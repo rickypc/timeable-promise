@@ -37,6 +37,7 @@ const config: Linter.Config[] = [
     languageOptions: { ecmaVersion: 2024 },
     plugins: { 'no-secrets': noSecrets },
     rules: {
+      complexity: ['warn', 10],
       'import/extensions': ['error', 'ignorePackages', { js: 'never', ts: 'never' }],
       'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
       'jsdoc/check-tag-names': ['error', { definedTags: ['packageDocumentation', 'ts-check'] }],

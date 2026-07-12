@@ -28,7 +28,7 @@
     ],
   },
   "include": [
-    "*.config.[jt]s",
+    "*.config.?s",
     "src",
     "tests"
   ]
