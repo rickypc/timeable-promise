@@ -13,23 +13,13 @@
     "noEmit": true,
     "outDir": "dist",
     "paths": {
-      "#root/*": [
-        "./*"
-      ],
-      "timeable-promise": [
-        "./src/index.ts"
-      ]
+      "#root/*": ["./*"],
+      "timeable-promise": ["./src/index.ts"]
     },
     "skipLibCheck": true,
     "strict": true,
     "target": "es2024",
-    "types": [
-      "jest"
-    ],
+    "types": ["jest"]
   },
-  "include": [
-    "*.config.?s",
-    "src",
-    "tests"
-  ]
+  "include": ["*.config.?s", "src", "tests"]
 }

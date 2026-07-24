@@ -28,5 +28,5 @@
  * @returns {number} A numeric value.
  */
 export default function toNumber(value: unknown, defaultValue: number = 0): number {
-  return 1 / (value as any) ? +value! : defaultValue;
+  return 1 / (value as any) ? Number(value) : defaultValue;
 }

@@ -12,8 +12,7 @@ import run from '#root/tests/resilient/runner';
 export default function testConcurrent(fn: typeof concurrent) {
   describe('concurrent', () => {
     test('should be resilient', async () => {
-      expect(await run(() => fn(['a', 'b', 'c'], (value) => value, 2)))
-        .toBeTruthy();
+      expect(await run(() => fn(['a', 'b', 'c'], (value) => value, 2))).toBeTruthy();
     });
   });
 }

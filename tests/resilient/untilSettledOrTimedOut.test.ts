@@ -12,14 +12,16 @@ import untilSettledOrTimedOut from '#root/src/untilSettledOrTimedOut';
 export default function testUntilSettledOrTimedOut(fn: typeof untilSettledOrTimedOut) {
   describe('untilSettledOrTimedOut', () => {
     test('should be resilient', async () => {
-      expect(await run(async () => {
-        await fn(
-          (resolve) => resolve('executor'),
-          (resolve) => resolve('timeout'),
-          // 1ns.
-          0.000001,
-        );
-      })).toBeTruthy();
+      expect(
+        await run(async () => {
+          await fn(
+            (resolve) => resolve('executor'),
+            (resolve) => resolve('timeout'),
+            // 1ns.
+            0.000001,
+          );
+        }),
+      ).toBeTruthy();
     });
   });
 }

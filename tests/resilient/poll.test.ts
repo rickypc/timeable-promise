@@ -12,15 +12,17 @@ import run from '#root/tests/resilient/runner';
 export default function testPoll(fn: typeof poll) {
   describe('poll', () => {
     test('should be resilient', async () => {
-      expect(await run(async () => {
-        const timer = fn(() => {});
-        await new Promise<void>((resolve) => {
-          setTimeout(() => {
-            timer.stop();
-            resolve();
-          }, 0);
-        });
-      })).toBeTruthy();
+      expect(
+        await run(async () => {
+          const timer = fn(() => {});
+          await new Promise<void>((resolve) => {
+            setTimeout(() => {
+              timer.stop();
+              resolve();
+            }, 0);
+          });
+        }),
+      ).toBeTruthy();
     });
   });
 }

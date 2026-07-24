@@ -6,9 +6,20 @@
  */
 
 import {
-  append, chunk, concurrent, concurrents, consecutive,
-  consecutives, outcome, parallel, poll, sequential,
-  sleep, toNumber, untilSettledOrTimedOut, waitFor,
+  append,
+  chunk,
+  concurrent,
+  concurrents,
+  consecutive,
+  consecutives,
+  outcome,
+  parallel,
+  poll,
+  sequential,
+  sleep,
+  toNumber,
+  untilSettledOrTimedOut,
+  waitFor,
 } from '#root/src/index';
 import testAppend from '#root/tests/resilient/append.test';
 import testChunk from '#root/tests/resilient/chunk.test';

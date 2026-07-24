@@ -1,0 +1,139 @@
+{
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": "off",
+        "useSortedInterfaceMembers": "on",
+        "useSortedKeys": "on",
+        "useSortedProperties": "on"
+      }
+    }
+  },
+  "files": {
+    "includes": ["**", "!!{coverage,dist,node_modules,supports}"]
+  },
+  "formatter": {
+    "indentStyle": "space",
+    "indentWidth": 2
+  },
+  "javascript": {
+    "formatter": {
+      "arrowParentheses": "always",
+      "delimiterSpacing": false,
+      "jsxQuoteStyle": "double",
+      "lineEnding": "lf",
+      "lineWidth": 100,
+      "operatorLinebreak": "before",
+      "quoteStyle": "single",
+      "semicolons": "always"
+    }
+  },
+  "linter": {
+    "rules": {
+      "complexity": {
+        "noDivRegex": "off",
+        "noExcessiveLinesPerFunction": {
+          "level": "error",
+          "options": {
+            "maxLines": 100,
+            "skipBlankLines": true,
+            "skipIifes": true
+          }
+        },
+        "noImplicitCoercions": "off",
+        "useMaxParams": {
+          "level": "error",
+          "options": {
+            "max": 10
+          }
+        }
+      },
+      "correctness": {
+        "noNodejsModules": "off",
+        "noUnresolvedImports": "off"
+      },
+      "nursery": {
+        "noConditionalExpect": "error",
+        "noExcessiveNestedCallbacks": {
+          "level": "error",
+          "options": {
+            "max": 5
+          }
+        },
+        "noIdenticalTestTitle": "error",
+        "noImpliedEval": "error",
+        "noLoopFunc": "error",
+        "noReactStringRefs": "error",
+        "useExpect": "error",
+        "useImportsFirst": "error",
+        "useNamedCaptureGroup": "off",
+        "useThisInClassMethods": {
+          "level": "error",
+          "options": {
+            "ignoreOverrideMethods": false
+          }
+        },
+        "useUnicodeRegex": "off",
+        "useVarsOnTop": "error"
+      },
+      "preset": "recommended",
+      "security": {
+        "noScriptUrl": "off",
+        "noSecrets": "off"
+      },
+      "style": {
+        "noCommonJs": "off",
+        "noDefaultExport": "off",
+        "noExcessiveClassesPerFile": {
+          "level": "error",
+          "options": {
+            "maxClasses": 1
+          }
+        },
+        "noExcessiveLinesPerFile": {
+          "level": "error",
+          "options": {
+            "maxLines": 1000,
+            "skipBlankLines": true
+          }
+        },
+        "noMagicNumbers": "off",
+        "noNegationElse": "off",
+        "noRestrictedGlobals": {
+          "level": "error",
+          "options": {
+            "deniedGlobals": {
+              "isFinite": "Use Number.isFinite instead https://github.com",
+              "isNaN": "Use Number.isNaN instead https://github.com"
+            }
+          }
+        },
+        "noRestrictedImports": "off",
+        "noTernary": "off",
+        "useExportsLast": "off"
+      },
+      "suspicious": {
+        "noBitwiseOperators": {
+          "level": "error",
+          "options": {
+            "allow": ["~"]
+          }
+        },
+        "noConsole": "off",
+        "noEmptyBlockStatements": "off",
+        "noEqualsToNull": "off",
+        "noExplicitAny": "off",
+        "useAwait": "off"
+      }
+    }
+  },
+  "overrides": [
+    {
+      "includes": ["tests/**/*.ts"],
+      "javascript": {
+        "globals": ["describe", "expect", "jest", "test"]
+      }
+    }
+  ]
+}

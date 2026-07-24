@@ -55,29 +55,35 @@ export default function consecutive<T, U = T>(
   concurrency: number = 0,
 ): Promise<Settled<U>[]> {
   if (toNumber(concurrency)) {
-    return array.reduce(async (previous, _, index) => {
-      const accumulator = await previous;
-      if (index % concurrency === 0) {
-        accumulator[accumulator.length] = await outcome(
-          executor,
-          array.slice(index, index + concurrency),
-          index,
-          array as T[][],
-          accumulator,
-        );
-      }
-      return accumulator;
-    }, Promise.resolve([] as Settled<U>[]));
-  }
-  return array.reduce(async (previous, value, index) => {
-    const accumulator = await previous;
-    accumulator[accumulator.length] = await outcome(
-      executor,
-      value as T[],
-      index,
-      array as T[][],
-      accumulator,
+    return array.reduce(
+      async (previous, _, index) => {
+        const accumulator = await previous;
+        if (index % concurrency === 0) {
+          accumulator[accumulator.length] = await outcome(
+            executor,
+            array.slice(index, index + concurrency),
+            index,
+            array as T[][],
+            accumulator,
+          );
+        }
+        return accumulator;
+      },
+      Promise.resolve([] as Settled<U>[]),
     );
-    return accumulator;
-  }, Promise.resolve([] as Settled<U>[]));
+  }
+  return array.reduce(
+    async (previous, value, index) => {
+      const accumulator = await previous;
+      accumulator[accumulator.length] = await outcome(
+        executor,
+        value as T[],
+        index,
+        array as T[][],
+        accumulator,
+      );
+      return accumulator;
+    },
+    Promise.resolve([] as Settled<U>[]),
+  );
 }

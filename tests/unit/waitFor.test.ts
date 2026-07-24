@@ -13,7 +13,9 @@ export default function testWaitFor(fn: typeof waitFor) {
   describe('waitFor', () => {
     test.concurrent('should return resolved', async () => {
       let inflight = true;
-      setTimeout(() => { inflight = false; }, 1);
+      setTimeout(() => {
+        inflight = false;
+      }, 1);
 
       const begin = process.hrtime();
       await fn(() => !inflight, 2, 1);

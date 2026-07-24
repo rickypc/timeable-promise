@@ -140,7 +140,9 @@ export { default as sequential } from './sequential';
 export { default as sleep } from './sleep';
 export { default as toNumber } from './toNumber';
 export {
-  type PromiseConstructor, type PromiseExecutor, type TimeoutExecutor,
+  type PromiseConstructor,
+  type PromiseExecutor,
+  type TimeoutExecutor,
   default as untilSettledOrTimedOut,
 } from './untilSettledOrTimedOut';
 export { default as waitFor } from './waitFor';

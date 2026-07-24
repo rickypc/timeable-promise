@@ -23,13 +23,17 @@ export default function testPoll(fn: typeof poll) {
     test.concurrent('should skip on congestion', async () => {
       let first = true;
       const log = jest.fn();
-      const timer = fn(async (stopped) => {
-        await sleep(first ? 200.05 : 15);
-        first = false;
-        if (!stopped()) {
-          log();
-        }
-      }, 100, true);
+      const timer = fn(
+        async (stopped) => {
+          await sleep(first ? 200.05 : 15);
+          first = false;
+          if (!stopped()) {
+            log();
+          }
+        },
+        100,
+        true,
+      );
       await sleep(500);
       timer.stop();
 

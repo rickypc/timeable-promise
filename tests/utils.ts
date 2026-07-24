@@ -20,7 +20,6 @@
  *   returned by `process.hrtime()`.
  * @returns {number} The total elapsed time in milliseconds.
  */
-// eslint-disable-next-line import/prefer-default-export
 export function hrtimeToMs(hrtime: [number, number]): number {
   return (hrtime[0] * 1000000000 + hrtime[1]) / 1000000;
 }

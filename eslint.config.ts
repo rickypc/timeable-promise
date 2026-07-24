@@ -5,25 +5,20 @@
  * @license AGPL-3.0-or-later
  */
 
-import { dirname } from 'node:path';
-import { fileURLToPath } from 'node:url';
-import { FlatCompat } from '@eslint/eslintrc';
+import importPlugin from 'eslint-plugin-import';
 import jest from 'eslint-plugin-jest';
-import js from '@eslint/js';
 import jsdoc from 'eslint-plugin-jsdoc';
-import { type Linter } from 'eslint';
+import type { Linter } from 'eslint';
 import noSecrets from 'eslint-plugin-no-secrets';
 import security from 'eslint-plugin-security';
 import ts from 'typescript-eslint';
 import yml from 'eslint-plugin-yml';
 import * as ymlParser from 'yaml-eslint-parser';
 
-const compat = new FlatCompat({ baseDirectory: dirname(fileURLToPath(import.meta.url)) });
 const config: Linter.Config[] = [
   // Order Matters™!
   { ignores: ['{dist,supports}/'] },
-  ...compat.config({ extends: ['airbnb-base'] }),
-  js.configs.recommended,
+  importPlugin.flatConfigs.recommended,
   jest.configs['flat/recommended'],
   jest.configs['flat/style'],
   jsdoc.configs['flat/recommended'],
@@ -37,7 +32,6 @@ const config: Linter.Config[] = [
     languageOptions: { ecmaVersion: 2024 },
     plugins: { 'no-secrets': noSecrets },
     rules: {
-      complexity: ['warn', 10],
       'import/extensions': ['error', 'ignorePackages', { js: 'never', ts: 'never' }],
       'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
       'jsdoc/check-tag-names': ['error', { definedTags: ['packageDocumentation', 'ts-check'] }],

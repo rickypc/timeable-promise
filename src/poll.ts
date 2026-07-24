@@ -5,7 +5,6 @@
  * @license AGPL-3.0-or-later
  */
 
-// eslint-disable-next-line no-unused-vars
 export type PollExecutor = (stopped: () => boolean) => Promise<void> | void;
 
 export type PollHandle = {

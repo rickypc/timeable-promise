@@ -27,20 +27,18 @@ export default function testConcurrents(fn: typeof concurrents) {
     });
 
     test.concurrent('should rejected with concurrency', async () => {
-      expect(await fn([['a', 'b'], ['c']], () => Promise.reject(Error('error')), 2))
-        .toEqual([
-          { reason: expect.any(Error), status: 'rejected' },
-          { reason: expect.any(Error), status: 'rejected' },
-        ]);
+      expect(await fn([['a', 'b'], ['c']], () => Promise.reject(new Error('error')), 2)).toEqual([
+        { reason: expect.any(Error), status: 'rejected' },
+        { reason: expect.any(Error), status: 'rejected' },
+      ]);
     });
 
     test.concurrent('should rejected without concurrency', async () => {
-      expect(await fn([['a', 'b'], ['c']], () => Promise.reject(Error('error'))))
-        .toEqual([
-          { reason: expect.any(Error), status: 'rejected' },
-          { reason: expect.any(Error), status: 'rejected' },
-          { reason: expect.any(Error), status: 'rejected' },
-        ]);
+      expect(await fn([['a', 'b'], ['c']], () => Promise.reject(new Error('error')))).toEqual([
+        { reason: expect.any(Error), status: 'rejected' },
+        { reason: expect.any(Error), status: 'rejected' },
+        { reason: expect.any(Error), status: 'rejected' },
+      ]);
     });
   });
 }

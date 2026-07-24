@@ -12,8 +12,7 @@ import run from '#root/tests/resilient/runner';
 export default function testConsecutives(fn: typeof consecutives) {
   describe('consecutives', () => {
     test('should be resilient', async () => {
-      expect(await run(() => fn([['a', 'b'], ['c']], (value) => value)))
-        .toBeTruthy();
+      expect(await run(() => fn([['a', 'b'], ['c']], (value) => value))).toBeTruthy();
     });
   });
 }

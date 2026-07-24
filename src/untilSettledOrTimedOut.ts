@@ -8,18 +8,13 @@
 export type PromiseConstructor<T> = ConstructorParameters<typeof Promise<T>>[0];
 
 export type PromiseExecutor<T> = (
-  // eslint-disable-next-line no-unused-vars
   resolve: Parameters<PromiseConstructor<T>>[0],
-  // eslint-disable-next-line no-unused-vars
   reject: Parameters<PromiseConstructor<T>>[1],
-  // eslint-disable-next-line no-unused-vars
-  pending: () => boolean
+  pending: () => boolean,
 ) => void;
 
 export type TimeoutExecutor<T> = (
-  // eslint-disable-next-line no-unused-vars
   resolve: Parameters<PromiseConstructor<T>>[0],
-  // eslint-disable-next-line no-unused-vars
   reject: Parameters<PromiseConstructor<T>>[1],
 ) => void;
 

@@ -12,8 +12,7 @@ import sequential from '#root/src/sequential';
 export default function testSequential(fn: typeof sequential) {
   describe('sequential', () => {
     test('should be resilient', async () => {
-      expect(await run(() => fn(['a', 'b', 'c'], (value) => value, 2)))
-        .toBeTruthy();
+      expect(await run(() => fn(['a', 'b', 'c'], (value) => value, 2))).toBeTruthy();
     });
   });
 }

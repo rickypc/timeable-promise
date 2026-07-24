@@ -6,7 +6,7 @@
  */
 
 import chunk from './chunk';
-import { type ItemExecutor, type Settled } from './outcome';
+import type { ItemExecutor, Settled } from './outcome';
 
 /**
  * Runs the executor concurrently across items in a single array.

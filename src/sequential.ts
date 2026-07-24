@@ -8,7 +8,7 @@
 import chunk from './chunk';
 import consecutive from './consecutive';
 import consecutives from './consecutives';
-import { type ItemExecutor, type Settled } from './outcome';
+import type { ItemExecutor, Settled } from './outcome';
 import toNumber from './toNumber';
 
 /**

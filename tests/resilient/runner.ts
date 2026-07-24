@@ -50,16 +50,19 @@ async function runLeak<T>(
     }
   };
   const runner = async (): Promise<void> => {
-    for (let i = 0; i < minSamples; i += 1) {
+    const runSample = async (i: number): Promise<void> => {
+      if (i >= minSamples) {
+        return;
+      }
       try {
-        // eslint-disable-next-line no-await-in-loop
         await fn();
       } catch (ex) {
         errors.push({ ex, src: i });
       }
-      // eslint-disable-next-line no-await-in-loop
       await sleep(delay);
-    }
+      await runSample(i + 1);
+    };
+    await runSample(0);
   };
   const heapDiff = new HeapDiff();
   process.on('warning', onWarning);
@@ -72,17 +75,16 @@ async function runLeak<T>(
   }
   const diff = heapDiff.end();
   if (errors.length) {
-    // eslint-disable-next-line no-console
     console.error(`--- ${testName}: Runner Errors ---`);
-    // eslint-disable-next-line no-console
-    errors.forEach((error) => console.error(error));
+    errors.forEach((error) => {
+      console.error(error);
+    });
     return false;
   }
   const growth = diff.change.details.reduce((sum, change: any) => sum + change['+'], 0);
   const response = growth < threshold;
   if (!response || verbose) {
     const duration = hrtimeToMs(process.hrtime(begin));
-    // eslint-disable-next-line no-console
     console.info(
       `${testName}: Growth=${growth} | Threshold=${threshold} | Duration=${duration}ms | ${response ? 'RESILIENT ✅' : 'LEAK ❌'}`,
     );
@@ -122,11 +124,12 @@ async function runPerf<T>(
     reporter(results) {
       totalTime = results.reduce((sum, result) => sum + (result?.totalTime || 0), 0);
     },
-  }).add(testName, { minSamples, repeatSuite }, fn as () => void).run();
+  })
+    .add(testName, { minSamples, repeatSuite }, fn as () => void)
+    .run();
   const response = totalTime < threshold;
   if (!response || verbose) {
     const duration = hrtimeToMs(process.hrtime(begin));
-    // eslint-disable-next-line no-console
     console.info(
       `${testName}: Total=${totalTime} | Threshold=${threshold} | Duration=${duration}ms | ${response ? 'FAST ✅' : 'SLOW ❌'}`,
     );

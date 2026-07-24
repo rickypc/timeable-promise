@@ -7,7 +7,7 @@
 
 import append from './append';
 import concurrent from './concurrent';
-import { type ItemExecutor, type Settled } from './outcome';
+import type { ItemExecutor, Settled } from './outcome';
 import toNumber from './toNumber';
 
 /**
@@ -58,22 +58,22 @@ export default function concurrents<T, U = T>(
   concurrency: number = 0,
 ): Promise<Settled<U>[]> {
   if (toNumber(concurrency)) {
-    return array.reduce(async (previous, _, index) => {
-      const accumulator = await previous;
-      if (index % concurrency === 0) {
-        return append(
-          accumulator,
-          await concurrent(array.slice(index, index + concurrency), executor),
-        );
-      }
-      return accumulator;
-    }, Promise.resolve([] as Settled<U>[]));
+    return array.reduce(
+      async (previous, _, index) => {
+        const accumulator = await previous;
+        if (index % concurrency === 0) {
+          return append(
+            accumulator,
+            await concurrent(array.slice(index, index + concurrency), executor),
+          );
+        }
+        return accumulator;
+      },
+      Promise.resolve([] as Settled<U>[]),
+    );
   }
   return array.reduce(
-    async (previous, value) => append(
-      await previous,
-      await concurrent(value as T[], executor),
-    ),
+    async (previous, value) => append(await previous, await concurrent(value as T[], executor)),
     Promise.resolve([] as Settled<U>[]),
   );
 }

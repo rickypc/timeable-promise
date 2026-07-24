@@ -12,8 +12,7 @@ import run from '#root/tests/resilient/runner';
 export default function testParallel(fn: typeof parallel) {
   describe('parallel', () => {
     test('should be resilient', async () => {
-      expect(await run(() => fn(['a', 'b', 'c'], (value) => value, 2)))
-        .toBeTruthy();
+      expect(await run(() => fn(['a', 'b', 'c'], (value) => value, 2))).toBeTruthy();
     });
   });
 }

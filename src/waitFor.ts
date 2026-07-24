@@ -41,7 +41,10 @@ export default function waitFor(
     (resolve, _, pending) => {
       timer = setInterval(() => {
         if (predicate()) {
-          clearInterval(timer!);
+          // istanbul ignore else
+          if (timer) {
+            clearInterval(timer);
+          }
           timer = null;
           // istanbul ignore else
           if (pending()) {

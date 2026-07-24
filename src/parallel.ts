@@ -8,7 +8,7 @@
 import chunk from './chunk';
 import concurrent from './concurrent';
 import concurrents from './concurrents';
-import { type ItemExecutor, type Settled } from './outcome';
+import type { ItemExecutor, Settled } from './outcome';
 import toNumber from './toNumber';
 
 /**

@@ -7,6 +7,7 @@
 
 // import { type Application, Configuration, type TypeDocOptions } from 'typedoc';
 import { Configuration } from 'typedoc';
+
 // import { type MarkdownRenderer } from 'typedoc-plugin-markdown';
 
 /*
@@ -32,9 +33,12 @@ type TypeDocConfig = Partial<Omit<TypeDocOptions, 'plugin'>> & {
 const plugins = {
   'typedoc-plugin-markdown': 'typedoc-plugin-markdown',
   // 'typedoc-plugin-markdown-index-end': (app: Application) => {
-  'typedoc-plugin-markdown-index-end': /** @param {import('typedoc').Application} app - Application */(app) => {
-    // (app.renderer as MarkdownRenderer).markdownHooks.on('index.page.end', () => `
-    app.renderer.markdownHooks.on('index.page.end', () => `
+  'typedoc-plugin-markdown-index-end':
+    /** @param {import('typedoc').Application} app - Application */ (app) => {
+      // (app.renderer as MarkdownRenderer).markdownHooks.on('index.page.end', () => `
+      app.renderer.markdownHooks.on(
+        'index.page.end',
+        () => `
 ## Development Dependencies
 
 You will need to install [Node.js](https://nodejs.org/en/) as a local
@@ -110,19 +114,15 @@ This module is free software, licensed under:
 
 Documentation and other similar content are provided under
 [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-nc-sa/4.0/).
-    `);
-  },
+    `,
+      );
+    },
 };
 
 /** @type {import('typedoc').TypeDocOptions} */
 export default {
   $schema: 'https://typedoc-plugin-markdown.org/schema.json',
-  blockTags: [
-    ...Configuration.OptionDefaults.blockTags,
-    '@copyright',
-    '@description',
-    '@file',
-  ],
+  blockTags: [...Configuration.OptionDefaults.blockTags, '@copyright', '@description', '@file'],
   // ⚠️ Danger: Cleaning the output directory will erase the repository.
   cleanOutputDir: false,
   entryPoints: ['src/index.ts'],

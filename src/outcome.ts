@@ -6,14 +6,10 @@
  */
 
 export type ItemExecutor<T, U = T> = (
-  // eslint-disable-next-line no-unused-vars
   value: T[],
-  // eslint-disable-next-line no-unused-vars
   index: number,
-  // eslint-disable-next-line no-unused-vars
   array: T[][],
-  // eslint-disable-next-line no-unused-vars
-  accumulator?: PromiseSettledResult<U>[]
+  accumulator?: PromiseSettledResult<U>[],
 ) => Promise<U> | U;
 
 export type Settled<T> = PromiseSettledResult<T>;
