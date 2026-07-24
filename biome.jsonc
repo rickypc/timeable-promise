@@ -3,7 +3,6 @@
   "assist": {
     "actions": {
       "source": {
-        "organizeImports": "off",
         "useSortedInterfaceMembers": "on",
         "useSortedKeys": "on",
         "useSortedProperties": "on"
@@ -32,7 +31,6 @@
   "linter": {
     "rules": {
       "complexity": {
-        "noDivRegex": "off",
         "noExcessiveLinesPerFunction": {
           "level": "error",
           "options": {
@@ -41,25 +39,16 @@
             "skipIifes": true
           }
         },
-        "noImplicitCoercions": "off",
         "useMaxParams": {
           "level": "error",
-          "options": {
-            "max": 10
-          }
+          "options": { "max": 10 }
         }
-      },
-      "correctness": {
-        "noNodejsModules": "off",
-        "noUnresolvedImports": "off"
       },
       "nursery": {
         "noConditionalExpect": "error",
         "noExcessiveNestedCallbacks": {
           "level": "error",
-          "options": {
-            "max": 5
-          }
+          "options": { "max": 5 }
         },
         "noIdenticalTestTitle": "error",
         "noImpliedEval": "error",
@@ -67,39 +56,22 @@
         "noReactStringRefs": "error",
         "useExpect": "error",
         "useImportsFirst": "error",
-        "useNamedCaptureGroup": "off",
         "useThisInClassMethods": {
           "level": "error",
-          "options": {
-            "ignoreOverrideMethods": false
-          }
+          "options": { "ignoreOverrideMethods": false }
         },
-        "useUnicodeRegex": "off",
         "useVarsOnTop": "error"
       },
       "preset": "recommended",
-      "security": {
-        "noScriptUrl": "off",
-        "noSecrets": "off"
-      },
       "style": {
-        "noCommonJs": "off",
-        "noDefaultExport": "off",
         "noExcessiveClassesPerFile": {
           "level": "error",
-          "options": {
-            "maxClasses": 1
-          }
+          "options": { "maxClasses": 1 }
         },
         "noExcessiveLinesPerFile": {
           "level": "error",
-          "options": {
-            "maxLines": 1000,
-            "skipBlankLines": true
-          }
+          "options": { "maxLines": 1000, "skipBlankLines": true }
         },
-        "noMagicNumbers": "off",
-        "noNegationElse": "off",
         "noRestrictedGlobals": {
           "level": "error",
           "options": {
@@ -108,23 +80,14 @@
               "isNaN": "Use Number.isNaN instead https://github.com"
             }
           }
-        },
-        "noRestrictedImports": "off",
-        "noTernary": "off",
-        "useExportsLast": "off"
+        }
       },
       "suspicious": {
         "noBitwiseOperators": {
           "level": "error",
-          "options": {
-            "allow": ["~"]
-          }
+          "options": { "allow": ["~"] }
         },
-        "noConsole": "off",
-        "noEmptyBlockStatements": "off",
-        "noEqualsToNull": "off",
-        "noExplicitAny": "off",
-        "useAwait": "off"
+        "noExplicitAny": "off"
       }
     }
   },

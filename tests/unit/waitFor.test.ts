@@ -5,8 +5,8 @@
  * @license AGPL-3.0-or-later
  */
 
-import { hrtimeToMs } from '#root/tests/utils';
 import waitFor from '#root/src/waitFor';
+import { hrtimeToMs } from '#root/tests/utils';
 
 // eslint-disable-next-line jest/no-export,jsdoc/require-jsdoc
 export default function testWaitFor(fn: typeof waitFor) {

@@ -5,10 +5,10 @@
  * @license AGPL-3.0-or-later
  */
 
-import { basename, dirname, join } from 'node:path';
-import { createRequire } from 'node:module';
-import { fileURLToPath } from 'node:url';
 import { copyFile, mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
+import { createRequire } from 'node:module';
+import { basename, dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { removeTypes } from 'remove-types';
 import { TsCheckerRspackPlugin } from 'ts-checker-rspack-plugin';
 

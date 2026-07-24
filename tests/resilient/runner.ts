@@ -6,9 +6,9 @@
  */
 
 import { HeapDiff } from '@airbnb/node-memwatch';
-import { hrtimeToMs } from '#root/tests/utils';
-import sleep from '#root/src/sleep';
 import { Suite } from 'bench-node';
+import sleep from '#root/src/sleep';
+import { hrtimeToMs } from '#root/tests/utils';
 
 export type ResilientOptions = {
   leak?: number;

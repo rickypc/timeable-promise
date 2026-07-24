@@ -18,6 +18,7 @@ const {
   toNumber,
   untilSettledOrTimedOut,
   waitFor,
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
 } = require('timeable-promise');
 
 module.exports = async (): Promise<string> => {

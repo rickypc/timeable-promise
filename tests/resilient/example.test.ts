@@ -7,6 +7,7 @@
 
 import run from '#root/tests/resilient/runner';
 
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const example = require('#root/src/example');
 
 describe('example.ts', () => {
