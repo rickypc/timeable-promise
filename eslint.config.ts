@@ -5,7 +5,6 @@
  * @license AGPL-3.0-or-later
  */
 
-import parser from '@typescript-eslint/parser';
 import type { Linter } from 'eslint';
 import jest from 'eslint-plugin-jest';
 import * as jsdoc from 'eslint-plugin-jsdoc';
@@ -27,14 +26,10 @@ const config: Linter.Config[] = [
     languageOptions: { parser: ymlParser },
   },
   {
-    languageOptions: {
-      ecmaVersion: 2024,
-      parser,
-      sourceType: 'module',
-    },
     plugins: { 'no-secrets': noSecrets },
     rules: {
       'jsdoc/check-tag-names': ['error', { definedTags: ['packageDocumentation', 'ts-check'] }],
+      'no-secrets/no-secrets': 'error',
     },
   },
 ];

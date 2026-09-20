@@ -22,7 +22,6 @@
     "@types/airbnb__node-memwatch": "2.0.4",
     "@types/eslint-plugin-security": "3.0.1",
     "@types/jest": "30.0.0",
-    "@typescript-eslint/parser": "8.70.0",
     "bench-node": "0.15.0",
     "eslint": "10.11.0",
     "eslint-plugin-jest": "29.16.6",
@@ -36,7 +35,7 @@
     "ts-checker-rspack-plugin": "1.6.1",
     "typedoc": "0.28.20",
     "typedoc-plugin-markdown": "4.13.1",
-    "typescript": "6.0.3",
+    "typescript": "7.0.2",
     "yaml-eslint-parser": "2.1.0"
   },
   "homepage": "https://github.com/rickypc/timeable-promise#readme",
