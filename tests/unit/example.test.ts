@@ -5,7 +5,6 @@
  * @license AGPL-3.0-or-later
  */
 
-// eslint-disable-next-line @typescript-eslint/no-require-imports
 const example = require('#root/src/example');
 
 describe('example.ts', () => {
