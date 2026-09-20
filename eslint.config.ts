@@ -5,19 +5,18 @@
  * @license AGPL-3.0-or-later
  */
 
+import parser from '@typescript-eslint/parser';
 import type { Linter } from 'eslint';
 import jest from 'eslint-plugin-jest';
-import jsdoc from 'eslint-plugin-jsdoc';
+import * as jsdoc from 'eslint-plugin-jsdoc';
 import noSecrets from 'eslint-plugin-no-secrets';
 import security from 'eslint-plugin-security';
 import yml from 'eslint-plugin-yml';
-import ts from 'typescript-eslint';
 import * as ymlParser from 'yaml-eslint-parser';
 
 const config: Linter.Config[] = [
   // Order Matters™!
-  { ignores: ['{dist,supports}/'] },
-  ...ts.configs.recommended,
+  { ignores: ['dist', 'supports'] },
   jest.configs['flat/recommended'],
   jest.configs['flat/style'],
   jsdoc.configs['flat/recommended'],
@@ -28,9 +27,13 @@ const config: Linter.Config[] = [
     languageOptions: { parser: ymlParser },
   },
   {
+    languageOptions: {
+      ecmaVersion: 2024,
+      parser,
+      sourceType: 'module',
+    },
     plugins: { 'no-secrets': noSecrets },
     rules: {
-      '@typescript-eslint/no-explicit-any': 'off',
       'jsdoc/check-tag-names': ['error', { definedTags: ['packageDocumentation', 'ts-check'] }],
     },
   },

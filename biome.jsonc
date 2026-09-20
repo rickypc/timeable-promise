@@ -1,16 +1,19 @@
 {
-  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "$schema": "https://biomejs.dev/schemas/latest/schema.json",
   "assist": {
     "actions": {
       "source": {
+        "noDuplicateClasses": "on",
+        "organizeImports": "on",
+        "useSortedAttributes": "on",
+        "useSortedEnumMembers": "on",
         "useSortedInterfaceMembers": "on",
-        "useSortedKeys": "on",
-        "useSortedProperties": "on"
+        "useSortedKeys": "on"
       }
     }
   },
   "files": {
-    "includes": ["**", "!!{coverage,dist,node_modules,supports}"]
+    "ignoreUnknown": true
   },
   "formatter": {
     "indentStyle": "space",
@@ -20,7 +23,6 @@
     "formatter": {
       "arrowParentheses": "always",
       "delimiterSpacing": false,
-      "jsxQuoteStyle": "double",
       "lineEnding": "lf",
       "lineWidth": 100,
       "operatorLinebreak": "before",
@@ -31,6 +33,10 @@
   "linter": {
     "rules": {
       "complexity": {
+        "noExcessiveCognitiveComplexity": {
+          "level": "error",
+          "options": { "maxAllowedComplexity": 10 }
+        },
         "noExcessiveLinesPerFunction": {
           "level": "error",
           "options": {
@@ -39,6 +45,7 @@
             "skipIifes": true
           }
         },
+        "noUselessSwitchCase": "error",
         "useMaxParams": {
           "level": "error",
           "options": { "max": 10 }
@@ -46,28 +53,19 @@
       },
       "nursery": {
         "noConditionalExpect": "error",
-        "noExcessiveNestedCallbacks": {
-          "level": "error",
-          "options": { "max": 5 }
-        },
+        "noExcessiveNestedCallbacks": "error",
+        "noFloatingPromises": "error",
         "noIdenticalTestTitle": "error",
         "noImpliedEval": "error",
         "noLoopFunc": "error",
-        "noReactStringRefs": "error",
         "useExpect": "error",
         "useImportsFirst": "error",
-        "useThisInClassMethods": {
-          "level": "error",
-          "options": { "ignoreOverrideMethods": false }
-        },
+        "useThisInClassMethods": "error",
         "useVarsOnTop": "error"
       },
       "preset": "recommended",
       "style": {
-        "noExcessiveClassesPerFile": {
-          "level": "error",
-          "options": { "maxClasses": 1 }
-        },
+        "noExcessiveClassesPerFile": "error",
         "noExcessiveLinesPerFile": {
           "level": "error",
           "options": { "maxLines": 1000, "skipBlankLines": true }
@@ -80,23 +78,18 @@
               "isNaN": "Use Number.isNaN instead https://github.com"
             }
           }
-        }
+        },
+        "useBlockStatements": "error",
+        "useDefaultSwitchClause": "error"
       },
       "suspicious": {
-        "noBitwiseOperators": {
-          "level": "error",
-          "options": { "allow": ["~"] }
-        },
         "noExplicitAny": "off"
       }
     }
   },
-  "overrides": [
-    {
-      "includes": ["tests/**/*.ts"],
-      "javascript": {
-        "globals": ["describe", "expect", "jest", "test"]
-      }
-    }
-  ]
+  "vcs": {
+    "clientKind": "git",
+    "enabled": true,
+    "useIgnoreFile": true
+  }
 }

@@ -40,16 +40,17 @@ export default function waitFor(
   return untilSettledOrTimedOut<void>(
     (resolve, _, pending) => {
       timer = setInterval(() => {
-        if (predicate()) {
-          // istanbul ignore else
-          if (timer) {
-            clearInterval(timer);
-          }
-          timer = null;
-          // istanbul ignore else
-          if (pending()) {
-            resolve();
-          }
+        if (!predicate()) {
+          return;
+        }
+        // istanbul ignore else
+        if (timer) {
+          clearInterval(timer);
+        }
+        timer = null;
+        // istanbul ignore else
+        if (pending()) {
+          resolve();
         }
       }, interval);
     },
