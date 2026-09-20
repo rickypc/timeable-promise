@@ -58,6 +58,7 @@
         "noIdenticalTestTitle": "error",
         "noImpliedEval": "error",
         "noLoopFunc": "error",
+        "useExhaustiveSwitchCases": "error",
         "useExpect": "error",
         "useImportsFirst": "error",
         "useThisInClassMethods": "error",
