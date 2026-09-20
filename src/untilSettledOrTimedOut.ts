@@ -65,18 +65,17 @@ export default function untilSettledOrTimedOut<T>(
   timeout: number,
 ): Promise<T> {
   let timedOut = false;
-  let timer: number | ReturnType<typeof setTimeout> | null = null;
-  return new Promise<T>((resolve, reject) => {
+  let timer: ReturnType<typeof setTimeout>;
+  const actionPromise = new Promise<T>((resolve, reject) => {
+    promiseExecutor(resolve, reject, () => !timedOut);
+  });
+  const timeoutPromise = new Promise<T>((resolve, reject) => {
     timer = setTimeout(() => {
       timedOut = true;
-      timer = null;
       timeoutExecutor(resolve, reject);
     }, timeout);
-    promiseExecutor(resolve, reject, () => !timedOut);
-  }).finally(() => {
-    if (!timedOut) {
-      clearTimeout(timer as number);
-    }
-    timer = null;
+  });
+  return Promise.race([actionPromise, timeoutPromise]).finally(() => {
+    clearTimeout(timer);
   });
 }
