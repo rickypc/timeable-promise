@@ -3,10 +3,11 @@
 # File: .gitignore
 # License: AGPL-3.0-or-later
 
-*coverage
-dist
+/coverage/
+/dist
 *.lock
-*.log
-node_modules
+*.log*
+/node_modules
 package-lock.json
+.searchignore
 supports
