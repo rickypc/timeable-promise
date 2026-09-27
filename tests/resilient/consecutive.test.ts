@@ -8,7 +8,10 @@
 import consecutive from '#root/src/consecutive';
 import run from '#root/tests/resilient/runner';
 
-// eslint-disable-next-line jest/no-export,jsdoc/require-jsdoc
+/**
+ * Registers the resilient test suite for the `consecutive` function.
+ * @param {typeof consecutive} fn - The consecutive implementation being tested.
+ */
 export default function testConsecutive(fn: typeof consecutive) {
   describe('consecutive', () => {
     test('should be resilient', async () => {

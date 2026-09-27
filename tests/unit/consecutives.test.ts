@@ -7,11 +7,14 @@
 
 import consecutives from '#root/src/consecutives';
 
-// eslint-disable-next-line jest/no-export,jsdoc/require-jsdoc
+/**
+ * Registers the unit test suite for the `consecutives` function.
+ * @param {typeof consecutives} fn - The consecutives implementation being tested.
+ */
 export default function testConsecutives(fn: typeof consecutives) {
   describe('consecutives', () => {
     test.concurrent('should fulfilled with concurrency', async () => {
-      expect(await fn([['a', 'b'], ['c']], (value) => value)).toEqual([
+      expect(await fn<unknown>([['a', 'b'], ['c']], (value) => value)).toEqual([
         { status: 'fulfilled', value: 'a' },
         { status: 'fulfilled', value: 'b' },
         { status: 'fulfilled', value: 'c' },
@@ -19,7 +22,7 @@ export default function testConsecutives(fn: typeof consecutives) {
     }, 2);
 
     test.concurrent('should fulfilled without concurrency', async () => {
-      expect(await fn([['a', 'b'], ['c']], (value) => value)).toEqual([
+      expect(await fn<unknown>([['a', 'b'], ['c']], (value) => value)).toEqual([
         { status: 'fulfilled', value: 'a' },
         { status: 'fulfilled', value: 'b' },
         { status: 'fulfilled', value: 'c' },

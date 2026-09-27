@@ -8,7 +8,10 @@
 import waitFor from '#root/src/waitFor';
 import run from '#root/tests/resilient/runner';
 
-// eslint-disable-next-line jest/no-export,jsdoc/require-jsdoc
+/**
+ * Registers the resilient test suite for the `waitFor` function.
+ * @param {typeof waitFor} fn - The waitFor implementation being tested.
+ */
 export default function testWaitFor(fn: typeof waitFor) {
   describe('waitFor', () => {
     test('should be resilient', async () => {

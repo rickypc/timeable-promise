@@ -7,7 +7,10 @@
 
 import outcome from '#root/src/outcome';
 
-// eslint-disable-next-line jest/no-export,jsdoc/require-jsdoc
+/**
+ * Registers the unit test suite for the `outcome` function.
+ * @param {typeof outcome} fn - The outcome implementation being tested.
+ */
 export default function testOutcome(fn: typeof outcome) {
   describe('outcome', () => {
     test.concurrent('should resolve with fulfilled status and value', async () => {

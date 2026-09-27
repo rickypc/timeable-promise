@@ -7,7 +7,10 @@
 
 import concurrent from '#root/src/concurrent';
 
-// eslint-disable-next-line jest/no-export,jsdoc/require-jsdoc
+/**
+ * Registers the unit test suite for the `concurrent` function.
+ * @param {typeof concurrent} fn - The concurrent implementation being tested.
+ */
 export default function testConcurrent(fn: typeof concurrent) {
   describe('concurrent', () => {
     test.concurrent('should fulfilled with concurrency', async () => {
@@ -18,7 +21,7 @@ export default function testConcurrent(fn: typeof concurrent) {
     });
 
     test.concurrent('should fulfilled without concurrency', async () => {
-      expect(await fn(['a', 'b', 'c'], (value) => value)).toEqual([
+      expect(await fn<unknown>(['a', 'b', 'c'], (value) => value)).toEqual([
         { status: 'fulfilled', value: 'a' },
         { status: 'fulfilled', value: 'b' },
         { status: 'fulfilled', value: 'c' },

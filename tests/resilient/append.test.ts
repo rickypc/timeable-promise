@@ -8,7 +8,10 @@
 import append from '#root/src/append';
 import run from '#root/tests/resilient/runner';
 
-// eslint-disable-next-line jest/no-export,jsdoc/require-jsdoc
+/**
+ * Registers the resilient test suite for the `append` function.
+ * @param {typeof append} fn - The append implementation being tested.
+ */
 export default function testAppend(fn: typeof append) {
   describe('append', () => {
     test('should be resilient', async () => {

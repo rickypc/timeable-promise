@@ -8,7 +8,10 @@
 import concurrent from '#root/src/concurrent';
 import run from '#root/tests/resilient/runner';
 
-// eslint-disable-next-line jest/no-export,jsdoc/require-jsdoc
+/**
+ * Registers the resilient test suite for the `concurrent` function.
+ * @param {typeof concurrent} fn - The concurrent implementation being tested.
+ */
 export default function testConcurrent(fn: typeof concurrent) {
   describe('concurrent', () => {
     test('should be resilient', async () => {

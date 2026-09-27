@@ -7,7 +7,10 @@
 
 import append from '#root/src/append';
 
-// eslint-disable-next-line jest/no-export,jsdoc/require-jsdoc
+/**
+ * Registers the unit test suite for the `append` function.
+ * @param {typeof append} fn - The append implementation being tested.
+ */
 export default function testAppend(fn: typeof append) {
   describe('append', () => {
     test.concurrent('should append numbers to an existing array', () => {

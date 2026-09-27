@@ -8,7 +8,10 @@
 import sequential from '#root/src/sequential';
 import run from '#root/tests/resilient/runner';
 
-// eslint-disable-next-line jest/no-export,jsdoc/require-jsdoc
+/**
+ * Registers the resilient test suite for the `sequential` function.
+ * @param {typeof sequential} fn - The sequential implementation being tested.
+ */
 export default function testSequential(fn: typeof sequential) {
   describe('sequential', () => {
     test('should be resilient', async () => {

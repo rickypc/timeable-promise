@@ -8,7 +8,10 @@
 import toNumber from '#root/src/toNumber';
 import run from '#root/tests/resilient/runner';
 
-// eslint-disable-next-line jest/no-export,jsdoc/require-jsdoc
+/**
+ * Registers the resilient test suite for the `toNumber` function.
+ * @param {typeof toNumber} fn - The toNumber implementation being tested.
+ */
 export default function testToNumber(fn: typeof toNumber) {
   describe('toNumber', () => {
     test('should be resilient', async () => {

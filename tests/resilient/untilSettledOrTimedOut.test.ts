@@ -8,7 +8,11 @@
 import untilSettledOrTimedOut from '#root/src/untilSettledOrTimedOut';
 import run from '#root/tests/resilient/runner';
 
-// eslint-disable-next-line jest/no-export,jsdoc/require-jsdoc
+/**
+ * Registers the resilient test suite for the `untilSettledOrTimedOut` function.
+ * @param {typeof untilSettledOrTimedOut} fn - The untilSettledOrTimedOut implementation being
+ *   tested.
+ */
 export default function testUntilSettledOrTimedOut(fn: typeof untilSettledOrTimedOut) {
   describe('untilSettledOrTimedOut', () => {
     test('should be resilient', async () => {

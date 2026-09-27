@@ -72,4 +72,22 @@ describe('example.ts', () => {
 
     spy.mockRestore();
   });
+
+  test('auto-runs when NODE_ENV is spawn', async () => {
+    const { NODE_ENV } = process.env;
+    process.env.NODE_ENV = 'spawn';
+
+    const spy = jest.spyOn(console, 'log').mockImplementation(() => {});
+
+    const spawned = await import(`#root/src/example?update=${Date.now()}`);
+    const result = await spawned.default();
+
+    expect(result).toBe('Timeable Promise Examples');
+
+    // Two calls each: spawn + import.
+    expect(spy).toHaveBeenCalledTimes(26);
+
+    spy.mockRestore();
+    process.env.NODE_ENV = NODE_ENV;
+  });
 });

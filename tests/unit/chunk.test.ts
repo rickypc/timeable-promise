@@ -7,7 +7,10 @@
 
 import chunk from '#root/src/chunk';
 
-// eslint-disable-next-line jest/no-export,jsdoc/require-jsdoc
+/**
+ * Registers the unit test suite for the `chunk` function.
+ * @param {typeof chunk} fn - The chunk implementation being tested.
+ */
 export default function testChunk(fn: typeof chunk) {
   describe('chunk', () => {
     test.concurrent('should return chunked array', () => {

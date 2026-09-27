@@ -43,12 +43,10 @@ export default function waitFor(
         if (!predicate()) {
           return;
         }
-        // istanbul ignore else
         if (timer) {
           clearInterval(timer);
         }
         timer = null;
-        // istanbul ignore else
         if (pending()) {
           resolve();
         }

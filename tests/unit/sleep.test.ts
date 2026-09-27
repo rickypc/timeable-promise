@@ -8,7 +8,10 @@
 import sleep from '#root/src/sleep';
 import { hrtimeToMs } from '#root/tests/utils';
 
-// eslint-disable-next-line jest/no-export,jsdoc/require-jsdoc
+/**
+ * Registers the unit test suite for the `sleep` function.
+ * @param {typeof sleep} fn - The sleep implementation being tested.
+ */
 export default function testSleep(fn: typeof sleep) {
   describe('sleep', () => {
     // Concurrent for style; single test runs like sequential.

@@ -64,30 +64,23 @@ module.exports = async (): Promise<string> => {
   console.log('10. ToNumber -> "1" ->', toNumber('1'));
 
   const settled = await untilSettledOrTimedOut(
-    async (resolve: (_: boolean) => void, _: unknown, pending: () => boolean) => {
+    async (resolve: (_: boolean) => void, _reject: unknown, pending: () => boolean) => {
       const value = true;
-      // istanbul ignore else
       if (pending()) {
         resolve(value);
       }
     },
-    // istanbul ignore next
-    (_: unknown, reject: (_: Error) => void) => reject(new Error('timeout')),
+    null,
     1,
-  ).catch(/* istanbul ignore next */ () => false);
+  );
   console.log('11. Settle -> finished before timeout -> return', settled);
 
   const timedOut = await untilSettledOrTimedOut(
-    async (resolve: (_: boolean) => void, _: unknown, pending: () => boolean) => {
+    async (_resolve: (_: boolean) => void, _reject: unknown, _pending: () => boolean) => {
       // Test-only delay to simulate long processing; real-world may not await.
       await sleep(3);
-      const value = true;
-      // istanbul ignore if
-      if (pending()) {
-        resolve(value);
-      }
     },
-    (_: unknown, reject: (_: Error) => void) => reject(new Error('timeout')),
+    (_resolve: unknown, reject: (_: Error) => void) => reject(new Error('timeout')),
     2,
   ).catch(() => false);
   console.log('12. Timeout -> took too long -> rejected -> return', timedOut);
@@ -105,7 +98,6 @@ module.exports = async (): Promise<string> => {
 };
 
 // Auto-run only when executed directly.
-// istanbul ignore if
-if (require.main === module) {
+if (require.main === module || process.env.NODE_ENV === 'spawn') {
   module.exports();
 }

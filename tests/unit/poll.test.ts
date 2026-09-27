@@ -5,16 +5,20 @@
  * @license AGPL-3.0-or-later
  */
 
+import { mock } from 'bun:test';
 import poll from '#root/src/poll';
 import sleep from '#root/src/sleep';
 
-// eslint-disable-next-line jest/no-export,jsdoc/require-jsdoc
+/**
+ * Registers the unit test suite for the `poll` function.
+ * @param {typeof poll} fn - The poll implementation being tested.
+ */
 export default function testPoll(fn: typeof poll) {
   describe('poll', () => {
     test.concurrent('should run at interval', async () => {
-      const log = jest.fn();
-      const timer = fn(log, 2);
-      await sleep(3);
+      const log = mock();
+      const timer = fn(log, 100);
+      await sleep(120);
       timer.stop();
 
       expect(log).toHaveBeenCalledTimes(1);
@@ -22,7 +26,7 @@ export default function testPoll(fn: typeof poll) {
 
     test.concurrent('should skip on congestion', async () => {
       let first = true;
-      const log = jest.fn();
+      const log = mock();
       const timer = fn(
         async (stopped) => {
           await sleep(first ? 200.05 : 15);
@@ -34,7 +38,7 @@ export default function testPoll(fn: typeof poll) {
         100,
         true,
       );
-      await sleep(500);
+      await sleep(1000);
       timer.stop();
 
       expect(log.mock.calls.length).toBeGreaterThanOrEqual(1);

@@ -8,7 +8,10 @@
 import parallel from '#root/src/parallel';
 import run from '#root/tests/resilient/runner';
 
-// eslint-disable-next-line jest/no-export,jsdoc/require-jsdoc
+/**
+ * Registers the resilient test suite for the `parallel` function.
+ * @param {typeof parallel} fn - The parallel implementation being tested.
+ */
 export default function testParallel(fn: typeof parallel) {
   describe('parallel', () => {
     test('should be resilient', async () => {

@@ -8,7 +8,10 @@
 import outcome, { type ItemExecutor } from '#root/src/outcome';
 import run from '#root/tests/resilient/runner';
 
-// eslint-disable-next-line jest/no-export,jsdoc/require-jsdoc
+/**
+ * Registers the resilient test suite for the `outcome` function.
+ * @param {typeof outcome} fn - The outcome implementation being tested.
+ */
 export default function testOutcome(fn: typeof outcome) {
   describe('outcome', () => {
     test('should be resilient', async () => {

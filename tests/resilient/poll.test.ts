@@ -8,7 +8,10 @@
 import poll from '#root/src/poll';
 import run from '#root/tests/resilient/runner';
 
-// eslint-disable-next-line jest/no-export,jsdoc/require-jsdoc
+/**
+ * Registers the resilient test suite for the `poll` function.
+ * @param {typeof poll} fn - The poll implementation being tested.
+ */
 export default function testPoll(fn: typeof poll) {
   describe('poll', () => {
     test('should be resilient', async () => {

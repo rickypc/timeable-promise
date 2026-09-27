@@ -8,7 +8,11 @@
 import sleep from '#root/src/sleep';
 import untilSettledOrTimedOut from '#root/src/untilSettledOrTimedOut';
 
-// eslint-disable-next-line jest/no-export,jsdoc/require-jsdoc
+/**
+ * Registers the unit test suite for the `untilSettledOrTimedOut` function.
+ * @param {typeof untilSettledOrTimedOut} fn - The untilSettledOrTimedOut implementation being
+ *   tested.
+ */
 export default function testUntilSettledOrTimedOut(fn: typeof untilSettledOrTimedOut) {
   describe('untilSettledOrTimedOut', () => {
     test.concurrent('should return resolved', async () => {
@@ -27,15 +31,13 @@ export default function testUntilSettledOrTimedOut(fn: typeof untilSettledOrTime
       const actual = await fn(
         async (_, reject, pending) => {
           await sleep(2);
-          // eslint-disable-next-line jest/no-conditional-expect
+
           expect(pending()).toBeFalsy();
           reject('executor');
         },
         (resolve) => resolve('timeout'),
         1,
-      )
-        // eslint-disable-next-line jest/no-conditional-expect
-        .catch((ex) => expect(ex).toBe('executor'));
+      ).catch((ex) => expect(ex).toBe('executor'));
       expect(actual).toBe('timeout');
     });
 
@@ -56,15 +58,13 @@ export default function testUntilSettledOrTimedOut(fn: typeof untilSettledOrTime
       const actual = await fn(
         async (resolve, _, pending) => {
           await sleep(2);
-          // eslint-disable-next-line jest/no-conditional-expect
+
           expect(pending()).toBeFalsy();
           resolve('executor');
         },
         (_, reject) => reject('timeout'),
         1,
-      )
-        // eslint-disable-next-line jest/no-conditional-expect
-        .catch((ex) => expect(ex).toBe('timeout'));
+      ).catch((ex) => expect(ex).toBe('timeout'));
       expect(actual).toBeUndefined();
     });
   });

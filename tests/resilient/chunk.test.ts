@@ -8,7 +8,10 @@
 import chunk from '#root/src/chunk';
 import run from '#root/tests/resilient/runner';
 
-// eslint-disable-next-line jest/no-export,jsdoc/require-jsdoc
+/**
+ * Registers the resilient test suite for the `chunk` function.
+ * @param {typeof chunk} fn - The chunk implementation being tested.
+ */
 export default function testChunk(fn: typeof chunk) {
   describe('chunk', () => {
     test('should be resilient', async () => {

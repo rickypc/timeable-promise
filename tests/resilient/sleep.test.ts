@@ -8,7 +8,10 @@
 import sleep from '#root/src/sleep';
 import run from '#root/tests/resilient/runner';
 
-// eslint-disable-next-line jest/no-export,jsdoc/require-jsdoc
+/**
+ * Registers the resilient test suite for the `sleep` function.
+ * @param {typeof sleep} fn - The sleep implementation being tested.
+ */
 export default function testSleep(fn: typeof sleep) {
   describe('sleep', () => {
     test('should be resilient', async () => {

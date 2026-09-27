@@ -5,17 +5,70 @@
  * @license AGPL-3.0-or-later
  */
 
-import { HeapDiff } from '@airbnb/node-memwatch';
-import { Suite } from 'bench-node';
-import sleep from '#root/src/sleep';
-import { hrtimeToMs } from '#root/tests/utils';
+import { gcAndSweep, heapStats } from 'bun:jsc';
+import { Bench } from 'tinybench';
 
 export type ResilientOptions = {
   leak?: number;
   minSamples?: number;
   perf?: number;
   repeatSuite?: number;
+  testName?: string;
 };
+
+/**
+ * Calculates the total estimated bytes of active user-land data structures.
+ * @returns {number} The user-land total heap bytes.
+ */
+function userlandHeapBytes(): number {
+  const engineTypes = [
+    'AsyncFunction',
+    'AsyncGeneratorFunction',
+    'Callee',
+    'CustomGetterSetter',
+    'DOMAttributeGetterSetter',
+    'Function',
+    'FunctionCodeBlock',
+    'FunctionExecutable',
+    'GeneratorFunction',
+    'GetterSetter',
+    'HashMapBucket',
+    'Immutable Butterfly',
+    'JSGlobalLexicalEnvironment',
+    'JSLexicalEnvironment',
+    'JSModuleEnvironment',
+    'JSPropertyNameEnumerator',
+    'JSSourceCode',
+    'ModuleProgramCodeBlock',
+    'ModuleProgramExecutable',
+    'NativeExecutable',
+    'PropertyTable',
+    'Structure',
+    'StructureChain',
+    'StructureRareData',
+    'SymbolTable',
+    'UnlinkedFunctionCodeBlock',
+    'UnlinkedFunctionExecutable',
+    'UnlinkedModuleProgramCodeBlock',
+  ];
+  const { objectTypeCounts } = heapStats();
+  let response = 0;
+  for (const [type, count] of Object.entries(objectTypeCounts)) {
+    if (engineTypes.includes(type)) {
+      continue;
+    }
+    if (['Boolean', 'Number', 'string', 'symbol'].includes(type)) {
+      response += count * 32;
+    } else if (['HashMapBucket', 'SparseArrayValueMap'].includes(type)) {
+      response += count * 128;
+    } else if (type === 'CallbackObject') {
+      response += count * 8;
+    } else {
+      response += count * 64;
+    }
+  }
+  return response;
+}
 
 /**
  * Runs a memory leak detection by repeatedly executing a function and
@@ -41,7 +94,7 @@ async function runLeak<T>(
   threshold: number,
   verbose: boolean,
 ): Promise<boolean> {
-  const begin = process.hrtime();
+  const begin = performance.now();
   const delay = 25;
   const errors: { ex: unknown; src: number | string }[] = [];
   const onWarning = (ex: Error): void => {
@@ -59,21 +112,24 @@ async function runLeak<T>(
       } catch (ex) {
         errors.push({ ex, src: i });
       }
-      await sleep(delay);
+      await Bun.sleep(delay);
       await runSample(i + 1);
     };
     await runSample(0);
   };
-  const heapDiff = new HeapDiff();
-  process.on('warning', onWarning);
+  gcAndSweep();
+  const before = userlandHeapBytes();
   try {
-    await Promise.all(new Array(repeatSuite).fill(null).map(() => runner()));
+    process.on('warning', onWarning);
+    await Promise.all(Array.from({ length: repeatSuite }, () => runner()));
   } catch (ex) {
     errors.push({ ex, src: 'concurrent' });
   } finally {
     process.removeListener('warning', onWarning);
   }
-  const diff = heapDiff.end();
+  await Bun.sleep(delay);
+  gcAndSweep();
+  const after = userlandHeapBytes();
   if (errors.length) {
     console.error(`--- ${testName}: Runner Errors ---`);
     errors.forEach((error) => {
@@ -81,12 +137,14 @@ async function runLeak<T>(
     });
     return false;
   }
-  const growth = diff.change.details.reduce((sum, change: any) => sum + change['+'], 0);
+  const growth = Math.max(0, after - before);
   const response = growth < threshold;
   if (!response || verbose) {
-    const duration = hrtimeToMs(process.hrtime(begin));
+    const duration = performance.now() - begin;
     console.info(
-      `${testName}: Growth=${growth} | Threshold=${threshold} | Duration=${duration}ms | ${response ? 'RESILIENT ✅' : 'LEAK ❌'}`,
+      `${testName}: Growth=${growth} | Threshold=${threshold} | Duration=${duration.toFixed(
+        2,
+      )}ms | ${response ? 'RESILIENT ✅' : 'LEAK ❌'}`,
     );
   }
   return response;
@@ -117,21 +175,27 @@ async function runPerf<T>(
   threshold: number,
   verbose: boolean,
 ): Promise<boolean> {
-  const begin = process.hrtime();
-  let totalTime = threshold + 1;
-  await new Suite({
-    benchmarkMode: 'time',
-    reporter(results) {
-      totalTime = results.reduce((sum, result) => sum + (result?.totalTime || 0), 0);
-    },
-  })
-    .add(testName, { minSamples, repeatSuite }, fn as () => void)
-    .run();
+  const begin = performance.now();
+  const bench = new Bench({
+    concurrency: 'task',
+    // Iterations.
+    iterations: minSamples,
+    // Concurrency.
+    threshold: repeatSuite,
+    timestampProvider: 'bunNanoseconds',
+    warmup: false,
+  });
+  bench.add(testName, fn);
+  await bench.run();
+  const { result } = (bench.getTask(testName) as any) ?? {};
+  const totalTime = result?.state === 'completed' ? result.latency.mean / 1e3 : threshold + 1;
   const response = totalTime < threshold;
   if (!response || verbose) {
-    const duration = hrtimeToMs(process.hrtime(begin));
+    const duration = performance.now() - begin;
     console.info(
-      `${testName}: Total=${totalTime} | Threshold=${threshold} | Duration=${duration}ms | ${response ? 'FAST ✅' : 'SLOW ❌'}`,
+      `${testName}: Total=${totalTime} | Threshold=${threshold} | Duration=${duration.toFixed(
+        2,
+      )}ms | ${response ? 'FAST ✅' : 'SLOW ❌'}`,
     );
   }
   return response;
@@ -152,20 +216,20 @@ export default async function run<T>(
     leak = 2048,
     // Iterations
     minSamples = 25,
-    // 17500ns.
-    perf = 0.00175,
+    // 32500ns.
+    perf = 0.00325,
     // Concurrency.
     repeatSuite = 200,
+    testName = 'should be resilient',
   }: ResilientOptions = {},
 ): Promise<boolean> {
-  const testName = expect.getState().currentTestName;
   const type = process.env.RESILIENT_TYPE;
   const verbose = process.argv.includes('--verbose');
   if (type === 'leak') {
-    return runLeak(fn, minSamples, repeatSuite, testName as string, leak, verbose);
+    return runLeak(fn, minSamples, repeatSuite, testName, leak, verbose);
   }
   if (type === 'perf') {
-    return runPerf(fn, minSamples, repeatSuite, testName as string, perf, verbose);
+    return runPerf(fn, minSamples, repeatSuite, testName, perf, verbose);
   }
   throw new Error(`Unknown RESILIENT_TYPE: ${type}. Valid options: 'leak' | 'perf'`);
 }
