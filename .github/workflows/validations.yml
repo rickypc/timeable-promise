@@ -20,7 +20,7 @@ jobs:
       - name: Validate
         uses: ./.github/actions/validate
         with:
-          command: npm run test:deps:ci
+          command: bun run test:deps:ci
   leak:
     name: Leak
     runs-on: ubuntu-latest
@@ -30,7 +30,7 @@ jobs:
       - name: Validate
         uses: ./.github/actions/validate
         with:
-          command: npm run test:leak:ci
+          command: bun run test:leak:ci
   lint:
     name: Lint
     runs-on: ubuntu-latest
@@ -40,7 +40,7 @@ jobs:
       - name: Validate
         uses: ./.github/actions/validate
         with:
-          command: npm run test:lint
+          command: bun run test:lint
   perf:
     name: Perf
     runs-on: ubuntu-latest
@@ -50,7 +50,7 @@ jobs:
       - name: Validate
         uses: ./.github/actions/validate
         with:
-          command: npm run test:perf:ci
+          command: bun run test:perf:ci
   types:
     name: Types
     runs-on: ubuntu-latest
@@ -60,7 +60,7 @@ jobs:
       - name: Validate
         uses: ./.github/actions/validate
         with:
-          command: npm run test:type
+          command: bun run test:type
   unit:
     name: Unit
     runs-on: ubuntu-latest
@@ -70,7 +70,7 @@ jobs:
       - name: Validate
         uses: ./.github/actions/validate
         with:
-          command: npm run test:unit:ci
+          command: bun run test:unit:ci
       - name: Codecov
         uses: codecov/codecov-action@v7
         with:

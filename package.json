@@ -73,7 +73,7 @@
     "test:perf:ci": "CI=true bun run test:perf",
     "test:type": "tsc",
     "test:unit": "bun test --coverage --parallel ./tests/unit",
-    "test:unit:ci": "CI=true bun test --parallel --reporter=dots ./tests/unit"
+    "test:unit:ci": "CI=true bun test --coverage --parallel --reporter=dots ./tests/unit"
   },
   "trustedDependencies": [
     "unrs-resolver"
