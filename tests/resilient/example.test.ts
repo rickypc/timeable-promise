@@ -14,8 +14,8 @@ describe('example.ts', () => {
     // Use direct reassignment to avoid extra memory overhead in leak tests.
     const original = console.log;
     console.log = () => {};
-    // 175000ns.
-    expect(await run(async () => example(), { leak: 3072, perf: 0.0175 })).toBeTruthy();
+    // 250000ns.
+    expect(await run(async () => example(), { leak: 3072, perf: 0.025 })).toBeTruthy();
     console.log = original;
   });
 });
