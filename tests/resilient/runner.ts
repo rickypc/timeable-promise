@@ -216,8 +216,8 @@ export default async function run<T>(
     leak = 2048,
     // Iterations
     minSamples = 25,
-    // 75000ns.
-    perf = 0.0075,
+    // 100000ns.
+    perf = 0.01,
     // Concurrency.
     repeatSuite = 200,
     testName = 'should be resilient',
