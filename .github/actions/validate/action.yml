@@ -3,7 +3,7 @@
 # File: action.yml
 # License: AGPL-3.0-or-later
 
-description: Setup Node.js, install dependencies, run a validation command.
+description: Setup Bun, install dependencies, run a validation command.
 name: Setup
 inputs:
   cache-dependency-path:
@@ -13,22 +13,17 @@ inputs:
   command:
     description: Validation command to run after install
     required: true
-  node-version:
-    description: Node.js version to use
-    required: true
 runs:
   using: composite
   steps:
     - name: Setup Node
-      uses: actions/setup-node@v6
+      uses: oven-sh/setup-bun@v2
       with:
-        cache: npm
-        cache-dependency-path: ${{inputs.cache-dependency-path}}
-        node-version: ${{inputs.node-version}}
+        bun-version: latest
     - name: Install
       run: |
         echo -e "::group::\033[34mInstall Dependencies\033[0m"
-        npm install --legacy-peer-deps
+        bun install
         echo "::endgroup::"
       shell: bash
     - name: Validate

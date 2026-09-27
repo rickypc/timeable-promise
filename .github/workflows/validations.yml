@@ -3,8 +3,6 @@
 # File: validations.yml
 # License: AGPL-3.0-or-later
 
-env:
-  NODE_LTS: 24
 name: Validations
 on:
   pull_request:
@@ -18,69 +16,63 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Validate
         uses: ./.github/actions/validate
         with:
           command: npm run test:deps:ci
-          node-version: ${{env.NODE_LTS}}
   leak:
     name: Leak
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Validate
         uses: ./.github/actions/validate
         with:
           command: npm run test:leak:ci
-          node-version: ${{env.NODE_LTS}}
   lint:
     name: Lint
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Validate
         uses: ./.github/actions/validate
         with:
           command: npm run test:lint
-          node-version: ${{env.NODE_LTS}}
   perf:
     name: Perf
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Validate
         uses: ./.github/actions/validate
         with:
           command: npm run test:perf:ci
-          node-version: ${{env.NODE_LTS}}
   types:
     name: Types
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Validate
         uses: ./.github/actions/validate
         with:
           command: npm run test:type
-          node-version: ${{env.NODE_LTS}}
   unit:
     name: Unit
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Validate
         uses: ./.github/actions/validate
         with:
           command: npm run test:unit:ci
-          node-version: ${{env.NODE_LTS}}
       - name: Codecov
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v7
         with:
           fail_ci_if_error: true
           flags: unittests
