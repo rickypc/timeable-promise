@@ -6,7 +6,6 @@
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, mock, test } from 'bun:test';
 
 process.env.TZ = 'UTC';
-(globalThis as any).require = { main: undefined };
 
 const assets = {
   methods: {

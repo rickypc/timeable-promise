@@ -7,7 +7,6 @@
 
 import { mock } from 'bun:test';
 import poll from '#root/src/poll';
-import sleep from '#root/src/sleep';
 
 /**
  * Registers the unit test suite for the `poll` function.
@@ -18,7 +17,7 @@ export default function testPoll(fn: typeof poll) {
     test.concurrent('should run at interval', async () => {
       const log = mock();
       const timer = fn(log, 100);
-      await sleep(120);
+      await Bun.sleep(120);
       timer.stop();
 
       expect(log).toHaveBeenCalledTimes(1);
@@ -29,7 +28,7 @@ export default function testPoll(fn: typeof poll) {
       const log = mock();
       const timer = fn(
         async (stopped) => {
-          await sleep(first ? 200.05 : 15);
+          await Bun.sleep(first ? 200.05 : 15);
           first = false;
           if (!stopped()) {
             log();
@@ -38,7 +37,7 @@ export default function testPoll(fn: typeof poll) {
         100,
         true,
       );
-      await sleep(1000);
+      await Bun.sleep(1000);
       timer.stop();
 
       expect(log.mock.calls.length).toBeGreaterThanOrEqual(1);

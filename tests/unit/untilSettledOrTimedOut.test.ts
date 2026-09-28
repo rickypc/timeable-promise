@@ -5,7 +5,6 @@
  * @license AGPL-3.0-or-later
  */
 
-import sleep from '#root/src/sleep';
 import untilSettledOrTimedOut from '#root/src/untilSettledOrTimedOut';
 
 /**
@@ -31,7 +30,7 @@ export default function testUntilSettledOrTimedOut(fn: typeof untilSettledOrTime
       const actual = await fn(
         (_, reject, pending) => {
           void (async () => {
-            await sleep(2);
+            await Bun.sleep(2);
             expect(pending()).toBeFalsy();
             reject('executor');
           })();
@@ -46,7 +45,7 @@ export default function testUntilSettledOrTimedOut(fn: typeof untilSettledOrTime
       const actual = await fn(
         (resolve, _, pending) => {
           void (async () => {
-            await sleep(2);
+            await Bun.sleep(2);
             expect(pending()).toBeFalsy();
             resolve('executor');
           })();
@@ -61,7 +60,7 @@ export default function testUntilSettledOrTimedOut(fn: typeof untilSettledOrTime
       const actual = await fn(
         (resolve, _, pending) => {
           void (async () => {
-            await sleep(2);
+            await Bun.sleep(2);
             expect(pending()).toBeFalsy();
             resolve('executor');
           })();
