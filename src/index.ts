@@ -18,15 +18,16 @@
  * [![Vulnerabilities](https://snyk.io/test/github/rickypc/timeable-promise/badge.svg)](https://snyk.io/test/github/rickypc/timeable-promise?tab=dependencies)
  * [![License](https://img.shields.io/npm/l/timeable-promise?logo=opensourceinitiative)](https://www.gnu.org/licenses/agpl-3.0.en.html)
  *
- * Collection of asynchronous utilities for managing concurrency,
- * sequencing, and timing. Provides helpers for running tasks in
- * parallel or sequential order, controlling execution with timeouts,
+ * Collection of asynchronous utilities for managing concurrency, sequencing, and timing. Provides
+ * helpers for running tasks in parallel or sequential order, controlling execution with timeouts,
  * and working with settled promise results.
  *
  * ## Installation
  *
  * ```bash
  * npm install --save timeable-promise
+ * # OR
+ * bun add timeable-promise
  * ```
  *
  * ## Importing
@@ -43,13 +44,11 @@
  * import chunk from 'timeable-promise/chunk';
  * ```
  *
- * Use whichever style fits your project. Named exports are convenient when you
- * need several utilities at once, while direct path imports can reduce bundle
- * size if you only need one.
+ * Use whichever style fits your project. Named exports are convenient when you need several
+ * utilities at once, while direct path imports can reduce bundle size if you only need one.
  *
- * > This package is written in TypeScript and provides type definitions
- * > out of the box. Your editor will offer autocomplete and type safety
- * > automatically.
+ * > This package is written in TypeScript and provides type definitions out of the box. Your editor
+ * > will offer autocomplete and type safety automatically.
  *
  * For the full list of exports, refer to the [API Call Graph](#api-call-graph).
  *

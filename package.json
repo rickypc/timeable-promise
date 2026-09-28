@@ -1,8 +1,4 @@
 {
-  "allowScripts": {
-    "fsevents": true,
-    "unrs-resolver": true
-  },
   "author": {
     "email": "rickypc@users.noreply.github.co",
     "name": "Richard Huang"
@@ -10,20 +6,15 @@
   "description": "Various asynchronous operations with timeout support.",
   "devDependencies": {
     "@biomejs/biome": "2.5.14",
-    "@rspack/cli": "2.2.7",
-    "@rspack/core": "2.2.7",
     "@types/bun": "1.4.2",
     "@types/eslint-plugin-security": "3.0.1",
     "@typescript-eslint/parser": "8.70.1",
     "eslint": "10.11.0",
     "eslint-plugin-jsdoc": "64.5.4",
-    "eslint-plugin-no-secrets": "2.3.3",
     "eslint-plugin-security": "4.0.1",
     "eslint-plugin-yml": "3.8.1",
-    "jiti": "2.7.0",
     "remove-types": "1.0.0",
     "tinybench": "6.2.0",
-    "ts-checker-rspack-plugin": "1.6.1",
     "typedoc": "0.28.20",
     "typedoc-plugin-markdown": "4.13.1",
     "typescript": "6.0.3",
@@ -47,25 +38,22 @@
   ],
   "license": "AGPL-3.0",
   "name": "timeable-promise",
-  "overrides": {
-    "baseline-browser-mapping": "*"
-  },
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/rickypc/timeable-promise.git"
   },
   "scripts": {
-    "build": "npm run build:docs && npm run build:dist",
-    "build:dist": "rspack build",
+    "build": "bun run build:docs && bun run build:dist",
+    "build:dist": "bun run build.ts",
     "build:docs": "typedoc",
     "deploy": "npm run deploy:ready && npm run deploy:tag && echo \"\\033[1;32mnpm publish ./dist --verbose\\033[0m\"",
     "deploy:dry": "npm run deploy:ready && npm publish --dry-run ./dist --verbose && echo \"\\033[1;32mgit commit && git push origin && npm run deploy\\033[0m\" || echo \"\\033[1;31m$(npm pkg get name | tr -d '\"') v$(npm pkg get version | tr -d '\"') is published. Do you want to bump up the version and modify CHANGELOG?\\033[0m\"",
-    "deploy:ready": "bun run test && npm run build",
+    "deploy:ready": "bun run test && bun run build",
     "deploy:tag": "git tag $(npm pkg get version | tr -d '\"') && git push --tags",
     "test": "bun run test:deps:ci && bun run test:lint && bun run test:type && bun run test:unit && bun run test:perf && bun run test:leak",
     "test:biome": "biome check .",
     "test:deps:ci": "bun outdated | grep -vE '\\-\\-\\-|Package|bun' | sed -E 's/^[[:space:]]*│[[:space:]]*//; s/[[:space:]]*│[[:space:]]*/ | /g; s/[[:space:]]*│[[:space:]]*$//'",
-    "test:eslint": "eslint .",
+    "test:eslint": "bunx --bun eslint .",
     "test:leak": "sh -c 'RESILIENT_TYPE=leak bun test --parallel ./tests/resilient \"$@\"' --",
     "test:leak:ci": "CI=true bun run test:leak",
     "test:lint": "bun run test:biome && bun run test:eslint",

@@ -41,16 +41,14 @@ const plugins = {
         () => `
 ## Development Dependencies
 
-You will need to install [Node.js](https://nodejs.org/en/) as a local
-development dependency. The \`npm\` package manager comes bundled with all
-recent releases of \`Node.js\`.
+You will need to install [Bun](https://bun.com/) as a local development dependency. The
+\`bun install\` package manager comes bundled with all recent releases of \`Bun\`.
 
-\`npm install\` will attempt to resolve any \`npm\` module dependencies
-that have been declared in the project's \`package.json\` file, installing them
-into the \`node_modules\` folder.
+\`bun install\` will attempt to resolve any \`bun\` module dependencies that have been declared in
+the project's \`package.json\` file, installing them into the \`node_modules\` folder.
 
 \`\`\`bash
-npm install
+bun install
 \`\`\`
 
 Run Leak, Lint, Performance, Type and Unit Tests
@@ -58,50 +56,49 @@ Run Leak, Lint, Performance, Type and Unit Tests
 To make sure we did not break anything, let's run all the tests:
 
 \`\`\`bash
-npm test
+bun run test
 \`\`\`
 
 Run leak tests only:
 
 \`\`\`bash
-npm run test:leak
+bun run test:leak
 \`\`\`
 
 Run linter only:
 
 \`\`\`bash
-npm run test:lint
+bun run test:lint
 \`\`\`
 
 Run performance tests only:
 
 \`\`\`bash
-npm run test:perf
+bun run test:perf
 \`\`\`
 
 Run type check only:
 
 \`\`\`bash
-npm run test:type
+bun run test:type
 \`\`\`
 
 Run unit tests only:
 
 \`\`\`bash
-npm run test:unit
+bun run test:unit
 \`\`\`
 
 ## Contributing
 
-If you would like to contribute code to Timeable Promise repository you can do so
-through GitHub by forking the repository and sending a pull request.
+If you would like to contribute code to Timeable Promise repository you can do so through GitHub by
+forking the repository and sending a pull request.
 
-If you do not agree to [Contribution Agreement](CONTRIBUTING.md), do not
-contribute any code to Timeable Promise repository.
+If you do not agree to [Contribution Agreement](CONTRIBUTING.md), do not contribute any code to
+Timeable Promise repository.
 
-When submitting code, please make every effort to follow existing conventions
-and style in order to keep the code as readable as possible. Please also include
-appropriate test cases.
+When submitting code, please make every effort to follow existing conventions and style in order to
+keep the code as readable as possible. Please also include appropriate test cases.
 
 That's it! Thank you for your contribution!
 

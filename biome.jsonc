@@ -12,13 +12,8 @@
       }
     }
   },
-  "files": {
-    "ignoreUnknown": true
-  },
-  "formatter": {
-    "indentStyle": "space",
-    "indentWidth": 2
-  },
+  "files": { "ignoreUnknown": true },
+  "formatter": { "indentStyle": "space", "indentWidth": 2 },
   "javascript": {
     "formatter": {
       "arrowParentheses": "always",
@@ -26,8 +21,7 @@
       "lineEnding": "lf",
       "lineWidth": 100,
       "operatorLinebreak": "before",
-      "quoteStyle": "single",
-      "semicolons": "always"
+      "quoteStyle": "single"
     }
   },
   "linter": {
@@ -46,11 +40,9 @@
           }
         },
         "noUselessSwitchCase": "error",
-        "useMaxParams": {
-          "level": "error",
-          "options": { "max": 10 }
-        }
+        "useMaxParams": { "level": "error", "options": { "max": 10 } }
       },
+      "correctness": { "useSingleJsDocAsterisk": "error" },
       "nursery": {
         "noConditionalExpect": "error",
         "noExcessiveNestedCallbacks": "error",
@@ -65,6 +57,7 @@
         "useVarsOnTop": "error"
       },
       "preset": "recommended",
+      "security": { "noSecrets": "error" },
       "style": {
         "noExcessiveClassesPerFile": "error",
         "noExcessiveLinesPerFile": {
@@ -83,14 +76,8 @@
         "useBlockStatements": "error",
         "useDefaultSwitchClause": "error"
       },
-      "suspicious": {
-        "noExplicitAny": "off"
-      }
+      "suspicious": { "noExplicitAny": "off" }
     }
   },
-  "vcs": {
-    "clientKind": "git",
-    "enabled": true,
-    "useIgnoreFile": true
-  }
+  "vcs": { "clientKind": "git", "enabled": true, "useIgnoreFile": true }
 }

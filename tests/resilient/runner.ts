@@ -32,9 +32,12 @@ function userlandHeapBytes(): number {
     'FunctionExecutable',
     'GeneratorFunction',
     'GetterSetter',
+    // biome-ignore lint/security/noSecrets: -
     'HashMapBucket',
     'Immutable Butterfly',
+    // biome-ignore lint/security/noSecrets: -
     'JSGlobalLexicalEnvironment',
+    // biome-ignore lint/security/noSecrets: -
     'JSLexicalEnvironment',
     'JSModuleEnvironment',
     'JSPropertyNameEnumerator',
@@ -49,6 +52,7 @@ function userlandHeapBytes(): number {
     'SymbolTable',
     'UnlinkedFunctionCodeBlock',
     'UnlinkedFunctionExecutable',
+    // biome-ignore lint/security/noSecrets: -
     'UnlinkedModuleProgramCodeBlock',
   ];
   const { objectTypeCounts } = heapStats();
@@ -59,6 +63,7 @@ function userlandHeapBytes(): number {
     }
     if (['Boolean', 'Number', 'string', 'symbol'].includes(type)) {
       response += count * 32;
+      // biome-ignore lint/security/noSecrets: -
     } else if (['HashMapBucket', 'SparseArrayValueMap'].includes(type)) {
       response += count * 128;
     } else if (type === 'CallbackObject') {

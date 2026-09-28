@@ -10,15 +10,16 @@
 [![Vulnerabilities](https://snyk.io/test/github/rickypc/timeable-promise/badge.svg)](https://snyk.io/test/github/rickypc/timeable-promise?tab=dependencies)
 [![License](https://img.shields.io/npm/l/timeable-promise?logo=opensourceinitiative)](https://www.gnu.org/licenses/agpl-3.0.en.html)
 
-Collection of asynchronous utilities for managing concurrency,
-sequencing, and timing. Provides helpers for running tasks in
-parallel or sequential order, controlling execution with timeouts,
+Collection of asynchronous utilities for managing concurrency, sequencing, and timing. Provides
+helpers for running tasks in parallel or sequential order, controlling execution with timeouts,
 and working with settled promise results.
 
 ## Installation
 
 ```bash
 npm install --save timeable-promise
+# OR
+bun add timeable-promise
 ```
 
 ## Importing
@@ -35,13 +36,11 @@ import { chunk, ..., waitFor } from 'timeable-promise';
 import chunk from 'timeable-promise/chunk';
 ```
 
-Use whichever style fits your project. Named exports are convenient when you
-need several utilities at once, while direct path imports can reduce bundle
-size if you only need one.
+Use whichever style fits your project. Named exports are convenient when you need several
+utilities at once, while direct path imports can reduce bundle size if you only need one.
 
-> This package is written in TypeScript and provides type definitions
-> out of the box. Your editor will offer autocomplete and type safety
-> automatically.
+> This package is written in TypeScript and provides type definitions out of the box. Your editor
+> will offer autocomplete and type safety automatically.
 
 For the full list of exports, refer to the [API Call Graph](#api-call-graph).
 
@@ -208,7 +207,8 @@ console.log(chunked); // [[1, 2], [3, 4], [5]]
 function concurrent<T, U>(
    array, 
    executor, 
-concurrency?): Promise<Settled<U>[]>;
+   concurrency?
+): Promise<Settled<U>[]>;
 ```
 
 Defined in: [concurrent.ts:52](https://github.com/rickypc/timeable-promise/blob/main/src/concurrent.ts#L52)
@@ -277,7 +277,8 @@ console.log(concurrentSettled2);
 function concurrents<T, U>(
    array, 
    executor, 
-concurrency?): Promise<Settled<U>[]>;
+   concurrency?
+): Promise<Settled<U>[]>;
 ```
 
 Defined in: [concurrents.ts:55](https://github.com/rickypc/timeable-promise/blob/main/src/concurrents.ts#L55)
@@ -346,7 +347,8 @@ console.log(concurrentsSettled2);
 function consecutive<T, U>(
    array, 
    executor, 
-concurrency?): Promise<Settled<U>[]>;
+   concurrency?
+): Promise<Settled<U>[]>;
 ```
 
 Defined in: [consecutive.ts:52](https://github.com/rickypc/timeable-promise/blob/main/src/consecutive.ts#L52)
@@ -415,7 +417,8 @@ console.log(consecutiveSettled2);
 function consecutives<T, U>(
    array, 
    executor, 
-concurrency?): Promise<Settled<U>[]>;
+   concurrency?
+): Promise<Settled<U>[]>;
 ```
 
 Defined in: [consecutives.ts:53](https://github.com/rickypc/timeable-promise/blob/main/src/consecutives.ts#L53)
@@ -483,7 +486,7 @@ console.log(consecutivesSettled2);
 function outcome<T, U>(executor, ...args): Promise<Settled<U>>;
 ```
 
-Defined in: [outcome.ts:42](https://github.com/rickypc/timeable-promise/blob/main/src/outcome.ts#L42)
+Defined in: [outcome.ts:38](https://github.com/rickypc/timeable-promise/blob/main/src/outcome.ts#L38)
 
 Executes an executor and returns a PromiseSettledResult-like outcome.
 
@@ -529,7 +532,8 @@ console.log(err); // { reason: Error('fail'), status: 'rejected' }
 function parallel<T, U>(
    array, 
    executor, 
-concurrency?): Promise<Settled<U>[]>;
+   concurrency?
+): Promise<Settled<U>[]>;
 ```
 
 Defined in: [parallel.ts:54](https://github.com/rickypc/timeable-promise/blob/main/src/parallel.ts#L54)
@@ -597,10 +601,11 @@ console.log(parallelSettled2);
 function poll(
    executor, 
    interval?, 
-   immediately?): PollHandle;
+   immediately?
+): PollHandle;
 ```
 
-Defined in: [poll.ts:41](https://github.com/rickypc/timeable-promise/blob/main/src/poll.ts#L41)
+Defined in: [poll.ts:40](https://github.com/rickypc/timeable-promise/blob/main/src/poll.ts#L40)
 
 Provides polling support without congestion when the executor takes longer
 than the interval. The executor receives a `stopped` function to check
@@ -645,7 +650,8 @@ setTimeout(() => {
 function sequential<T, U>(
    array, 
    executor, 
-concurrency?): Promise<Settled<U>[]>;
+   concurrency?
+): Promise<Settled<U>[]>;
 ```
 
 Defined in: [sequential.ts:54](https://github.com/rickypc/timeable-promise/blob/main/src/sequential.ts#L54)
@@ -788,10 +794,11 @@ console.log(toNumber(null));        // 0
 function untilSettledOrTimedOut<T>(
    promiseExecutor, 
    timeoutExecutor, 
-timeout): Promise<T>;
+   timeout
+): Promise<T>;
 ```
 
-Defined in: [untilSettledOrTimedOut.ts:67](https://github.com/rickypc/timeable-promise/blob/main/src/untilSettledOrTimedOut.ts#L67)
+Defined in: [untilSettledOrTimedOut.ts:62](https://github.com/rickypc/timeable-promise/blob/main/src/untilSettledOrTimedOut.ts#L62)
 
 Provides timeout support for a Promise. The executor runs until either
 it settles or the timeout expires, in which case the timeoutExecutor
@@ -856,7 +863,8 @@ console.log(`resolved with ${response}, yay!`);
 function waitFor(
    predicate, 
    timeout, 
-interval?): Promise<void>;
+   interval?
+): Promise<void>;
 ```
 
 Defined in: [waitFor.ts:34](https://github.com/rickypc/timeable-promise/blob/main/src/waitFor.ts#L34)
@@ -933,7 +941,7 @@ Defined in: [outcome.ts:8](https://github.com/rickypc/timeable-promise/blob/main
 type PollExecutor = (stopped) => Promise<void> | void;
 ```
 
-Defined in: [poll.ts:9](https://github.com/rickypc/timeable-promise/blob/main/src/poll.ts#L9)
+Defined in: [poll.ts:8](https://github.com/rickypc/timeable-promise/blob/main/src/poll.ts#L8)
 
 #### Parameters
 
@@ -955,13 +963,13 @@ type PollHandle = {
 };
 ```
 
-Defined in: [poll.ts:11](https://github.com/rickypc/timeable-promise/blob/main/src/poll.ts#L11)
+Defined in: [poll.ts:10](https://github.com/rickypc/timeable-promise/blob/main/src/poll.ts#L10)
 
 #### Properties
 
 | Property | Type | Defined in |
 | ------ | ------ | ------ |
-| <a id="stop"></a> `stop` | () => `void` | [poll.ts:12](https://github.com/rickypc/timeable-promise/blob/main/src/poll.ts#L12) |
+| <a id="stop"></a> `stop` | () => `void` | [poll.ts:11](https://github.com/rickypc/timeable-promise/blob/main/src/poll.ts#L11) |
 
 ***
 
@@ -1015,7 +1023,7 @@ Defined in: [untilSettledOrTimedOut.ts:10](https://github.com/rickypc/timeable-p
 type Settled<T> = PromiseSettledResult<T>;
 ```
 
-Defined in: [outcome.ts:19](https://github.com/rickypc/timeable-promise/blob/main/src/outcome.ts#L19)
+Defined in: [outcome.ts:15](https://github.com/rickypc/timeable-promise/blob/main/src/outcome.ts#L15)
 
 #### Type Parameters
 
@@ -1031,7 +1039,7 @@ Defined in: [outcome.ts:19](https://github.com/rickypc/timeable-promise/blob/mai
 type TimeoutExecutor<T> = (resolve, reject) => void;
 ```
 
-Defined in: [untilSettledOrTimedOut.ts:19](https://github.com/rickypc/timeable-promise/blob/main/src/untilSettledOrTimedOut.ts#L19)
+Defined in: [untilSettledOrTimedOut.ts:16](https://github.com/rickypc/timeable-promise/blob/main/src/untilSettledOrTimedOut.ts#L16)
 
 #### Type Parameters
 
@@ -1052,16 +1060,14 @@ Defined in: [untilSettledOrTimedOut.ts:19](https://github.com/rickypc/timeable-p
 
 ## Development Dependencies
 
-You will need to install [Node.js](https://nodejs.org/en/) as a local
-development dependency. The `npm` package manager comes bundled with all
-recent releases of `Node.js`.
+You will need to install [Bun](https://bun.com/) as a local development dependency. The
+`bun install` package manager comes bundled with all recent releases of `Bun`.
 
-`npm install` will attempt to resolve any `npm` module dependencies
-that have been declared in the project's `package.json` file, installing them
-into the `node_modules` folder.
+`bun install` will attempt to resolve any `bun` module dependencies that have been declared in
+the project's `package.json` file, installing them into the `node_modules` folder.
 
 ```bash
-npm install
+bun install
 ```
 
 Run Leak, Lint, Performance, Type and Unit Tests
@@ -1069,50 +1075,49 @@ Run Leak, Lint, Performance, Type and Unit Tests
 To make sure we did not break anything, let's run all the tests:
 
 ```bash
-npm test
+bun run test
 ```
 
 Run leak tests only:
 
 ```bash
-npm run test:leak
+bun run test:leak
 ```
 
 Run linter only:
 
 ```bash
-npm run test:lint
+bun run test:lint
 ```
 
 Run performance tests only:
 
 ```bash
-npm run test:perf
+bun run test:perf
 ```
 
 Run type check only:
 
 ```bash
-npm run test:type
+bun run test:type
 ```
 
 Run unit tests only:
 
 ```bash
-npm run test:unit
+bun run test:unit
 ```
 
 ## Contributing
 
-If you would like to contribute code to Timeable Promise repository you can do so
-through GitHub by forking the repository and sending a pull request.
+If you would like to contribute code to Timeable Promise repository you can do so through GitHub by
+forking the repository and sending a pull request.
 
-If you do not agree to [Contribution Agreement](CONTRIBUTING.md), do not
-contribute any code to Timeable Promise repository.
+If you do not agree to [Contribution Agreement](CONTRIBUTING.md), do not contribute any code to
+Timeable Promise repository.
 
-When submitting code, please make every effort to follow existing conventions
-and style in order to keep the code as readable as possible. Please also include
-appropriate test cases.
+When submitting code, please make every effort to follow existing conventions and style in order to
+keep the code as readable as possible. Please also include appropriate test cases.
 
 That's it! Thank you for your contribution!
 
