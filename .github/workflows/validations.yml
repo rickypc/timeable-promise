@@ -13,7 +13,7 @@ on:
 jobs:
   deps:
     name: Deps
-    runs-on: ubuntu-slim
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -23,7 +23,7 @@ jobs:
           command: bun run test:deps:ci
   leak:
     name: Leak
-    runs-on: ubuntu-slim
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -33,7 +33,7 @@ jobs:
           command: bun run test:leak:ci
   lint:
     name: Lint
-    runs-on: ubuntu-slim
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -43,7 +43,7 @@ jobs:
           command: bun run test:lint
   perf:
     name: Perf
-    runs-on: ubuntu-slim
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -53,7 +53,7 @@ jobs:
           command: bun run test:perf:ci
   types:
     name: Types
-    runs-on: ubuntu-slim
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -63,7 +63,7 @@ jobs:
           command: bun run test:type
   unit:
     name: Unit
-    runs-on: ubuntu-slim
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v7
