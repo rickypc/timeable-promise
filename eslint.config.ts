@@ -18,23 +18,13 @@ const config: Linter.Config[] = [
   jsdoc.configs['flat/recommended'],
   security.configs.recommended,
   ...yml.configs['flat/recommended'],
-  {
-    files: ['*.yml'],
-    languageOptions: { parser: ymlParser },
-  },
+  { files: ['*.yml'], languageOptions: { parser: ymlParser } },
   {
     rules: {
       'jsdoc/check-tag-names': ['error', { definedTags: ['packageDocumentation', 'ts-check'] }],
     },
   },
-  {
-    files: ['**/*.ts'],
-    languageOptions: {
-      ecmaVersion: 2024,
-      parser,
-      sourceType: 'module',
-    },
-  },
+  { files: ['**/*.ts'], languageOptions: { ecmaVersion: 2024, parser, sourceType: 'module' } },
 ];
 
 export default config;
