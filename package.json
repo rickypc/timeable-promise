@@ -13,6 +13,7 @@
     "eslint-plugin-jsdoc": "64.5.4",
     "eslint-plugin-security": "4.0.1",
     "eslint-plugin-yml": "3.8.1",
+    "jiti": "2.7.0",
     "remove-types": "1.0.0",
     "tinybench": "6.2.0",
     "typedoc": "0.28.20",

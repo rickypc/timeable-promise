@@ -21,8 +21,10 @@ const path = `${base}/dist`;
 const src = `${base}/src`;
 
 // Ensure dist exists.
+// eslint-disable-next-line security/detect-non-literal-fs-filename
 await mkdir(path, { recursive: true });
 
+// eslint-disable-next-line security/detect-non-literal-fs-filename
 for (const file of await readdir(src)) {
   if (file.endsWith('.ts') && file !== example.ts) {
     entry[basename(file, '.ts')] = join(src, file);
@@ -77,19 +79,16 @@ await Promise.all(
 );
 
 // Generate package.json.
-const {
-  allowScripts,
-  devDependencies,
-  imports,
-  overrides,
-  scripts,
-  trustedDependencies,
-  ...pkg
-} = await Bun.file(join(base, 'package.json')).json();
+const { allowScripts, devDependencies, imports, overrides, scripts, trustedDependencies, ...pkg } =
+  await Bun.file(join(base, 'package.json')).json();
 pkg.exports = {};
 for (const name of Object.keys(entry)) {
   const key = name === 'index' ? '.' : `./${name}`;
-  pkg.exports[key] = { import: `./${name}.js`, require: `./${name}.cjs`, types: `./${name}.d.ts` };
+  pkg.exports[key as keyof typeof pkg.exports] = {
+    import: `./${name}.js`,
+    require: `./${name}.cjs`,
+    types: `./${name}.d.ts`,
+  };
 }
 pkg.exports = Object.fromEntries(Object.entries(pkg.exports).sort(([a], [b]) => (a < b ? -1 : 1)));
 pkg.main = 'index.cjs';
@@ -101,10 +100,13 @@ await Bun.write(
   JSON.stringify(
     Object.keys(pkg)
       .sort()
-      .reduce<Record<string, any>>((acc, key) => {
-        acc[key] = pkg[key];
-        return acc;
-      }, {}),
+      .reduce<Record<string, any>>(
+        (acc, key) => {
+          acc[key as keyof typeof acc] = pkg[key as keyof typeof pkg];
+          return acc;
+        },
+        {} as typeof pkg,
+      ),
     null,
     2,
   ),

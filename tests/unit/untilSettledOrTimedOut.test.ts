@@ -17,7 +17,7 @@ export default function testUntilSettledOrTimedOut(fn: typeof untilSettledOrTime
   describe('untilSettledOrTimedOut', () => {
     test.concurrent('should return resolved', async () => {
       const actual = await fn(
-        async (resolve, _, pending) => {
+        (resolve, _, pending) => {
           expect(pending()).toBeTruthy();
           resolve('executor');
         },
@@ -29,11 +29,12 @@ export default function testUntilSettledOrTimedOut(fn: typeof untilSettledOrTime
 
     test.concurrent('should return rejected', async () => {
       const actual = await fn(
-        async (_, reject, pending) => {
-          await sleep(2);
-
-          expect(pending()).toBeFalsy();
-          reject('executor');
+        (_, reject, pending) => {
+          void (async () => {
+            await sleep(2);
+            expect(pending()).toBeFalsy();
+            reject('executor');
+          })();
         },
         (resolve) => resolve('timeout'),
         1,
@@ -43,10 +44,12 @@ export default function testUntilSettledOrTimedOut(fn: typeof untilSettledOrTime
 
     test.concurrent('should return timed out resolved', async () => {
       const actual = await fn(
-        async (resolve, _, pending) => {
-          await sleep(2);
-          expect(pending()).toBeFalsy();
-          resolve('executor');
+        (resolve, _, pending) => {
+          void (async () => {
+            await sleep(2);
+            expect(pending()).toBeFalsy();
+            resolve('executor');
+          })();
         },
         (resolve) => resolve('timeout'),
         1,
@@ -56,11 +59,12 @@ export default function testUntilSettledOrTimedOut(fn: typeof untilSettledOrTime
 
     test.concurrent('should return timed out rejected', async () => {
       const actual = await fn(
-        async (resolve, _, pending) => {
-          await sleep(2);
-
-          expect(pending()).toBeFalsy();
-          resolve('executor');
+        (resolve, _, pending) => {
+          void (async () => {
+            await sleep(2);
+            expect(pending()).toBeFalsy();
+            resolve('executor');
+          })();
         },
         (_, reject) => reject('timeout'),
         1,
