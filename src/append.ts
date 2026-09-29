@@ -20,8 +20,7 @@
  */
 export default function append<T>(accumulator: T[], array: T[]): T[] {
   for (let accLength = accumulator.length, i = 0, { length } = array; i < length; i += 1) {
-    // eslint-disable-next-line security/detect-object-injection
-    accumulator[accLength + i] = array[i];
+    accumulator[(accLength + i) as number] = array[i as number];
   }
   return accumulator;
 }
