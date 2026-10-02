@@ -20,7 +20,7 @@
 
 * Add full TypeScript support and type checking
 * Migrate examples, tests, and utilities to TypeScript
-* Refactor runner, exports/imports, and improve tree‑shaking
+* Refactor runner, exports/imports, and improve tree-shaking
 * Consolidate performance and leak tests into resilient Jest suite
 * Update configs, GitHub Actions, and documentation
 * Minor improvements to output formatting, labels, and captions
