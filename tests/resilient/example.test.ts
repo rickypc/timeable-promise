@@ -18,4 +18,15 @@ describe('example.ts', () => {
     expect(await run(async () => example(), { leak: 3072, perf: 0.0275 })).toBeTruthy();
     console.log = original;
   });
+
+  test('should auto-run when NODE_ENV is spawn', async () => {
+    const env = process.env.NODE_ENV;
+    const original = console.log;
+    process.env.NODE_ENV = 'spawn';
+    console.log = () => {};
+    const spawned = await import(`#root/src/example?update=${Date.now()}`);
+    expect(await spawned.default()).toBe('Timeable Promise Examples');
+    console.log = original;
+    process.env.NODE_ENV = env;
+  });
 });

@@ -18,6 +18,11 @@ export default function testWaitFor(fn: typeof waitFor) {
       // 1ns.
       expect(await run(() => fn(() => true, 0.000001, 0.000001))).toBeTruthy();
     });
+
+    test('should be resilient on timeout', async () => {
+      // 1ns.
+      expect(await run(() => fn(() => false, 0.000001, 0.000001))).toBeTruthy();
+    });
   });
 }
 

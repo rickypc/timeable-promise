@@ -27,6 +27,25 @@ export default function testPoll(fn: typeof poll) {
         }),
       ).toBeTruthy();
     });
+
+    test('should be resilient with immediate start', async () => {
+      expect(
+        await run(
+          async () => {
+            const timer = fn(
+              (stopped) => {
+                stopped();
+              },
+              1000,
+              true,
+            );
+            await Bun.sleep(20);
+            timer.stop();
+          },
+          { perf: 0.05 },
+        ),
+      ).toBeTruthy();
+    });
   });
 }
 

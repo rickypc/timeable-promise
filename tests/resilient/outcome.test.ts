@@ -18,6 +18,13 @@ export default function testOutcome(fn: typeof outcome) {
       const executor: ItemExecutor<number> = (async (x: number, y: number) => x + y) as any;
       expect(await run(() => fn(executor, 2 as any, 3, [2] as any))).toBeTruthy();
     });
+
+    test('should be resilient with rejection', async () => {
+      const executor: ItemExecutor<number> = (async () => {
+        throw new Error('failure');
+      }) as any;
+      expect(await run(() => fn(executor, 2 as any, 3, [2] as any))).toBeTruthy();
+    });
   });
 }
 
