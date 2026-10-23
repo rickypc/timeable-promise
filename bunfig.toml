@@ -1,4 +1,10 @@
+telemetry = false
+
+[run]
+silent = true
+
 [test]
+coverage = true
 coveragePathIgnorePatterns = ["**/dist/**", "**/tests/**"]
 coverageReporter = ["lcov", "text"]
 coverageSkipTestFiles = true

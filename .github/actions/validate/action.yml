@@ -7,7 +7,7 @@ description: Setup Bun, install dependencies, run a validation command.
 name: Setup
 inputs:
   cache-dependency-path:
-    default: '**/package.json'
+    default: "**/package.json"
     description: Path to dependency file for caching
     required: false
   command:

@@ -6,7 +6,7 @@
 name: Validations
 on:
   pull_request:
-    types: [ edited, opened, reopened, synchronize ]
+    types: [edited, opened, reopened, synchronize]
   push:
     branches:
       - main

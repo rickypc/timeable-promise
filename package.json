@@ -5,19 +5,19 @@
   },
   "description": "Various asynchronous operations with timeout support.",
   "devDependencies": {
-    "@biomejs/biome": "2.5.15",
+    "@biomejs/biome": "2.6.2",
     "@types/bun": "1.4.2",
     "@types/eslint-plugin-security": "3.0.1",
-    "@typescript-eslint/parser": "8.71.2",
-    "eslint": "10.12.0",
-    "eslint-plugin-jsdoc": "65.3.1",
+    "@typescript-eslint/parser": "8.72.0",
+    "eslint": "10.13.0",
+    "eslint-plugin-jsdoc": "65.4.1",
     "eslint-plugin-security": "4.2.0",
     "eslint-plugin-yml": "3.9.0",
     "jiti": "2.7.0",
     "remove-types": "1.0.0",
     "tinybench": "6.2.2",
     "typedoc": "0.28.20",
-    "typedoc-plugin-markdown": "4.13.1",
+    "typedoc-plugin-markdown": "4.14.1",
     "typescript": "6.0.3",
     "yaml-eslint-parser": "2.1.0"
   },
@@ -61,8 +61,8 @@
     "test:perf": "sh -c 'RESILIENT_TYPE=perf bun test --parallel ./tests/resilient \"$@\"' --",
     "test:perf:ci": "CI=true bun run test:perf",
     "test:type": "bun check",
-    "test:unit": "bun test --coverage --parallel ./tests/unit",
-    "test:unit:ci": "CI=true bun test --coverage --parallel --reporter=dots ./tests/unit"
+    "test:unit": "bun test --parallel ./tests/unit",
+    "test:unit:ci": "CI=true bun test --parallel --reporter=dots ./tests/unit"
   },
   "trustedDependencies": [
     "unrs-resolver"

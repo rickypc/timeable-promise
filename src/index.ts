@@ -33,7 +33,6 @@
  * ## Importing
  *
  * This package supports two styles of import:
- *
  * 1. Named exports from the entry point:
  * ```ts
  * import { chunk, ..., waitFor } from 'timeable-promise';
