@@ -12,14 +12,12 @@
     "eslint": "10.13.0",
     "eslint-plugin-jsdoc": "65.4.1",
     "eslint-plugin-security": "4.2.0",
-    "eslint-plugin-yml": "3.9.0",
     "jiti": "2.7.0",
     "remove-types": "1.0.0",
     "tinybench": "6.2.2",
     "typedoc": "0.28.20",
     "typedoc-plugin-markdown": "4.14.1",
-    "typescript": "6.0.3",
-    "yaml-eslint-parser": "2.1.0"
+    "typescript": "6.0.3"
   },
   "homepage": "https://github.com/rickypc/timeable-promise#readme",
   "imports": {
