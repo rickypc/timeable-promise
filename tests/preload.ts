@@ -1,6 +1,8 @@
-/*!
- * Copyright © 2018 Richard Huang <rickypc@users.noreply.github.com>
- * All rights reserved.
+/**
+ * @copyright Copyright © 2018 Richard Huang <rickypc@users.noreply.github.com>
+ * @description Test preload.
+ * @file preload.ts
+ * @license AGPL-3.0-or-later
  */
 
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, mock, test } from 'bun:test';
@@ -15,6 +17,7 @@ const assets = {
     beforeEach,
     describe,
     expect,
+    mock,
     test,
     xdescribe: describe.skip,
     xtest: test.skip,

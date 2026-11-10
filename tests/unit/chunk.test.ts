@@ -12,18 +12,21 @@ import chunk from '#root/src/chunk';
  * @param {typeof chunk} fn - The chunk implementation being tested.
  */
 export default function testChunk(fn: typeof chunk) {
+  const chunkUndefined = fn as (array?: number[]) => number[] | undefined;
+  const chunkString = fn as unknown as (array: string, size: number) => string[];
+
   describe('chunk', () => {
     test.concurrent('should return chunked array', () => {
-      expect(fn([1, 2, 3], 2)).toEqual([[1, 2], [3]]);
+      expect(fn<number, number[][]>([1, 2, 3], 2)).toEqual([[1, 2], [3]]);
     });
 
     test.concurrent('should return original array', () => {
       expect(fn([1, 2, 3])).toEqual([1, 2, 3]);
-      expect(fn(undefined as any)).toBeUndefined();
+      expect(chunkUndefined()).toBeUndefined();
     });
 
     test.concurrent('should return empty array', () => {
-      expect(fn('' as any, 2)).toEqual([]);
+      expect(chunkString('', 2)).toEqual([]);
     });
   });
 }

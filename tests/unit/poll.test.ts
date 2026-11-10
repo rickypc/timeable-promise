@@ -5,7 +5,6 @@
  * @license AGPL-3.0-or-later
  */
 
-import { mock } from 'bun:test';
 import poll from '#root/src/poll';
 
 /**

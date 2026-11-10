@@ -30,7 +30,9 @@ export default function testUntilSettledOrTimedOut(fn: typeof untilSettledOrTime
       const actual = await fn(
         (_, reject, pending) => {
           void (async () => {
-            await Bun.sleep(2);
+            while (pending()) {
+              await Bun.sleep(1);
+            }
             expect(pending()).toBeFalsy();
             reject('executor');
           })();
@@ -45,7 +47,9 @@ export default function testUntilSettledOrTimedOut(fn: typeof untilSettledOrTime
       const actual = await fn(
         (resolve, _, pending) => {
           void (async () => {
-            await Bun.sleep(2);
+            while (pending()) {
+              await Bun.sleep(1);
+            }
             expect(pending()).toBeFalsy();
             resolve('executor');
           })();
@@ -60,7 +64,9 @@ export default function testUntilSettledOrTimedOut(fn: typeof untilSettledOrTime
       const actual = await fn(
         (resolve, _, pending) => {
           void (async () => {
-            await Bun.sleep(2);
+            while (pending()) {
+              await Bun.sleep(1);
+            }
             expect(pending()).toBeFalsy();
             resolve('executor');
           })();
